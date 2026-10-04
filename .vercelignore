@@ -1,6 +1,12 @@
+**/node_modules
 node_modules
 react-app/node_modules
 makeen_reports/node_modules
 dist
 .git
 .vercel
+**/.git
+**/.vercel
+react-app/public/assets/img/img_web
+*.psd
+*.eps
