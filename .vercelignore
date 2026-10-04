@@ -1,5 +1,6 @@
 **/node_modules
 node_modules
+scripts/node_modules
 react-app/node_modules
 makeen_reports/node_modules
 dist
@@ -8,5 +9,11 @@ dist
 **/.git
 **/.vercel
 react-app/public/assets/img/img_web
+react-app/public/assets/img/**/*Copy*
+react-app/public/assets/img/**/*Copy*.*
+react-app/public/assets/img/Development-Process1.jpg
+react-app/public/assets/img/Customized-Solutions.jpg
+react-app/public/assets/vendor/bootstrap/**/*.map
+react-app/public/assets/vendor/bootstrap/js
 *.psd
 *.eps

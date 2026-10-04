@@ -4,7 +4,7 @@
   "rewrites": [
     { "source": "/makeen_reports", "destination": "/makeen_reports/index.html" },
     { "source": "/makeen_reports/", "destination": "/makeen_reports/index.html" },
-    { "source": "/makeen_reports/:path*", "destination": "/makeen_reports/index.html" },
-    { "source": "/((?!api/).*)", "destination": "/index.html" }
+    { "source": "/makeen_reports/:path((?!assets/).*)", "destination": "/makeen_reports/index.html" },
+    { "source": "/((?!api/|assets/|favicon\\.|apple-touch-icon\\.png).*)", "destination": "/index.html" }
   ]
 }

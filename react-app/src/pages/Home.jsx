@@ -129,7 +129,7 @@ export default function Home() {
             <div
               key={src}
               className={`carousel-item${index === slide ? ' active' : ''}`}
-              style={{ backgroundImage: `url('${src}')` }}
+              style={index === slide ? { backgroundImage: `url('${src}')` } : undefined}
             />
           ))}
           <a href="#hero-carousel" className="carousel-control-prev" role="button" onClick={(event) => { event.preventDefault(); setSlide((slide + banners.length - 1) % banners.length) }} aria-label="Previous slide">
@@ -179,7 +179,7 @@ export default function Home() {
               <div key={item.hash} className="col-lg-4 col-md-6 aos-init aos-animate mb-3" data-aos="fade-up" data-aos-delay="10">
                 <div className="service-item position-relative">
                   <div className="image">
-                    <img src={item.image} alt="" />
+                    <img src={item.image} alt="" loading="lazy" decoding="async" />
                   </div>
                   <div className="service-content">
                     <div style={{ height: 250, overflow: 'hidden' }}>

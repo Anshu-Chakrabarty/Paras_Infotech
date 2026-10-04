@@ -60,6 +60,14 @@ export default function Contact() {
       })
     }
 
+    if (!document.querySelector('link[data-quill]')) {
+      const quillCss = document.createElement('link')
+      quillCss.rel = 'stylesheet'
+      quillCss.href = 'https://cdn.quilljs.com/1.3.7/quill.snow.css'
+      quillCss.dataset.quill = 'true'
+      document.head.appendChild(quillCss)
+    }
+
     let quillScript = document.querySelector('script[data-quill]')
     if (!quillScript) {
       quillScript = document.createElement('script')

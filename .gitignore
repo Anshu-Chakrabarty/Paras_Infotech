@@ -1,4 +1,5 @@
 node_modules
+scripts/node_modules
 dist
 .vercel
 .env
@@ -7,3 +8,6 @@ dist
 .DS_Store
 react-app/server/uploads
 react-app/server/submissions.log
+
+.vercel
+.env*

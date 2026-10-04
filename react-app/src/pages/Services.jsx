@@ -171,7 +171,7 @@ export default function Services() {
             <div className="col-lg-7">
               <div className="blog-details">
                 <div className="post-img">
-                  <img src="/assets/img/Mobile-Desktop-Application.jpg" alt="" className="img-fluid" />
+                  <img src="/assets/img/Mobile-Desktop-Application.jpg" alt="" className="img-fluid" loading="lazy" decoding="async" />
                 </div>
                 <h2 className="title">Services</h2>
                 <div className="content">

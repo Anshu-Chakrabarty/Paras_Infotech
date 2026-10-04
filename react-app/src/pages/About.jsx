@@ -40,7 +40,7 @@ export default function About() {
           </div>
 
           <div className="post-author d-flex align-items-center">
-            <img src="/assets/img/Visionimg1.jpeg" className="rounded-circle flex-shrink-0" alt="" />
+            <img src="/assets/img/Visionimg1.jpeg" className="rounded-circle flex-shrink-0" alt="" loading="lazy" decoding="async" />
             <div>
               <h4>Vision</h4>
               <p>Enabling our customers to leverage technology for business growth and success.</p>
@@ -48,7 +48,7 @@ export default function About() {
           </div>
 
           <div className="post-author d-flex align-items-center">
-            <img src="/assets/img/mission.jpeg" className="rounded-circle flex-shrink-0" alt="" />
+            <img src="/assets/img/mission.jpeg" className="rounded-circle flex-shrink-0" alt="" loading="lazy" decoding="async" />
             <div>
               <h4>Mission</h4>
               <p>
@@ -88,7 +88,7 @@ export default function About() {
         <div className="container" data-aos="fade-up">
           <div className="row justify-content-between gy-4">
             <div className="col-lg-5 text-center" data-aos="fade-up" data-aos-delay="200">
-              <img src="/assets/img/team/Sudipto_Goswami_Founder1.jpeg" alt="Sudipto Goswami" className="rounded-circle img-fluid about-page-img" />
+              <img src="/assets/img/team/Sudipto_Goswami_Founder1.jpeg" alt="Sudipto Goswami" className="rounded-circle img-fluid about-page-img" loading="lazy" decoding="async" />
             </div>
             <div className="col-lg-7" data-aos="fade-up">
               <div className="content">
