@@ -1,0 +1,49 @@
+html {
+  scroll-behavior: smooth;
+}
+
+[id] {
+  scroll-margin-top: 225px;
+}
+
+.moretext.is-open {
+  display: block;
+}
+
+.form-alert {
+  margin-bottom: 16px;
+  padding: 12px 16px;
+  border-radius: 4px;
+}
+
+.form-alert.success {
+  background: #e8f6ee;
+  color: #146c43;
+  border: 1px solid #b7e4c7;
+}
+
+.form-alert.error {
+  background: #fdecec;
+  color: #b42318;
+  border: 1px solid #f5c2c7;
+}
+
+.field-error {
+  display: block;
+  margin-top: 4px;
+  color: #dc3545;
+  font-size: 13px;
+}
+
+.php-email-form textarea.form-control {
+  min-height: 150px;
+}
+
+.page-missing {
+  min-height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 80px 16px;
+}

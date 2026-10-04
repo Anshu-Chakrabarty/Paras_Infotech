@@ -1,0 +1,10 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "rewrites": [
+    { "source": "/makeen_reports", "destination": "/makeen_reports/index.html" },
+    { "source": "/makeen_reports/", "destination": "/makeen_reports/index.html" },
+    { "source": "/makeen_reports/:path*", "destination": "/makeen_reports/index.html" },
+    { "source": "/((?!api/).*)", "destination": "/index.html" }
+  ]
+}
