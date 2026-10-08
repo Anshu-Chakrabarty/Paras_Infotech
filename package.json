@@ -2,7 +2,7 @@
   "name": "paras-infotech",
   "private": true,
   "scripts": {
-    "build": "npm --prefix react-app install && npm --prefix react-app run build && npm --prefix makeen_reports install && npm --prefix makeen_reports run build"
+    "build": "npm --prefix react-app install && npm --prefix react-app run build && npm --prefix makeen_reports install && npm --prefix makeen_reports run build && node scripts/copy-bricks.js"
   },
   "dependencies": {
     "nodemailer": "^10.0.14"
