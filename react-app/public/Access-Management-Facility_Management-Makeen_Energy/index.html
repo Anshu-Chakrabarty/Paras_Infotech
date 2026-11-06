@@ -4,10 +4,10 @@
 <meta name="robots" content="noindex,nofollow">
 <title>Access Management — MAKEEN Energy India · Facility Management</title>
 <style>
-:root{--ink:#1f2937;--navy:#0b2e4a;--navy2:#143a58;--soft:#4b5563;--line:#e5e7eb;--bg:#f7f8fa;--card:#ffffff;--chip:#e8eef5;--chip-ink:#0b2e4a;--chip2:#eaf5ee;--chip2-ink:#1d5a37;--warn:#9a5b00;--warnbg:#fff6e5;--ok:#1d5a37;--okbg:#eaf5ee;
+:root{--ink:#1f2937;--navy:#0b2e4a;--navy2:#143a58;--soft:#4b5563;--line:#e5e7eb;--bg:#f7f8fa;--card:#ffffff;--chip:#e8eef5;--chip-ink:#0b2e4a;--chip2:#eaf5ee;--chip2-ink:#1d5a37;--warn:#9a5b00;--warnbg:#fff6e5;--ok:#1d5a37;--okbg:#eaf5ee;--drop:#8a2b2b;--dropbg:#f8ecec;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#e5e9ee;--navy:#0b2e4a;--navy2:#174468;--soft:#a3adb8;--line:#2b3644;--bg:#121a23;--card:#18222d;--chip:#1f3346;--chip-ink:#d3e4f3;--chip2:#1c3426;--chip2-ink:#acdcbc;--warn:#f1c27a;--warnbg:#382c15;--ok:#acdcbc;--okbg:#1c3426;color-scheme:dark}}
-:root[data-theme="dark"]{--ink:#e5e9ee;--navy:#0b2e4a;--navy2:#174468;--soft:#a3adb8;--line:#2b3644;--bg:#121a23;--card:#18222d;--chip:#1f3346;--chip-ink:#d3e4f3;--chip2:#1c3426;--chip2-ink:#acdcbc;--warn:#f1c27a;--warnbg:#382c15;--ok:#acdcbc;--okbg:#1c3426;color-scheme:dark}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#e5e9ee;--navy:#0b2e4a;--navy2:#174468;--soft:#a3adb8;--line:#2b3644;--bg:#121a23;--card:#18222d;--chip:#1f3346;--chip-ink:#d3e4f3;--chip2:#1c3426;--chip2-ink:#acdcbc;--warn:#f1c27a;--warnbg:#382c15;--ok:#acdcbc;--okbg:#1c3426;--drop:#f0b4b4;--dropbg:#3a2222;color-scheme:dark}}
+:root[data-theme="dark"]{--ink:#e5e9ee;--navy:#0b2e4a;--navy2:#174468;--soft:#a3adb8;--line:#2b3644;--bg:#121a23;--card:#18222d;--chip:#1f3346;--chip-ink:#d3e4f3;--chip2:#1c3426;--chip2-ink:#acdcbc;--warn:#f1c27a;--warnbg:#382c15;--ok:#acdcbc;--okbg:#1c3426;--drop:#f0b4b4;--dropbg:#3a2222;color-scheme:dark}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:calc(64px + env(safe-area-inset-top,0px));height:100%}
 body{margin:0;font:16px/1.5 Calibri,"Segoe UI",Carlito,Arial,sans-serif;color:var(--ink);background:var(--bg)}
@@ -17,6 +17,8 @@ aside .brand{padding:4px 20px 6px;font-weight:700}
 aside .sub{padding:0 20px 14px;color:#c5d0da;font-size:12px}
 aside a{display:flex;justify-content:space-between;gap:8px;color:#e8eef4;text-decoration:none;padding:7px 20px;font-size:13px}
 aside a:hover,aside a.on{background:#143a58}
+aside a.g{font-weight:700;padding-top:14px}
+aside a.s{padding-left:32px;font-size:12.5px;color:#c5d0da}
 aside a .cnt{color:#9fb4c9;font-size:12px}
 aside a.full .cnt{color:#9be3b5}
 .main{min-width:0}
@@ -25,25 +27,33 @@ header.top .t{font-weight:700}
 header.top .right{display:flex;align-items:center;gap:14px;font-size:14px;color:#dfe7ee}
 .wrap{max-width:1040px;margin:0 auto;padding:28px 32px 120px}
 h1{margin:4px 0 10px;color:var(--navy);font-size:26px}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) h1,:root:not([data-theme="light"]) h2{color:#9cc3e4}}
-:root[data-theme="dark"] h1,:root[data-theme="dark"] h2{color:#9cc3e4}
-.intro{margin:0 0 6px;color:var(--soft);max-width:72ch}
-section.mod{margin:0 0 22px;padding:22px 20px 14px;border:1px solid var(--line);border-radius:8px;background:var(--card);scroll-margin-top:72px}
-section.mod>h2{margin:0 0 12px;color:var(--navy);font-size:18px}
-.q{border-top:1px solid var(--line);padding:14px 0 14px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) h1,:root:not([data-theme="light"]) h2,:root:not([data-theme="light"]) h3{color:#9cc3e4}}
+:root[data-theme="dark"] h1,:root[data-theme="dark"] h2,:root[data-theme="dark"] h3{color:#9cc3e4}
+.intro{margin:0 0 6px;color:var(--soft);max-width:78ch}
+.how{margin:10px 0 18px;padding:12px 14px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font-size:14.5px}
+.how b{color:var(--navy)}
+section.mod{margin:0 0 28px;padding:22px 20px 8px;border:1px solid var(--line);border-radius:8px;background:var(--card);scroll-margin-top:72px}
+section.mod>h2{margin:0 0 6px;color:var(--navy);font-size:20px}
+section.mod>.gn{margin:0 0 16px;color:var(--soft);font-size:14.5px}
+.block{margin:0 0 8px;padding:4px 0 10px;scroll-margin-top:72px}
+.block>h3{margin:12px 0 8px;color:var(--navy);font-size:17px}
+.shot{margin:0 0 12px;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--bg)}
+.shot img{display:block;width:100%;max-height:280px;object-fit:contain;object-position:top;background:#fff}
+.shot .cap{padding:8px 10px;font-size:13px;color:var(--soft);font-style:italic}
+.q{border-top:1px solid var(--line);padding:14px 0 16px}
 .q:first-of-type{border-top:0;padding-top:4px}
 .q.done .qt::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:#2f8f5b;margin-right:8px;vertical-align:middle}
 .qt{font-weight:700;color:var(--ink)}
-.qd{color:var(--soft);font-size:14px;margin-bottom:10px}
+.qd{color:var(--soft);font-size:14.5px;margin:4px 0 12px;max-width:78ch}
 .pickers{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 @media (max-width:760px){.pickers{grid-template-columns:1fr}}
 .ms{position:relative}
 .ms>button{width:100%;text-align:left;font:inherit;font-size:15px;color:var(--ink);background:var(--card);border:1px solid #c9d1da;border-radius:4px;padding:8px 32px 8px 10px;cursor:pointer;position:relative}
 .ms>button::after{content:"";position:absolute;right:12px;top:50%;width:7px;height:7px;border-right:2px solid var(--soft);border-bottom:2px solid var(--soft);transform:translateY(-70%) rotate(45deg)}
-.ms>button:focus-visible,.panel input:focus-visible,button:focus-visible,a:focus-visible{outline:2px solid #2f6aa3;outline-offset:2px}
+.ms>button:focus-visible,.panel input:focus-visible,button:focus-visible,a:focus-visible,.who input:focus-visible{outline:2px solid #2f6aa3;outline-offset:2px}
 .panel{position:absolute;z-index:40;left:0;right:0;top:calc(100% + 4px);background:var(--card);border:1px solid var(--line);border-radius:6px;box-shadow:0 10px 28px rgba(11,46,74,.18);padding:8px;display:none}
 .ms.open .panel{display:block}
-.panel input[type=search]{width:100%;font:inherit;font-size:15px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:7px 9px;margin-bottom:6px}
+.panel input[type=search],.who input[type=search]{width:100%;font:inherit;font-size:15px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:7px 9px;margin-bottom:6px}
 .opts{max-height:260px;overflow:auto}
 .opt{display:flex;gap:8px;align-items:flex-start;padding:6px;border-radius:4px;cursor:pointer;font-size:15px}
 .opt:hover{background:var(--bg)}
@@ -53,6 +63,20 @@ section.mod>h2{margin:0 0 12px;color:var(--navy);font-size:18px}
 .chip{display:inline-flex;align-items:center;gap:6px;background:var(--chip);color:var(--chip-ink);border-radius:4px;padding:3px 6px 3px 9px;font-size:14px}
 .chip.p{background:var(--chip2);color:var(--chip2-ink)}
 .chip button{border:0;background:transparent;color:inherit;cursor:pointer;font-size:16px;line-height:1;padding:0 4px}
+.who{margin-top:10px;border:1px solid var(--line);border-radius:6px;overflow:hidden;display:none}
+.who.show{display:block}
+.who .bar2{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:8px 10px;background:var(--bg);border-bottom:1px solid var(--line);flex-wrap:wrap}
+.who .bar2 span{font-size:13.5px;color:var(--soft)}
+.who .bar2 input{width:220px;margin:0}
+.who .scroll{max-height:260px;overflow:auto}
+.who table{width:100%;border-collapse:collapse;font-size:13.5px}
+.who th,.who td{padding:7px 10px;text-align:left;border-bottom:1px solid var(--line);vertical-align:middle}
+.who th{background:var(--card);position:sticky;top:0;font-weight:700}
+.who tr.drop{background:var(--dropbg);color:var(--drop)}
+.who .src{color:var(--soft);font-size:12.5px}
+.btn.tiny{font:inherit;font-size:13px;font-weight:700;border-radius:4px;padding:4px 10px;cursor:pointer;border:1px solid #0b2e4a;background:#0b2e4a;color:#fff}
+.btn.tiny.ghost{background:transparent;color:var(--ink);border-color:#c9d1da}
+.btn.tiny.drop{background:transparent;color:var(--drop);border-color:var(--drop)}
 .cover{font-size:14px;color:var(--soft);margin-top:8px}
 .bar{position:fixed;z-index:30;left:268px;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);padding:12px 32px calc(12px + env(safe-area-inset-bottom,0px))}
 .bar .in{max-width:1040px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
@@ -61,7 +85,7 @@ section.mod>h2{margin:0 0 12px;color:var(--navy);font-size:18px}
 .btn[disabled]{opacity:.55;cursor:not-allowed}
 .modal{position:fixed;inset:0;background:rgba(11,20,32,.7);display:none;align-items:center;justify-content:center;padding:18px;z-index:60}
 .modal.show{display:flex}
-.dlg{background:var(--card);color:var(--ink);border-radius:8px;max-width:780px;width:100%;max-height:86vh;display:flex;flex-direction:column;border-top:6px solid #0b2e4a}
+.dlg{background:var(--card);color:var(--ink);border-radius:8px;max-width:860px;width:100%;max-height:86vh;display:flex;flex-direction:column;border-top:6px solid #0b2e4a}
 .dlg h3{margin:0;padding:18px 22px 6px;font-size:20px;color:var(--ink)}
 .dlg .sub{padding:0 22px 12px;color:var(--soft);font-size:15px}
 .dlg .body{overflow:auto;padding:0 22px 10px;border-top:1px solid var(--line)}
@@ -81,7 +105,8 @@ table.grid td.none{color:var(--warn)}
 <header class="top"><span class="t">MAKEEN Energy India</span><span class="right" id="progress"></span></header>
 <div class="wrap">
 <h1>Access Management</h1>
-<p class="intro">For each question, choose the designations and/or the individual people who should have that access in the Facility Management portal. The Dashboard is open to everyone, so it is not asked here. Choosing a designation gives the access to everyone holding it. Leave a question empty if nobody should have it.</p>
+<p class="intro">For each access, pick a KEKA designation to give it to everyone with that title. The list under the pickers shows each name — Drop removes one person without dropping the designation. You can still add extra people by name on top of that. The Dashboard is open to everyone, so it is not asked here. Leave an item empty if nobody should have it.</p>
+<div class="how"><b>Designations come from KEKA</b> (the people file already loaded on this page). We do not type titles by hand. If KEKA later adds a title, it appears on the next load.</div>
 <div id="doneBox"></div>
 <div id="form"></div>
 </div></div></div>
@@ -91,51 +116,87 @@ table.grid td.none{color:var(--warn)}
 <div class="body" id="mbody"></div>
 <div class="acts"><button class="btn ghost" id="back">Go back and change</button><button class="btn" id="confirm">Yes, submit</button></div></div></div>
 <script>
-const QUESTIONS=[
-["Daily MIS",[
- ["dmis_read","Daily MIS — read","Search, view and download the daily reports."],
- ["dmis_edit","Daily MIS — enter and edit","Fill in the daily report, save draft and submit for approval."],
- ["dmis_approve","Daily MIS — approve or return","Approve a submitted day, or send it back with a reason."],
- ["dmis_reopen","Daily MIS — reopen an approved day","Unlock a day that is already approved, with a reason."]]],
-["Monthly MIS",[
- ["mmis_read","Monthly MIS — read","Search, view and download the monthly reports."],
- ["mmis_edit","Monthly MIS — enter and edit","Fill in the monthly inputs and submit the month for approval."],
- ["mmis_approve","Monthly MIS — approve or return","Approve a submitted month, or send it back with a reason."],
- ["mmis_reopen","Monthly MIS — reopen an approved month","Unlock a month that is already approved, with a reason."]]],
-["Daily Exceptions",[
- ["exc_read","Daily Exceptions — read","Search, view and download the daily safety checks."],
- ["exc_edit","Daily Exceptions — enter and edit","Fill in the 13-point daily safety check."],
- ["exc_ack","Daily Exceptions — receive and acknowledge exceptions","Get notified when a safety problem or incident is reported, and acknowledge it."],
- ["exc_email","Daily Exceptions — daily email","Receive the daily email of open exceptions and plants that have not filed."]]],
-["Management Review",[
- ["mr_read","Management Review — read","See the review pack and plant comparison, and download them."]]],
-["Plant master",[
- ["pm_read","Plant master — read","View plant details and contracts."],
- ["pm_create","Plant master — create or delete a plant","Add a new plant or remove one."],
- ["pm_edit","Plant master — edit plant details","Update capacity, equipment, activities and contract files."]]],
-["Audit",[
- ["aud_read","Audit — read","View and download audits and their observations."],
- ["aud_edit","Audit — enter and edit","Add audits, observations and update their status."]]],
-["Licences",[
- ["lic_read","Licences — read","View and download licences and internal tests."],
- ["lic_edit","Licences — add and edit","Add or update licences, dates and reminders."],
- ["lic_remind","Licences — receive due / expiry reminders","Get notified when a licence is due or has expired."]]],
-["Review Check",[
- ["rc_read","Review Check — read","See the per-plant summary of contract, audit and licence status."]]],
-["Graphs",[
- ["gr_read","Graphs — read","View the charts built from Daily and Monthly MIS."]]],
-["Files",[
- ["file_replace","Replace a file after approval","Replace an uploaded file (SQC report, audit, licence, contract) once the record is approved."]]],
-["Administration",[
- ["adm_people","Manage people","Load the KEKA list, assign plants and turn logins on or off."],
- ["adm_roles","Manage roles and access","Map designations to roles and set what each role can do."],
- ["adm_reset","Reset passwords","Reset a person's password to the default."],
- ["adm_notify","Send notices to staff","Send custom notices and control which events send notifications."],
- ["adm_log","View the access log","See who signed in and who changed access."]]]
+const GROUPS=[
+{id:"mis",title:"MIS",note:"Day-to-day plant reporting, missed-report counts, and the pack that shows what was already entered.",
+ blocks:[
+  {id:"daily",title:"Daily MIS",shot:"daily.jpg",cap:"Daily MIS list. Search is on for every login. Submit, Download and Approve show only if that access is given below.",
+   qs:[
+    ["dmis_read","Daily MIS — open and download","Open the Daily MIS list, search a plant and date, look at a day, and download Excel or PDF. This does not let the person type numbers or approve."],
+    ["dmis_edit","Daily MIS — enter and edit","Fill the daily figures for a plant and date, save a draft, and submit the day for approval. Use this for the officer who types the day."],
+    ["dmis_approve","Daily MIS — approve or return","Approve a submitted day, or send it back with a reason. Use this for Plant Manager (and Admin). The next day can still be opened if yesterday is waiting."],
+    ["dmis_reopen","Daily MIS — reopen an approved day","Unlock a day that is already approved, with a reason. Keep this tight — usually Admin only."]
+   ]},
+  {id:"monthly",title:"Monthly MIS",shot:"monthly.jpg",cap:"Monthly MIS. Daily totals on this screen come from approved Daily MIS. The officer only types the month-only fields (TT, shifts, power, diesel, hours, OT, training, penalties, defects).",
+   qs:[
+    ["mmis_read","Monthly MIS — open and download","Open the monthly list, search a plant and month, look at the month, and download. No typing."],
+    ["mmis_edit","Monthly MIS — enter and edit","Fill the month-only fields (TT, shifts, power, diesel, hours, OT, training, penalties, defects) and submit the month. Daily totals on this screen are rolled up from approved Daily MIS — they are not typed again."],
+    ["mmis_approve","Monthly MIS — approve or return","Approve a submitted month, or send it back with a reason."],
+    ["mmis_reopen","Monthly MIS — reopen an approved month","Unlock a closed month, with a reason. Usually Admin only."]
+   ]},
+  {id:"exc",title:"Daily Exceptions",shot:"exception.jpg",cap:"Daily Exceptions list. One list for all plants. Colour shows Completed / Pending. The problem line sits on the row. “Not yet initiated” is the lapse count for that day.",
+   qs:[
+    ["exc_read","Daily Exceptions — open and download","Open the exceptions list, search, look at a day, and download. No typing."],
+    ["exc_edit","Daily Exceptions — enter and edit","Fill the 13-point daily safety check for a plant and date, including remarks when a line is Yes or an incident is Yes."],
+    ["exc_ack","Daily Exceptions — receive and acknowledge","Get a notice when a Yes-line or an incident is reported, open that row, and acknowledge it. This is for Plant Manager / safety, not for the person who typed the check."],
+    ["exc_email","Daily Exceptions — daily email / inbox of open items","Receive the daily list of open exceptions and plants that have not filed. In-app always. Email only if you later ask for it."]
+   ]},
+  {id:"lapse",title:"Lapses",
+   qs:[
+    ["lapse_read","Lapses — see missed-report counts","A lapse is a day where Daily MIS or Daily Exception was not started. There is no separate typing screen. The system counts it — it already shows as “Not yet initiated” on Exceptions and as “Lapse today” on the Review pack. Tick who may see these counts on Dashboard and the Review pack."]
+   ]},
+  {id:"review",title:"MIS Review pack",shot:"review.jpg",cap:"This used to be labelled Management Review. It is not a new form. It only pulls Daily + Exceptions + Monthly that are already filled, for the plants and dates you pick. Nobody types new numbers here.",
+   qs:[
+    ["mr_read","MIS Review pack — open and download","Pick plants and a date or month. See Daily, Exceptions and Monthly that are already entered, in one place, and download Excel and PDF. This is not a new input, and it is not the plant contract / audit / licence board."]
+   ]},
+  {id:"graphs",title:"Graphs",
+   qs:[
+    ["gr_read","Graphs — open","View the charts built from Daily and Monthly MIS. No typing."]
+   ]}
+ ]},
+{id:"admin",title:"Admin",note:"Set-up and plant status that Admin maintains — not daily typing.",
+ blocks:[
+  {id:"keka",title:"KEKA interface",shot:"people.jpg",cap:"People and access. Name, code, email, phone, Aadhaar and designation come from KEKA. This portal only assigns plant, role and whether the login is Active.",
+   qs:[
+    ["adm_people","KEKA interface — load people and assign plant","Load the KEKA list. Assign a person to a plant, turn the Facility login on or off, and see designation from KEKA. This does not edit name, phone or Aadhaar — those stay in KEKA."],
+    ["adm_roles","KEKA interface — map designation to role","Map each KEKA designation to one portal role (Admin, Plant Manager, Staff, and the rest). If a designation has no map, that person cannot sign in until Admin maps it or sets a role on the person."],
+    ["adm_reset","Reset a password","Reset a person’s Facility password to the first password."],
+    ["adm_notify","Send notices to staff","Send a notice, and control which events notify which designations."],
+    ["adm_log","View the access log","See who signed in and who changed access."]
+   ]},
+  {id:"plant",title:"Plant master data",shot:"plant-master.jpg",cap:"Plant master. Admin creates the plant once. Contract dates, code and status sit here.",
+   qs:[
+    ["pm_read","Plant master — open","View plant details, contract dates and files. No create or edit."],
+    ["pm_create","Plant master — create or remove a plant","Add a new plant to the list, or remove one. Keep this on Admin."],
+    ["pm_edit","Plant master — edit plant details","Update capacity, equipment, activities and contract files on an existing plant."]
+   ]},
+  {id:"lic",title:"Licences",
+   qs:[
+    ["lic_read","Licences — open and download","View statutory / mandatory licences and internal tests, and download the file."],
+    ["lic_edit","Licences — add and edit","Add or update a licence, dates, the remind list and the file."],
+    ["lic_remind","Licences — receive due / expiry reminders","Get notified when a licence is due or has expired."]
+   ]},
+  {id:"comply",title:"Plant compliance snapshot",
+   qs:[
+    ["rc_read","Plant compliance snapshot — open","This used to be labelled Review Check. For one plant, see contract status, open audit observations and licences due or expired. It is a status board — not the Daily / Monthly Review pack, and nobody types MIS numbers here."]
+   ]},
+  {id:"files",title:"Replace a file",
+   qs:[
+    ["file_replace","Replace a file after approval","Replace an uploaded file (SQC, audit, licence, contract) after the record is approved. Keep this tight — usually Admin only."]
+   ]}
+ ]},
+{id:"audit",title:"Audit",note:"Separate register. Not mixed with MIS or licences.",
+ blocks:[
+  {id:"aud",title:"Audit",shot:"audit.jpg",cap:"Audit register under Plant Operations. ISA / OISD / MEIPL. Observation, compliance status and target date. Overdue first.",
+   qs:[
+    ["aud_read","Audit — open and download","Open the audit list and observations, and download. No typing."],
+    ["aud_edit","Audit — enter and edit","Add an audit, add observations, update compliance status and target date, attach the file."]
+   ]}
+ ]}
 ];
-const ALLQ=QUESTIONS.flatMap(g=>g[1]);
+const ALLQ=GROUPS.flatMap(g=>g.blocks.flatMap(b=>b.qs));
 const SAVE_URL="/api/fm-access";
-const KEY="fm-access-draft-v1";
+const KEY="fm-access-draft-v2";
+const OLDKEY="fm-access-draft-v1";
 let EMPS=[];
 let DES={};
 let DKEYS=[];
@@ -149,15 +210,20 @@ const norm=s=>s.toLowerCase().replace(/\s+/g," ").trim();
 function status(t){const el=document.getElementById("progress2");if(el)el.textContent=t||""}
 function packDraft(){
  const draft={};
- ALLQ.forEach(([id])=>{draft[id]={d:[...(state[id].d||[])],p:(state[id].p||[]).map(i=>String(EMPS[i][0]))}});
+ ALLQ.forEach(([id])=>{draft[id]={d:[...(state[id].d||[])],p:(state[id].p||[]).map(i=>String(EMPS[i][0])),x:(state[id].x||[]).map(i=>String(EMPS[i][0]))}});
  return draft;
+}
+function numsToIdx(arr){
+ return (arr||[]).map(n=>{if(BYNUM[String(n)]!=null)return BYNUM[String(n)];const i=Number(n);return Number.isInteger(i)&&EMPS[i]?i:null}).filter(i=>i!=null);
 }
 function applyDraft(draft){
  if(!draft||typeof draft!=="object")return;
  ALLQ.forEach(([id])=>{
   const row=draft[id];if(!row||!state[id])return;
   state[id].d=(row.d||[]).filter(k=>DES[k]);
-  state[id].p=(row.p||[]).map(n=>{if(BYNUM[String(n)]!=null)return BYNUM[String(n)];const i=Number(n);return Number.isInteger(i)&&EMPS[i]?i:null}).filter(i=>i!=null);
+  state[id].p=numsToIdx(row.p);
+  state[id].x=numsToIdx(row.x);
+  pruneX(id);
  });
 }
 function saveLocal(){try{localStorage.setItem(KEY,JSON.stringify({savedAt:Date.now(),draft:packDraft()}))}catch(e){}}
@@ -175,21 +241,25 @@ function saveDraft(){
  clearTimeout(saveTimer);
  saveTimer=setTimeout(persistNow,400);
 }
-function covered(q){const set=new Set();state[q].d.forEach(k=>DES[k]&&DES[k].idx.forEach(i=>set.add(i)));state[q].p.forEach(i=>set.add(i));return set}
-function el(t,a={},...c){const n=document.createElement(t);for(const k in a){if(k==="class")n.className=a[k];else if(k.startsWith("on"))n.addEventListener(k.slice(2),a[k]);else n.setAttribute(k,a[k])}c.flat().forEach(x=>n.append(x));return n}
+function fromDes(q){const set=new Set();state[q].d.forEach(k=>DES[k]&&DES[k].idx.forEach(i=>set.add(i)));return set}
+function pruneX(q){const keep=fromDes(q);state[q].x=state[q].x.filter(i=>keep.has(i))}
+function covered(q){const set=fromDes(q);state[q].x.forEach(i=>set.delete(i));state[q].p.forEach(i=>set.add(i));return set}
+function droppedOnly(q){const extra=new Set(state[q].p);return state[q].x.filter(i=>!extra.has(i))}
+function extraOnly(q){const d=fromDes(q);const x=new Set(state[q].x);return state[q].p.filter(i=>!d.has(i)||x.has(i))}
+function el(t,a={},...c){const n=document.createElement(t);for(const k in a){if(k==="class")n.className=a[k];else if(k.startsWith("on"))n.addEventListener(k.slice(2),a[k]);else n.setAttribute(k,a[k])}c.flat().forEach(x=>{if(x!=null)n.append(x)});return n}
 function picker(q,kind){
  const box=el("div",{class:"ms"});
  const btn=el("button",{type:"button","aria-haspopup":"listbox"});
- const search=el("input",{type:"search",placeholder:kind==="d"?"Search designations":"Search people by name",["aria-label"]:"Search"});
+ const search=el("input",{type:"search",placeholder:kind==="d"?"Search KEKA designations":"Search people by name",["aria-label"]:"Search"});
  const opts=el("div",{class:"opts",role:"listbox"});
  const panel=el("div",{class:"panel"},search,opts);
- function label(){const n=state[q][kind].length;btn.textContent=kind==="d"?(n?n+" designation"+(n>1?"s":"")+" selected":"Select by designation"):(n?n+" "+(n>1?"people":"person")+" selected":"Select by name")}
+ function label(){const n=state[q][kind].length;btn.textContent=kind==="d"?(n?n+" designation"+(n>1?"s":"")+" selected":"Select by designation"):(n?n+" extra "+(n>1?"people":"person")+" by name":"Add extra people by name")}
  function render(){
   const f=norm(search.value);opts.innerHTML="";let shown=0;
   if(kind==="d"){for(const k of DKEYS){if(f&&!k.includes(f))continue;if(++shown>400)break;const d=DES[k];
     const cb=el("input",{type:"checkbox"});cb.checked=state[q].d.includes(k);
     cb.addEventListener("change",()=>{toggle(q,"d",k,cb.checked)});
-    opts.append(el("label",{class:"opt"},cb,el("span",{},d.label,el("small",{},d.idx.length+(d.idx.length>1?" people":" person")))))}}
+    opts.append(el("label",{class:"opt"},cb,el("span",{},d.label,el("small",{},d.idx.length+(d.idx.length>1?" people":" person")+" in KEKA"))))}}
   else{EMPS.forEach((e,i)=>{if(f&&!norm(e[1]+" "+e[2]+" "+e[3]+" "+e[0]).includes(f))return;if(++shown>300)return;
     const cb=el("input",{type:"checkbox"});cb.checked=state[q].p.includes(i);
     cb.addEventListener("change",()=>{toggle(q,"p",i,cb.checked)});
@@ -203,16 +273,90 @@ function picker(q,kind){
 }
 function closeAll(){document.querySelectorAll(".ms.open").forEach(m=>m.classList.remove("open"))}
 function hideModal(){document.getElementById("modal").classList.remove("show")}
-function toggle(q,kind,v,on){const a=state[q][kind];const i=a.indexOf(v);if(on&&i<0)a.push(v);if(!on&&i>=0)a.splice(i,1);refresh(q);saveDraft()}
-function refresh(q){const c=cards[q];c.pd._label();c.pp._label();c.chips.innerHTML="";
- state[q].d.forEach(k=>c.chips.append(el("span",{class:"chip"},DES[k].label+" ("+DES[k].idx.length+")",el("button",{type:"button",["aria-label"]:"Remove "+DES[k].label,onclick:()=>toggle(q,"d",k,false)},"×"))));
- state[q].p.forEach(i=>c.chips.append(el("span",{class:"chip p"},EMPS[i][1],el("button",{type:"button",["aria-label"]:"Remove "+EMPS[i][1],onclick:()=>toggle(q,"p",i,false)},"×"))));
- const n=covered(q).size;c.cover.textContent=n?"Gives this access to "+n+(n>1?" people":" person")+".":"";
- c.card.classList.toggle("done",n>0);progress()}
-function progress(){const a=ALLQ.filter(q=>covered(q[0]).size>0).length;document.getElementById("progress").textContent=a+" of "+ALLQ.length+" answered";for(const m in navLinks){const L=navLinks[m];const d=L.ids.filter(i=>covered(i).size>0).length;L.a.querySelector(".cnt").textContent=d+"/"+L.ids.length;L.a.classList.toggle("full",d===L.ids.length)}}
+function toggle(q,kind,v,on){
+ const a=state[q][kind];const i=a.indexOf(v);
+ if(on&&i<0)a.push(v);
+ if(!on&&i>=0)a.splice(i,1);
+ if(kind==="d")pruneX(q);
+ if(kind==="p"&&on){const xi=state[q].x.indexOf(v);if(xi>=0)state[q].x.splice(xi,1)}
+ refresh(q);saveDraft();
+}
+function dropPerson(q,i){
+ const extra=state[q].p.indexOf(i);if(extra>=0)state[q].p.splice(extra,1);
+ if(fromDes(q).has(i)&&!state[q].x.includes(i))state[q].x.push(i);
+ refresh(q);saveDraft();
+}
+function putBack(q,i){
+ const xi=state[q].x.indexOf(i);if(xi>=0)state[q].x.splice(xi,1);
+ refresh(q);saveDraft();
+}
+function coverLine(q){
+ const n=covered(q).size;if(!n&&!state[q].x.length)return "";
+ const nDes=fromDes(q).size-droppedOnly(q).length;
+ const nEx=extraOnly(q).length;
+ const nDr=droppedOnly(q).length;
+ const bits=[];
+ if(state[q].d.length)bits.push(nDes+" from designation"+(state[q].d.length>1?"s":""));
+ if(nEx)bits.push(nEx+" added by name");
+ if(nDr)bits.push(nDr+" dropped");
+ return (n?"Gives this access to "+n+(n>1?" people":" person"):"Nobody currently has this access")+(bits.length?" ("+bits.join(", ")+").":".");
+}
+function renderWho(q){
+ const c=cards[q];const st=state[q];const dset=fromDes(q);const extra=new Set(st.p);const dropped=new Set(st.x);
+ const active=[];
+ dset.forEach(i=>{if(dropped.has(i)&&!extra.has(i))return;active.push(i)});
+ extra.forEach(i=>{if(!dset.has(i))active.push(i)});
+ active.sort((a,b)=>EMPS[a][1].localeCompare(EMPS[b][1]));
+ const droppedRows=droppedOnly(q).slice().sort((a,b)=>EMPS[a][1].localeCompare(EMPS[b][1]));
+ const filter=norm(c.find.value);
+ function match(i){if(!filter)return true;return norm(EMPS[i][1]+" "+EMPS[i][2]+" "+(EMPS[i][3]||"")).includes(filter)}
+ c.tbody.innerHTML="";
+ const showA=active.filter(match);const showD=droppedRows.filter(match);
+ showA.forEach(i=>{
+  const how=dset.has(i)&&!(dropped.has(i)&&extra.has(i))?"From designation":"Added by name";
+  c.tbody.append(el("tr",{},
+   el("td",{},EMPS[i][1]),
+   el("td",{},EMPS[i][2]||"—"),
+   el("td",{},EMPS[i][3]||"—"),
+   el("td",{class:"src"},how),
+   el("td",{},el("button",{class:"btn tiny drop",type:"button",onclick:()=>dropPerson(q,i)},"Drop"))
+  ));
+ });
+ showD.forEach(i=>{
+  c.tbody.append(el("tr",{class:"drop"},
+   el("td",{},EMPS[i][1]),
+   el("td",{},EMPS[i][2]||"—"),
+   el("td",{},EMPS[i][3]||"—"),
+   el("td",{class:"src"},"Dropped"),
+   el("td",{},el("button",{class:"btn tiny ghost",type:"button",onclick:()=>putBack(q,i)},"Put back"))
+  ));
+ });
+ if(!showA.length&&!showD.length){
+  c.tbody.append(el("tr",{},el("td",{colspan:"5",class:"src"},active.length||droppedRows.length?"No name in this list matches that search.":"Nobody added yet.")));
+ }
+ c.who.classList.toggle("show",active.length+droppedRows.length>0||st.d.length>0||st.p.length>0);
+ c.whoCount.textContent=(active.length?active.length+(active.length>1?" people":" person")+" on this access":"Nobody on this access")+(droppedRows.length?" · "+droppedRows.length+" dropped":"");
+}
+function refresh(q){
+ const c=cards[q];c.pd._label();c.pp._label();c.chips.innerHTML="";
+ state[q].d.forEach(k=>c.chips.append(el("span",{class:"chip"},DES[k].label+" ("+DES[k].idx.length+")",el("button",{type:"button",["aria-label"]:"Remove designation "+DES[k].label,onclick:()=>toggle(q,"d",k,false)},"×"))));
+ state[q].p.forEach(i=>c.chips.append(el("span",{class:"chip p"},EMPS[i][1]+" (by name)",el("button",{type:"button",["aria-label"]:"Remove "+EMPS[i][1],onclick:()=>toggle(q,"p",i,false)},"×"))));
+ c.cover.textContent=coverLine(q);
+ c.card.classList.toggle("done",covered(q).size>0);
+ renderWho(q);progress();
+}
+function progress(){
+ const a=ALLQ.filter(q=>covered(q[0]).size>0).length;
+ document.getElementById("progress").textContent=a+" of "+ALLQ.length+" answered";
+ for(const m in navLinks){const L=navLinks[m];const d=L.ids.filter(i=>covered(i).size>0).length;L.a.querySelector(".cnt").textContent=d+"/"+L.ids.length;L.a.classList.toggle("full",d===L.ids.length&&L.ids.length>0)}
+}
 function payload(){const out={submittedAt:new Date().toISOString(),answers:{}};
- ALLQ.forEach(([id,t])=>{out.answers[id]={question:t,designations:state[id].d.map(k=>DES[k].label),people:state[id].p.map(i=>({employeeNumber:EMPS[i][0],name:EMPS[i][1],designation:EMPS[i][2],location:EMPS[i][3]})),coveredCount:covered(id).size}});return out}
-function csv(p){const rows=[["Question","Designations","People","People covered"]];ALLQ.forEach(([id])=>{const a=p.answers[id];rows.push([a.question,a.designations.join("; "),a.people.map(x=>x.name+" ("+x.designation+")").join("; "),a.coveredCount])});
+ ALLQ.forEach(([id,t])=>{
+  const people= [...covered(id)].sort((a,b)=>EMPS[a][1].localeCompare(EMPS[b][1])).map(i=>({employeeNumber:EMPS[i][0],name:EMPS[i][1],designation:EMPS[i][2],location:EMPS[i][3]}));
+  const dropped=droppedOnly(id).map(i=>({employeeNumber:EMPS[i][0],name:EMPS[i][1],designation:EMPS[i][2],location:EMPS[i][3]}));
+  out.answers[id]={question:t,designations:state[id].d.map(k=>DES[k].label),peopleAddedByName:state[id].p.map(i=>({employeeNumber:EMPS[i][0],name:EMPS[i][1],designation:EMPS[i][2],location:EMPS[i][3]})),dropped,people,coveredCount:people.length};
+ });return out}
+function csv(p){const rows=[["Question","Designations","Added by name","Dropped","People covered","Covered count"]];ALLQ.forEach(([id])=>{const a=p.answers[id];rows.push([a.question,a.designations.join("; "),(a.peopleAddedByName||[]).map(x=>x.name+" ("+x.designation+")").join("; "),(a.dropped||[]).map(x=>x.name).join("; "),(a.people||[]).map(x=>x.name+" ("+x.designation+")").join("; "),a.coveredCount])});
  return rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(",")).join("\n")}
 async function download(){const data=csv(payload());
  const url=URL.createObjectURL(new Blob([data],{type:"text/csv"}));const a=el("a",{href:url,download:"access-management-answers.csv"});document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000)}
@@ -222,33 +366,65 @@ async function save(p){
  if(!r.ok||!j.ok) throw new Error(j.message||"save failed");
  return true;
 }
+function shotFig(file,cap){
+ if(!file)return null;
+ const img=el("img",{src:"shots/"+file,alt:cap||""});
+ const fig=el("div",{class:"shot"},img,el("div",{class:"cap"},cap||""));
+ img.addEventListener("error",()=>fig.remove());
+ return fig;
+}
 function boot(people){
  EMPS=people;
  DES={};BYNUM={};EMPS.forEach((e,i)=>{const k=norm(e[2]);(DES[k]||(DES[k]={label:e[2],idx:[]})).idx.push(i);BYNUM[String(e[0])]=i});
  DKEYS=Object.keys(DES).sort((a,b)=>DES[a].label.localeCompare(DES[b].label));
- ALLQ.forEach(q=>state[q[0]]={d:[],p:[]});
+ ALLQ.forEach(q=>state[q[0]]={d:[],p:[],x:[]});
  document.addEventListener("click",closeAll);
  document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeAll();hideModal()}});
  const form=document.getElementById("form");
  const nav=document.getElementById("nav");
- QUESTIONS.forEach(([mod,qs],mi)=>{const sid="m"+mi;const s=el("section",{class:"mod",id:sid},el("h2",{},mod));const a=el("a",{href:"#"+sid},el("span",{},mod),el("span",{class:"cnt"},"0/"+qs.length));navLinks[mod]={a,ids:qs.map(q=>q[0])};nav.append(a);
- qs.forEach(([id,t,d])=>{const pd=picker(id,"d"),pp=picker(id,"p"),chips=el("div",{class:"chips"}),cover=el("div",{class:"cover"});
-  const card=el("div",{class:"q"},el("div",{class:"qt"},t),el("div",{class:"qd"},d),el("div",{class:"pickers"},pd,pp),chips,cover);
-  cards[id]={pd,pp,chips,cover,card};s.append(card)});form.append(s)});
+ GROUPS.forEach(g=>{
+  const sid=g.id;
+  const s=el("section",{class:"mod",id:sid},el("h2",{},g.title),el("p",{class:"gn"},g.note));
+  const gIds=g.blocks.flatMap(b=>b.qs.map(q=>q[0]));
+  const ga=el("a",{class:"g",href:"#"+sid},el("span",{},g.title),el("span",{class:"cnt"},"0/"+gIds.length));
+  navLinks[sid]={a:ga,ids:gIds};nav.append(ga);
+  g.blocks.forEach(b=>{
+   const bid=g.id+"-"+b.id;
+   const block=el("div",{class:"block",id:bid},el("h3",{},b.title));
+   const fig=shotFig(b.shot,b.cap);if(fig)block.append(fig);
+   const ba=el("a",{class:"s",href:"#"+bid},el("span",{},b.title),el("span",{class:"cnt"},"0/"+b.qs.length));
+   navLinks[bid]={a:ba,ids:b.qs.map(q=>q[0])};nav.append(ba);
+   b.qs.forEach(([id,t,d])=>{
+    const pd=picker(id,"d"),pp=picker(id,"p"),chips=el("div",{class:"chips"}),cover=el("div",{class:"cover"});
+    const find=el("input",{type:"search",placeholder:"Find a name in this list"});
+    const whoCount=el("span",{});
+    const tbody=el("tbody",{});
+    const who=el("div",{class:"who"},
+     el("div",{class:"bar2"},whoCount,find),
+     el("div",{class:"scroll"},el("table",{},el("thead",{},el("tr",{},el("th",{},"Name"),el("th",{},"KEKA designation"),el("th",{},"Location"),el("th",{},"How added"),el("th",{},"Action"))),tbody))
+    );
+    find.addEventListener("input",()=>renderWho(id));
+    const card=el("div",{class:"q"},el("div",{class:"qt"},t),el("div",{class:"qd"},d),el("div",{class:"pickers"},pd,pp),chips,who,cover);
+    cards[id]={pd,pp,chips,cover,card,who,tbody,find,whoCount};block.append(card);
+   });
+   s.append(block);
+  });
+  form.append(s);
+ });
  ALLQ.forEach(q=>refresh(q[0]));
  fetch(SAVE_URL,{cache:"no-store"}).then(r=>{if(!r.ok)throw new Error("load");return r.json()}).then(data=>{
   const remote=data&&data.draft;
-  let local=null;try{local=JSON.parse(localStorage.getItem(KEY)||"null")}catch(e){}
+  let local=null;try{local=JSON.parse(localStorage.getItem(KEY)||localStorage.getItem(OLDKEY)||"null")}catch(e){}
   if(remote&&Object.keys(remote).length)applyDraft(remote);
   else if(local&&(local.draft||local.state)){
    if(local.draft)applyDraft(local.draft);
-   else if(local.state){ALLQ.forEach(([id])=>{if(local.state[id]&&state[id])state[id]=local.state[id]})}
+   else if(local.state){ALLQ.forEach(([id])=>{if(local.state[id]&&state[id]){state[id].d=local.state[id].d||[];state[id].p=local.state[id].p||[];state[id].x=local.state[id].x||[]}})}
   }
   ALLQ.forEach(q=>refresh(q[0]));
   ready=true;
   if(!(remote&&Object.keys(remote).length)&&local&&(local.draft||local.state))persistNow();
  }).catch(()=>{
-  try{const local=JSON.parse(localStorage.getItem(KEY)||"null");if(local&&(local.draft||local.state)){if(local.draft)applyDraft(local.draft);else if(local.state){ALLQ.forEach(([id])=>{if(local.state[id]&&state[id])state[id]=local.state[id]})};ALLQ.forEach(q=>refresh(q[0]))}}catch(e){}
+  try{const local=JSON.parse(localStorage.getItem(KEY)||localStorage.getItem(OLDKEY)||"null");if(local&&(local.draft||local.state)){if(local.draft)applyDraft(local.draft);else if(local.state){ALLQ.forEach(([id])=>{if(local.state[id]&&state[id]){state[id].d=local.state[id].d||[];state[id].p=local.state[id].p||[];state[id].x=local.state[id].x||[]}})};ALLQ.forEach(q=>refresh(q[0]))}}catch(e){}
   ready=true;
  });
  const modal=document.getElementById("modal");
@@ -256,12 +432,12 @@ function boot(people){
  modal.addEventListener("click",e=>{if(e.target===modal)hideModal()});
  document.getElementById("review").onclick=()=>{
   const body=document.getElementById("mbody");body.innerHTML="";let empty=0;
-  const tb=el("table",{class:"grid"},el("tr",{},el("th",{},"Access"),el("th",{},"Designations"),el("th",{},"People"),el("th",{},"Total")));
-  ALLQ.forEach(([id,t])=>{const st=state[id];const n=covered(id).size;
-   if(!n){empty++;tb.append(el("tr",{},el("td",{},t),el("td",{class:"none",colspan:"3"},"Nobody selected — nobody will have this access.")));return}
-   tb.append(el("tr",{},el("td",{},t),el("td",{},st.d.map(k=>DES[k].label+" ("+DES[k].idx.length+")").join(", ")||"—"),el("td",{},st.p.map(i=>EMPS[i][1]).join(", ")||"—"),el("td",{},String(n))))});
+  const tb=el("table",{class:"grid"},el("tr",{},el("th",{},"Access"),el("th",{},"Designations"),el("th",{},"People on this access"),el("th",{},"Dropped"),el("th",{},"Total")));
+  ALLQ.forEach(([id,t])=>{const n=covered(id).size;const names=[...covered(id)].sort((a,b)=>EMPS[a][1].localeCompare(EMPS[b][1])).map(i=>EMPS[i][1]);const dr=droppedOnly(id).map(i=>EMPS[i][1]);
+   if(!n){empty++;tb.append(el("tr",{},el("td",{},t),el("td",{class:"none",colspan:"4"},"Nobody selected — nobody will have this access.")));return}
+   tb.append(el("tr",{},el("td",{},t),el("td",{},state[id].d.map(k=>DES[k].label+" ("+DES[k].idx.length+")").join(", ")||"—"),el("td",{},names.join(", ")),el("td",{},dr.join(", ")||"—"),el("td",{},String(n))))});
   body.append(tb);
-  document.getElementById("msub").textContent="These are the designations and people you selected for each access. Are you sure you want to submit?"+(empty?" "+empty+" question"+(empty>1?"s are":" is")+" left empty.":"");
+  document.getElementById("msub").textContent="These are the designations and people you selected for each access. Dropped names are listed separately. Are you sure you want to submit?"+(empty?" "+empty+" item"+(empty>1?"s are":" is")+" left empty.":"");
   modal.classList.add("show");document.getElementById("confirm").focus()};
  const dlb=document.getElementById("dl");dlb.hidden=false;dlb.onclick=download;
  document.getElementById("confirm").onclick=async()=>{
