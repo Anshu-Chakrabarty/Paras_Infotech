@@ -9,7 +9,6 @@ import {
   segments,
   useFilters,
   warehouseOpts,
-  plantOpts,
   type Filters,
 } from './filters'
 import { ic } from './icons'
@@ -39,14 +38,14 @@ const nav: { title: string; items: Item[] }[] = [
     title: 'Contracts',
     items: [
       { to: '/contracts', label: 'FM Contracts', icon: ic.contracts },
-      { to: '/engineer', label: 'Engineer Cost', icon: ic.engineer, badge: '2' },
+      { to: '/engineer', label: 'Engineer Cost', icon: ic.engineer },
     ],
   },
   {
     title: 'Control',
     items: [
       { to: '/variance', label: 'Budget Variance', icon: ic.variance },
-      { to: '/ledger', label: 'Ledger Exceptions', icon: ic.ledger, badge: '8' },
+      { to: '/ledger', label: 'Ledger Exceptions', icon: ic.ledger },
       { to: '/upload', label: 'Excel upload', icon: ic.export },
     ],
   },
@@ -138,7 +137,7 @@ const chipsByPath: Record<string, { key: keyof Filters; label: string }[]> = {
   ],
 }
 
-function options(key: keyof Filters, periodOpts: { value: string; label: string }[], yearOpts: string[]) {
+function options(key: keyof Filters, periodOpts: { value: string; label: string }[], yearOpts: string[], plants: string[]) {
   if (key === 'year') return yearOpts.map((v) => ({ value: v, label: v }))
   if (key === 'period') return periodOpts
   if (key === 'region') return regions.map((v) => ({ value: v, label: v === 'All' ? 'All regions' : v }))
@@ -148,14 +147,14 @@ function options(key: keyof Filters, periodOpts: { value: string; label: string 
   if (key === 'warehouse') return warehouseOpts
   if (key === 'origin') return origins.map((v) => ({ value: v, label: v }))
   if (key === 'reported') return reporteds.map((v) => ({ value: v, label: v === 'All' ? 'All reported as' : v }))
-  if (key === 'plant') return plantOpts.map((v) => ({ value: v, label: v === 'All' ? 'All plants' : v }))
+  if (key === 'plant') return [{ value: 'All', label: 'All plants' }, ...plants.map((v) => ({ value: v, label: v }))]
   return []
 }
 
 function Chip({ field, label }: { field: keyof Filters; label: string }) {
-  const { filters, set, periods: periodOpts, years: yearOpts } = useFilters()
+  const { filters, set, periods: periodOpts, years: yearOpts, plants } = useFilters()
   const [open, setOpen] = useState(false)
-  const opts = options(field, periodOpts, yearOpts)
+  const opts = options(field, periodOpts, yearOpts, plants)
   const current = opts.find((o) => o.value === filters[field])?.label ?? filters[field]
   return (
     <div className="relative">
@@ -461,6 +460,7 @@ function loadOpenMenus() {
 function NavGroups({ pathname, onNavigate, flash }: { pathname: string; onNavigate: () => void; flash: (msg: string) => void }) {
   const [openMenus, setOpenMenus] = useState<Record<string, boolean>>(loadOpenMenus)
   const current = crumbs[pathname]?.[0]
+  const { ledger, engineers } = useLive().data
 
   useEffect(() => {
     if (!current) return
@@ -510,7 +510,8 @@ function NavGroups({ pathname, onNavigate, flash }: { pathname: string; onNaviga
                 >
                   <span className="opacity-90">{item.icon}</span>
                   <span className="min-w-0 flex-1 truncate">{item.label}</span>
-                  {item.badge && <span className="rounded-full bg-white/15 px-1.5 text-[10px] font-semibold leading-4">{item.badge}</span>}
+                  {item.to === '/ledger' && ledger.length > 0 && <span className="rounded-full bg-white/15 px-1.5 text-[10px] font-semibold leading-4">{ledger.length}</span>}
+                  {item.to === '/engineer' && engineers.length > 0 && <span className="rounded-full bg-white/15 px-1.5 text-[10px] font-semibold leading-4">{engineers.length}</span>}
                 </NavLink>
               ))}
           </div>

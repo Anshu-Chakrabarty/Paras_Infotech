@@ -15,14 +15,15 @@ const shortAge: Record<string, string> = {
 
 export function Receivables() {
   const narrow = useNarrow()
-  const { ageTrend, ageing, customers, invoices } = useLive().data
+  const { ageTrend, ageing, customers, invoices, cycle } = useLive().data
   const { filters, money, registerExport, exportCsv, flash } = useFilters()
   const [owners, setOwners] = useState<Record<string, string>>({})
   const custs = customers.filter((c) => matchOmc(c.name, filters.omc))
   const bills = invoices.filter((r) => matchOmc(r.cust, filters.omc) && matchRegion(r.plant, filters.region))
   const overdue = custs.reduce((s, c) => s + c.overdue, 0)
-  const gross = custs.reduce((s, c) => s + c.gross, 0) + 1.8
-  const old = bills.reduce((s, r) => s + r.amt, 0)
+  const gross = custs.reduce((s, c) => s + c.gross, 0)
+  const old = bills.filter((r) => r.days > 180).reduce((s, r) => s + r.amt, 0)
+  const dso = cycle.find((c) => c.name === 'DSO')?.days
 
   useEffect(() => {
     registerExport(() =>
@@ -41,14 +42,14 @@ export function Receivables() {
         title="Receivables"
         note="Internal receivables sit in the gross book with external and WIP. Ageing splits 91–180 and older than 180."
       />
-      <ScopeLine text={`Gross = external + WIP + internal ₹1.8 Cr. Customer ${filters.omc}.`} />
+      <ScopeLine text={`Customer balances from this MIS close. ${filters.omc === 'All' ? 'All customers' : filters.omc}.`} />
 
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
-        <Kpi label="Overdue exposure" value={money(overdue || 17.9)} note="40% of the external book" tone="rose" />
-        <Kpi label="Gross book" value={money(gross || 45.7)} note="External + WIP + internal" />
-        <Kpi label="Over 180 days" value={money(old || 8.1)} note="Watch block" />
-        <Kpi label="DSO" value="67 days" note="Target 55 days" />
-        <Kpi label="Provision" value={money(-2.5)} note="31% of the 180+ exposure" />
+        <Kpi label="Overdue exposure" value={money(overdue)} note="Positive customer balances" tone="rose" />
+        <Kpi label="Gross book" value={money(gross)} note="From BP data" />
+        <Kpi label="Over 180 days" value={money(old)} note="Invoices older than 180 days" />
+        <Kpi label="DSO" value={`${dso ?? 0} days`} note="Target 55 days" />
+        <Kpi label="Open invoices" value={String(bills.length)} note="Largest A/R invoices this close" />
       </div>
 
       <div className="mt-4 grid gap-3 xl:grid-cols-2">

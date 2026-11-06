@@ -133,6 +133,7 @@ type Ctx = {
   flash: (msg: string) => void
   periods: { value: string; label: string }[]
   years: string[]
+  plants: string[]
 }
 
 const FilterCtx = createContext<Ctx | null>(null)
@@ -195,7 +196,7 @@ export function FilterProvider({ children }: { children: ReactNode }) {
   const scale = useMemo(() => {
     let s = 1
     if (filters.region !== 'All') {
-      const inR = plantRows.filter((p) => plantRegion[p.name] === filters.region)
+      const inR = plantRows.filter((p) => regionOf(p.name) === filters.region)
       const num = inR.reduce((a, p) => a + Math.abs(p.v), 0)
       const den = plantRows.reduce((a, p) => a + Math.abs(p.v), 0)
       s *= den ? num / den : 1
@@ -297,6 +298,7 @@ export function FilterProvider({ children }: { children: ReactNode }) {
     flash,
     periods: periodOpts,
     years: yearOpts,
+    plants: plantRows.map((p) => p.name),
   }
 
   return <FilterCtx.Provider value={value}>{children}</FilterCtx.Provider>
@@ -308,9 +310,19 @@ export function useFilters() {
   return ctx
 }
 
+export function regionOf(name: string) {
+  if (plantRegion[name]) return plantRegion[name]
+  const n = name.toLowerCase()
+  if (/(chennai|gummidipundi|warangal|tirunel|kochi|cochin|dharwad|yediyur|cpcl)/.test(n)) return 'South'
+  if (/(surat|nagpur|chandrapur)/.test(n)) return 'West'
+  if (/(bokaro|korba|haldia)/.test(n)) return 'East'
+  if (/(gorakhpur|barhi|bareilly|gwalior|motihari|goalpara|raipur|bolangir|sugoli)/.test(n)) return 'North'
+  return ''
+}
+
 export function matchRegion(name: string, region: string) {
   if (region === 'All') return true
-  return plantRegion[name] === region
+  return regionOf(name) === region
 }
 
 export function matchOmc(name: string, omc: string) {

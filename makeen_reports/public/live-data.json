@@ -1,15 +1,15 @@
 {
-  "version": 2,
+  "version": 3,
   "active": "2026-02",
   "file": "MIS for the month of Feb 26.xlsx",
-  "uploadedAt": "2026-11-06T07:27:41Z",
+  "uploadedAt": "2026-11-06T09:26:45Z",
   "packs": [
     {
       "id": "2026-01",
       "year": "2026",
       "month": "Jan",
       "file": "MIS for the month of JAN 26.xlsx",
-      "at": "2026-11-06T07:27:34Z",
+      "at": "2026-11-06T09:26:40Z",
       "source": "published",
       "data": {
         "monthly": [
@@ -100,6 +100,24 @@
             "v": 0.6825
           }
         ],
+        "bridge": [
+          {
+            "name": "Turnover",
+            "v": 23.704
+          },
+          {
+            "name": "Gross profit",
+            "v": 3.2945
+          },
+          {
+            "name": "EBITDA",
+            "v": 0.8763
+          },
+          {
+            "name": "Net profit",
+            "v": -1.0513
+          }
+        ],
         "costLines": [
           {
             "name": "Staff costs",
@@ -172,6 +190,216 @@
             "b2b": 0.0,
             "cover": 0,
             "reserved": false
+          }
+        ],
+        "intakeTrend": [
+          {
+            "m": "Jan",
+            "intake": 25.5349,
+            "billed": 23.704,
+            "backlog": 27.7217
+          }
+        ],
+        "ageing": [
+          {
+            "name": "Trade receivables",
+            "v": 42.0065
+          }
+        ],
+        "customers": [
+          {
+            "name": "IOCL",
+            "overdue": 41.2438,
+            "share": 37.1,
+            "dso": 0,
+            "notDue": 0,
+            "mid": 0,
+            "old": 0,
+            "gross": 41.2438
+          },
+          {
+            "name": "BPCL",
+            "overdue": 32.1295,
+            "share": 28.9,
+            "dso": 0,
+            "notDue": 0,
+            "mid": 0,
+            "old": 0,
+            "gross": 32.1295
+          },
+          {
+            "name": "Other",
+            "overdue": 21.025,
+            "share": 18.9,
+            "dso": 0,
+            "notDue": 0,
+            "mid": 0,
+            "old": 0,
+            "gross": 21.025
+          },
+          {
+            "name": "HPCL",
+            "overdue": 16.9132,
+            "share": 15.2,
+            "dso": 0,
+            "notDue": 0,
+            "mid": 0,
+            "old": 0,
+            "gross": 16.9132
+          }
+        ],
+        "invoices": [
+          {
+            "id": "2251046",
+            "cust": "HPCL",
+            "plant": "HPCL YEDIYUR",
+            "amt": 2.5296,
+            "days": 29,
+            "owner": "Unassigned",
+            "next": "\u2014"
+          },
+          {
+            "id": "1253439",
+            "cust": "BPCL",
+            "plant": "BPCL Refinery",
+            "amt": 1.8448,
+            "days": 25,
+            "owner": "Unassigned",
+            "next": "\u2014"
+          },
+          {
+            "id": "2251045",
+            "cust": "HPCL",
+            "plant": "HPCL YEDIYUR",
+            "amt": 1.69,
+            "days": 29,
+            "owner": "Unassigned",
+            "next": "\u2014"
+          },
+          {
+            "id": "4251045",
+            "cust": "BPCL",
+            "plant": "BPCL Gummidipundi",
+            "amt": 1.0211,
+            "days": 26,
+            "owner": "Unassigned",
+            "next": "\u2014"
+          },
+          {
+            "id": "8251025",
+            "cust": "IOCL",
+            "plant": "IOCL Motihari",
+            "amt": 1.0112,
+            "days": 16,
+            "owner": "Unassigned",
+            "next": "\u2014"
+          },
+          {
+            "id": "4251046",
+            "cust": "Other",
+            "plant": "Chennai Petroleum Corporation Ltd",
+            "amt": 0.9535,
+            "days": 25,
+            "owner": "Unassigned",
+            "next": "\u2014"
+          },
+          {
+            "id": "1253502",
+            "cust": "HPCL",
+            "plant": "HPCL Cherlapally",
+            "amt": 0.94,
+            "days": 22,
+            "owner": "Unassigned",
+            "next": "\u2014"
+          },
+          {
+            "id": "9252017",
+            "cust": "BPCL",
+            "plant": "BPCL Surat",
+            "amt": 0.9046,
+            "days": 24,
+            "owner": "Unassigned",
+            "next": "\u2014"
+          },
+          {
+            "id": "4251048",
+            "cust": "IOCL",
+            "plant": "IOCL Tirunelvelli",
+            "amt": 0.8342,
+            "days": 22,
+            "owner": "Unassigned",
+            "next": "\u2014"
+          },
+          {
+            "id": "9254038",
+            "cust": "HPCL",
+            "plant": "HPCL Chandrapur",
+            "amt": 0.7642,
+            "days": 18,
+            "owner": "Unassigned",
+            "next": "\u2014"
+          },
+          {
+            "id": "6251055",
+            "cust": "IOCL",
+            "plant": "IOCL Gorakhpur",
+            "amt": 0.762,
+            "days": 16,
+            "owner": "Unassigned",
+            "next": "\u2014"
+          },
+          {
+            "id": "2251047",
+            "cust": "BPCL",
+            "plant": "BPCL Dharwad",
+            "amt": 0.6843,
+            "days": 26,
+            "owner": "Unassigned",
+            "next": "\u2014"
+          }
+        ],
+        "cycle": [
+          {
+            "name": "DSO",
+            "days": 53.0,
+            "target": 55,
+            "note": "Trade receivables / monthly revenue"
+          },
+          {
+            "name": "DIO",
+            "days": 0,
+            "target": 38,
+            "note": "Stock days \u2014 COGS not split on this close"
+          },
+          {
+            "name": "DPO",
+            "days": 0,
+            "target": 40,
+            "note": "Payables days \u2014 COGS not split on this close"
+          }
+        ],
+        "twc": [
+          {
+            "m": "Jan",
+            "ar": 42.0065,
+            "inv": 23.0863,
+            "ap": 12.412,
+            "twc": 52.6808,
+            "pct": 222.2
+          }
+        ],
+        "warehouses": [
+          {
+            "name": "Inventories",
+            "region": "All India",
+            "origin": "Domestic",
+            "qty": 0,
+            "val": 23.0863,
+            "turns": null,
+            "dio": null,
+            "slow": 0,
+            "ret": 0,
+            "inScope": true
           }
         ],
         "contracts": [
@@ -331,6 +559,224 @@
             "cm": 0,
             "status": "Active"
           }
+        ],
+        "varianceGrid": [
+          {
+            "plant": "HPCL YEDIYUR",
+            "region": "",
+            "months": [
+              4.2196,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "plant": "IOCL Nagpur",
+            "region": "",
+            "months": [
+              1.4772,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "plant": "Chennai Petroleum Corporation Ltd",
+            "region": "",
+            "months": [
+              1.2937,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "plant": "BPCL Gummidipundi",
+            "region": "",
+            "months": [
+              1.0211,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "plant": "IOCL Motihari",
+            "region": "",
+            "months": [
+              1.0112,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "plant": "BPCL Surat",
+            "region": "",
+            "months": [
+              0.9046,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "plant": "HPCL Warangal",
+            "region": "",
+            "months": [
+              0.8391,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "plant": "IOCL Tirunelvelli",
+            "region": "",
+            "months": [
+              0.8342,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "plant": "HPCL Chandrapur",
+            "region": "",
+            "months": [
+              0.7642,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "plant": "IOCL Gorakhpur",
+            "region": "",
+            "months": [
+              0.762,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "plant": "BPCL Dharwad",
+            "region": "",
+            "months": [
+              0.6843,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "plant": "BPCL Bareilly",
+            "region": "",
+            "months": [
+              0.6825,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
         ]
       }
     },
@@ -339,7 +785,7 @@
       "year": "2026",
       "month": "Feb",
       "file": "MIS for the month of Feb 26.xlsx",
-      "at": "2026-11-06T07:27:41Z",
+      "at": "2026-11-06T09:26:45Z",
       "source": "published",
       "data": {
         "monthly": [
@@ -439,6 +885,24 @@
             "v": 0.5891
           }
         ],
+        "bridge": [
+          {
+            "name": "Turnover",
+            "v": 20.4399
+          },
+          {
+            "name": "Gross profit",
+            "v": 3.7558
+          },
+          {
+            "name": "EBITDA",
+            "v": 4.0263
+          },
+          {
+            "name": "Net profit",
+            "v": 5.9539
+          }
+        ],
         "costLines": [
           {
             "name": "Staff costs",
@@ -511,6 +975,222 @@
             "b2b": 0.0,
             "cover": 0,
             "reserved": false
+          }
+        ],
+        "intakeTrend": [
+          {
+            "m": "Jan",
+            "intake": 24.2412,
+            "billed": 23.704,
+            "backlog": 27.7217
+          },
+          {
+            "m": "Feb",
+            "intake": 24.2412,
+            "billed": 20.4399,
+            "backlog": 27.7217
+          }
+        ],
+        "ageing": [
+          {
+            "name": "Trade receivables",
+            "v": 45.921
+          }
+        ],
+        "customers": [
+          {
+            "name": "IOCL",
+            "overdue": 19.3595,
+            "share": 33.0,
+            "dso": 0,
+            "notDue": 0,
+            "mid": 0,
+            "old": 0,
+            "gross": 19.3595
+          },
+          {
+            "name": "BPCL",
+            "overdue": 16.233,
+            "share": 27.7,
+            "dso": 0,
+            "notDue": 0,
+            "mid": 0,
+            "old": 0,
+            "gross": 16.233
+          },
+          {
+            "name": "Other",
+            "overdue": 12.2748,
+            "share": 20.9,
+            "dso": 0,
+            "notDue": 0,
+            "mid": 0,
+            "old": 0,
+            "gross": 12.2748
+          },
+          {
+            "name": "HPCL",
+            "overdue": 10.8217,
+            "share": 18.4,
+            "dso": 0,
+            "notDue": 0,
+            "mid": 0,
+            "old": 0,
+            "gross": 10.8217
+          }
+        ],
+        "invoices": [
+          {
+            "id": "2251052",
+            "cust": "HPCL",
+            "plant": "HPCL YEDIYUR",
+            "amt": 2.6074,
+            "days": 2,
+            "owner": "Unassigned",
+            "next": "\u2014"
+          },
+          {
+            "id": "1253853",
+            "cust": "BPCL",
+            "plant": "BPCL Uran",
+            "amt": 1.3262,
+            "days": 10,
+            "owner": "Unassigned",
+            "next": "\u2014"
+          },
+          {
+            "id": "4251054",
+            "cust": "BPCL",
+            "plant": "BPCL Gummidipundi",
+            "amt": 0.9685,
+            "days": 23,
+            "owner": "Unassigned",
+            "next": "\u2014"
+          },
+          {
+            "id": "8251027",
+            "cust": "IOCL",
+            "plant": "IOCL Motihari",
+            "amt": 0.9539,
+            "days": 14,
+            "owner": "Unassigned",
+            "next": "\u2014"
+          },
+          {
+            "id": "9252018",
+            "cust": "BPCL",
+            "plant": "BPCL Surat",
+            "amt": 0.9302,
+            "days": 17,
+            "owner": "Unassigned",
+            "next": "\u2014"
+          },
+          {
+            "id": "4251055",
+            "cust": "Other",
+            "plant": "Chennai Petroleum Corporation Ltd",
+            "amt": 0.9059,
+            "days": 18,
+            "owner": "Unassigned",
+            "next": "\u2014"
+          },
+          {
+            "id": "4251053",
+            "cust": "IOCL",
+            "plant": "IOCL Tirunelvelli",
+            "amt": 0.832,
+            "days": 24,
+            "owner": "Unassigned",
+            "next": "\u2014"
+          },
+          {
+            "id": "6251059",
+            "cust": "IOCL",
+            "plant": "IOCL Gorakhpur",
+            "amt": 0.7879,
+            "days": 12,
+            "owner": "Unassigned",
+            "next": "\u2014"
+          },
+          {
+            "id": "9254048",
+            "cust": "HPCL",
+            "plant": "HPCL Chandrapur",
+            "amt": 0.7845,
+            "days": 11,
+            "owner": "Unassigned",
+            "next": "\u2014"
+          },
+          {
+            "id": "6251062",
+            "cust": "BPCL",
+            "plant": "BPCL Bareilly",
+            "amt": 0.7137,
+            "days": 1,
+            "owner": "Unassigned",
+            "next": "\u2014"
+          },
+          {
+            "id": "2251049",
+            "cust": "BPCL",
+            "plant": "BPCL Dharwad",
+            "amt": 0.6737,
+            "days": 11,
+            "owner": "Unassigned",
+            "next": "\u2014"
+          },
+          {
+            "id": "1253677",
+            "cust": "HPCL",
+            "plant": "HPCL Warangal",
+            "amt": 0.6637,
+            "days": 25,
+            "owner": "Unassigned",
+            "next": "\u2014"
+          }
+        ],
+        "cycle": [
+          {
+            "name": "DSO",
+            "days": 67.0,
+            "target": 55,
+            "note": "Trade receivables / monthly revenue"
+          },
+          {
+            "name": "DIO",
+            "days": 0,
+            "target": 38,
+            "note": "Stock days \u2014 COGS not split on this close"
+          },
+          {
+            "name": "DPO",
+            "days": 0,
+            "target": 40,
+            "note": "Payables days \u2014 COGS not split on this close"
+          }
+        ],
+        "twc": [
+          {
+            "m": "Feb",
+            "ar": 45.921,
+            "inv": 23.1627,
+            "ap": 10.8695,
+            "twc": 58.2142,
+            "pct": 284.8
+          }
+        ],
+        "warehouses": [
+          {
+            "name": "Inventories",
+            "region": "All India",
+            "origin": "Domestic",
+            "qty": 0,
+            "val": 23.1627,
+            "turns": null,
+            "dio": null,
+            "slow": 0,
+            "ret": 0,
+            "inScope": true
           }
         ],
         "contracts": [
@@ -669,6 +1349,224 @@
             "eng": 0,
             "cm": 0,
             "status": "Active"
+          }
+        ],
+        "varianceGrid": [
+          {
+            "plant": "HPCL YEDIYUR",
+            "region": "",
+            "months": [
+              0,
+              2.6074,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "plant": "Chennai Petroleum Corporation Ltd",
+            "region": "",
+            "months": [
+              0,
+              1.222,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "plant": "BPCL Gummidipundi",
+            "region": "",
+            "months": [
+              0,
+              0.9685,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "plant": "IOCL Motihari",
+            "region": "",
+            "months": [
+              0,
+              0.9539,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "plant": "BPCL Surat",
+            "region": "",
+            "months": [
+              0,
+              0.9302,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "plant": "IOCL Tirunelvelli",
+            "region": "",
+            "months": [
+              0,
+              0.832,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "plant": "IOCL Gorakhpur",
+            "region": "",
+            "months": [
+              0,
+              0.7879,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "plant": "HPCL Chandrapur",
+            "region": "",
+            "months": [
+              0,
+              0.7845,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "plant": "HPCL Warangal",
+            "region": "",
+            "months": [
+              0,
+              0.7632,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "plant": "BPCL Bareilly",
+            "region": "",
+            "months": [
+              0,
+              0.7137,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "plant": "BPCL Dharwad",
+            "region": "",
+            "months": [
+              0,
+              0.6737,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "plant": "HPCL Barhi",
+            "region": "",
+            "months": [
+              0,
+              0.5891,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
           }
         ]
       }

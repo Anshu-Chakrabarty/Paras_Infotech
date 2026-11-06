@@ -51,9 +51,34 @@ export function Overview() {
       />
 
       <div className="grid gap-3 md:grid-cols-3">
-        <Alert tone="rose" to="/ledger" title="April EBITDA −15%" body={`${money(-2.7, 'Apr')} below plan. Open ledger exceptions.`} />
-        <Alert tone="amber" to="/receivables" title="Receivables over 180 days" body={`${money(8.1)} still out. Open ageing, 180+ bucket.`} />
-        <Alert tone="ink" to="/variance" title="3 of 16 plants loss-making" body="Lucknow, Jaipur and Piyala. Open plant variance." />
+        {(() => {
+          const last = monthSlice.at(-1)
+          const loss = plants.filter((p) => p.v < 0)
+          const top = [...plants].sort((a, b) => b.v - a.v)[0]
+          const old = monthSlice.filter((r) => r.np < 0)
+          return (
+            <>
+              <Alert
+                tone={last && last.np < 0 ? 'rose' : 'ink'}
+                to="/budget"
+                title={last ? `${last.m} net profit ${last.np < 0 ? 'loss' : 'close'}` : 'No month loaded'}
+                body={last ? `${money(last.np, last.m)} · EBITDA ${money(last.ebitda, last.m)} (${last.ebitdaPct.toFixed(1)}%).` : 'Upload a close.'}
+              />
+              <Alert
+                tone="amber"
+                to="/receivables"
+                title="Trade receivables"
+                body={plants.length ? `Open receivables for this close. Largest billed plant ${top?.name ?? '—'} ${top ? money(top.v) : ''}.` : 'No plant billed figures in this pack.'}
+              />
+              <Alert
+                tone={loss.length ? 'rose' : 'ink'}
+                to="/variance"
+                title={loss.length ? `${loss.length} plant${loss.length === 1 ? '' : 's'} negative` : `${plants.length} plants billed`}
+                body={loss.length ? `${loss.slice(0, 3).map((p) => p.name).join(', ')}. Open plant variance.` : old.length ? `${old.map((r) => r.m).join(', ')} closed at a loss. Open monthly detail.` : 'All listed plants billed positive this close.'}
+              />
+            </>
+          )
+        })()}
       </div>
 
       <div className="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">

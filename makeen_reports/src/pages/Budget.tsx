@@ -5,50 +5,36 @@ import { useFilters } from '../filters'
 import { useLive } from '../live'
 import { Banner, Card, H, Kpi, PageHead, ScopeLine, Table, axis, chart, hPad, nW, shortTick, useNarrow, vPad, vW } from '../ui'
 
-const steps = [
-  { step: 'Budget EBITDA', v: 71.44, pct: '—', driver: '—', owner: '—' },
-  { step: 'Higher revenue', v: 7.17, pct: '+10%', driver: 'Projects intake ahead of plan', owner: 'Sales' },
-  { step: 'Lower GP ratio', v: -13.33, pct: '−19%', driver: 'Material cost and job mix', owner: 'Operations' },
-  { step: 'Sales expense saved', v: 2.15, pct: '+3%', driver: 'Headcount timing', owner: 'Sales' },
-  { step: 'Higher G&A', v: -13.91, pct: '−19%', driver: 'Legal and audit', owner: 'Finance' },
-  { step: 'Higher staff', v: -19.87, pct: '−28%', driver: 'Annual increment timing', owner: 'HR' },
-  { step: 'Overheads saved', v: 0.97, pct: '+1%', driver: 'Utilities', owner: 'Facilities' },
-  { step: 'FC / allocations', v: 30.4, pct: '+43%', driver: 'Group recharge', owner: 'Group' },
-  { step: 'Actual EBITDA', v: 57.14, pct: '—', driver: '—', owner: '—' },
-]
-
 const shortStep: Record<string, string> = {
-  'Budget EBITDA': 'Budget',
-  'Higher revenue': 'Revenue',
-  'Lower GP ratio': 'GP',
-  'Sales expense saved': 'Sales',
-  'Higher G&A': 'G&A',
-  'Higher staff': 'Staff',
-  'Overheads saved': 'OH',
-  'FC / allocations': 'FC',
-  'Actual EBITDA': 'Actual',
+  Turnover: 'Rev',
+  'Gross profit': 'GP',
+  EBITDA: 'EBITDA',
+  'Net profit': 'NP',
 }
 
 export function Budget() {
   const narrow = useNarrow()
   const nav = useNavigate()
-  const { bridge, costLines } = useLive().data
-  const { filters, money, moneyLakh, registerExport, exportCsv } = useFilters()
+  const { bridge, costLines, monthly } = useLive().data
+  const { filters, money, moneyLakh, monthSlice, registerExport, exportCsv } = useFilters()
+  const last = monthSlice.at(-1) ?? monthly.at(-1)
+  const staff = costLines.find((c) => c.name === 'Staff costs')
+  const oh = costLines.find((c) => c.name === 'Overheads')
   const bars = bridge.map((b, i) => ({
     ...b,
     fill: i === 0 || i === bridge.length - 1 ? '#334155' : b.v < 0 ? chart.rose : chart.green,
   }))
-  const vs = costLines.map((c) => ({ name: c.name, gap: ((c.actual - c.plan) / c.plan) * 100 }))
+  const vs = costLines.map((c) => ({ name: c.name, gap: c.plan ? ((c.actual - c.plan) / c.plan) * 100 : 0 }))
 
   useEffect(() => {
     registerExport(() =>
       exportCsv(
         'actual-vs-budget',
         ['Step', 'Lakh', '% of budget EBITDA', 'Driver', 'Owner'],
-        steps.map((s) => [s.step, s.v, s.pct, s.driver, s.owner]),
+        bridge.map((s) => [s.name, s.v, '', 'From MIS P&L', '']),
       ),
     )
-  }, [registerExport, exportCsv])
+  }, [bridge, registerExport, exportCsv])
 
   return (
     <div>
@@ -66,10 +52,10 @@ export function Budget() {
       <ScopeLine text={`${filters.region === 'All' ? 'All India' : filters.region}. ${filters.year}. ${filters.segment === 'All' ? 'All lines' : filters.segment}. ${filters.currency}.`} />
 
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-        <Kpi label="EBITDA variance" value={moneyLakh(-14.3)} note={`Actual ${money(3.7)} against plan ${money(4.3)}`} tone="rose" />
-        <Kpi label="Revenue" value={money(131)} note="+2.9% vs plan · favourable" />
-        <Kpi label="Salaries" value={money(8.3)} note="−2.4% vs plan · adverse" />
-        <Kpi label="Overheads" value={money(5.9)} note="+1.8% vs plan · favourable" />
+        <Kpi label="EBITDA" value={last ? money(last.ebitda, last.m) : money(0)} note={last ? `${last.m} close · ${last.ebitdaPct.toFixed(1)}% of turnover` : 'No close loaded'} />
+        <Kpi label="Revenue" value={last ? money(last.rev, last.m) : money(0)} note={last ? `GP ${last.gp.toFixed(1)}%` : ''} />
+        <Kpi label="Salaries" value={staff ? moneyLakh(staff.actual) : money(0)} note="From P&L overheads" />
+        <Kpi label="Overheads" value={oh ? moneyLakh(oh.actual) : money(0)} note="From P&L overheads" />
       </div>
 
       <Card className="mt-4">
@@ -146,12 +132,12 @@ export function Budget() {
         <H title="Bridge steps" hint="Driver and owner turn a step into assignable work." />
         <Table
           cols={['Step', 'Amount', '% of budget EBITDA', 'Driver', 'Owner']}
-          rows={steps.map((s) => [
-            s.step,
-            <span className={s.v < 0 ? 'text-rose num' : 'num'}>{moneyLakh(s.v)}</span>,
-            s.pct,
-            s.driver,
-            s.owner,
+          rows={bridge.map((s) => [
+            s.name,
+            <span className={s.v < 0 ? 'text-rose num' : 'num'}>{money(s.v)}</span>,
+            '—',
+            'From MIS P&L',
+            '—',
           ])}
         />
       </Card>

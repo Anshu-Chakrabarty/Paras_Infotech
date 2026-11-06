@@ -1,7 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
-import { sampleData, type AppData } from './data'
+import { emptyData, sampleData, type AppData } from './data'
 
-const ARCHIVE_KEY = 'mein-live-archive'
+const ARCHIVE_KEY = 'mein-live-archive-v3'
 const ACTIVE_KEY = 'mein-live-active'
 const DATA_KEY = 'mein-live-data'
 const META_KEY = 'mein-live-meta'
@@ -106,7 +106,7 @@ function hydratePack(raw: Partial<MonthPack>): MonthPack | null {
     file: raw.file || 'uploaded.xlsx',
     at: raw.at || '',
     source: raw.source === 'sample' || raw.source === 'published' ? raw.source : 'upload',
-    data: merge(sampleData(), raw.data ?? {}),
+    data: merge(raw.source === 'sample' ? sampleData() : emptyData(), raw.data ?? {}),
   }
 }
 
@@ -139,7 +139,7 @@ function readArchive(): { packs: MonthPack[]; activeId: string } {
         file: meta.file || 'uploaded.xlsx',
         at: meta.at || '',
         source: 'upload',
-        data: merge(sampleData(), data),
+        data: merge(emptyData(), data),
       }
       return { packs: [pack], activeId: pack.id }
     }
@@ -206,24 +206,22 @@ export function LiveProvider({ children }: { children: ReactNode }) {
             file: json.file || 'live-data.json',
             at: json.uploadedAt || '',
             source: 'published',
-            data: merge(sampleData(), json),
+            data: merge(emptyData(), json),
           })
         }
         if (!incoming.length) return
         setPacks((prev) => {
-          const currentActive = localStorage.getItem(ACTIVE_KEY) || activeId
-          const byId = new Map(prev.map((p) => [p.id, p]))
-          incoming.forEach((pack) => {
-            const cur = byId.get(pack.id)
-            if (!cur || (pack.at && pack.at >= (cur.at || ''))) byId.set(pack.id, { ...pack, source: 'published' })
+          const published: MonthPack[] = incoming.map((p) => ({ ...p, source: 'published' }))
+          const byId = new Map<string, MonthPack>(published.map((p) => [p.id, p]))
+          prev.forEach((pack) => {
+            if (pack.source !== 'upload') return
+            const pub = byId.get(pack.id)
+            if (!pub || (pack.at && pack.at > (pub.at || ''))) byId.set(pack.id, pack)
           })
           const next = sortPacks([...byId.values()])
-          const prefer = json.active && next.some((p) => p.id === json.active) ? json.active : currentActive
-          const localNewer = prev.some((p) => p.at && incoming.every((n) => !n.at || p.at > n.at))
-          const nextActive = localNewer ? currentActive : prefer
-          const resolved = next.some((p) => p.id === nextActive) ? nextActive : next.at(-1)!.id
-          persist(next, resolved)
-          if (!localNewer) setActiveId(resolved)
+          const prefer = json.active && next.some((p) => p.id === json.active) ? json.active : next.at(-1)!.id
+          persist(next, prefer)
+          setActiveId(prefer)
           return next
         })
       })

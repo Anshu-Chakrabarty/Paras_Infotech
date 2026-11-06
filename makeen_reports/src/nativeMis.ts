@@ -1,5 +1,5 @@
 import * as XLSX from 'xlsx'
-import type { AppData } from './data'
+import { yearMonths, type AppData } from './data'
 
 type Row = Record<string, unknown>
 const CRORE = 10_000_000
@@ -210,10 +210,38 @@ function tidyPlant(name: string) {
 }
 
 function omcOf(name: string) {
-  if (/^IOCL/i.test(name)) return 'IOCL'
-  if (/^BPCL/i.test(name)) return 'BPCL'
-  if (/^HPCL/i.test(name)) return 'HPCL'
+  const u = name.toUpperCase()
+  if (u.includes('IOCL') || u.includes('INDIAN OIL') || u.includes('INDIANOIL')) return 'IOCL'
+  if (u.includes('BPCL') || u.includes('BHARAT PETROLEUM')) return 'BPCL'
+  if (u.includes('HPCL') || u.includes('HINDUSTAN PETROLEUM')) return 'HPCL'
   return 'Other'
+}
+
+function bsLines(wb: XLSX.WorkBook) {
+  const grid = aoa(wb, 'BS')
+  const out = { ar: 0, inv: 0, ap: 0, provision: 0 }
+  for (const r of grid) {
+    const b = str(r, 1).toLowerCase()
+    const amt = num(r[2])
+    if (b === 'trade receivables') out.ar = crore(amt)
+    else if (b === 'inventories') out.inv = crore(amt)
+    else if (b === 'trade payables') out.ap = crore(amt)
+    else if (b.includes('provision') && b.includes('bad')) out.provision = crore(amt)
+  }
+  return out
+}
+
+function closeDay(month: string, year: string) {
+  const i = MONTHS.indexOf(month as (typeof MONTHS)[number])
+  const y = Number(year)
+  const last = new Date(Date.UTC(y, i + 1, 0))
+  return last
+}
+
+function excelToDate(v: unknown): Date | null {
+  if (v instanceof Date && !Number.isNaN(v.getTime())) return excelDay(v)
+  if (typeof v === 'number' && v > 20000) return new Date(Date.UTC(1899, 11, 30) + Math.round(v) * 86400000)
+  return null
 }
 
 export function isNativeMis(wb: XLSX.WorkBook) {
@@ -312,24 +340,119 @@ export function parseNativeMis(wb: XLSX.WorkBook): { patch: Partial<AppData>; fo
   }))
   if (contracts.length) found.push('Contracts')
 
+  const monthlyRows = metrics.map((row) => ({
+    m: row.m,
+    rev: row.rev,
+    gp: row.gp,
+    ebitda: row.ebitda,
+    ebitdaPct: row.ebitdaPct,
+    np: row.np,
+    rate: row.rate,
+  }))
+  const orderRows = Object.values(ordersBy)
+  const bs = bsLines(wb)
+  const end = closeDay(close.month, close.year)
+  const want = monthKey(close.month, close.year)
+  const invoiceBy: Record<string, { id: string; cust: string; plant: string; amt: number; date: Date | null }> = {}
+  for (const r of dataRows) {
+    if (String(pick(r, 'Screen Name') ?? '') !== 'A/R Invoice') continue
+    const period = String(pick(r, 'Month / Year') ?? '').trim()
+    if (period && period !== want) continue
+    const acct = String(pick(r, 'Account') ?? '')
+    if (!acct.startsWith('400')) continue
+    const id = String(pick(r, 'BaseRef') ?? '').trim()
+    if (!id) continue
+    const raw = String(pick(r, 'Offset Account Name') ?? '').trim()
+    const cur = invoiceBy[id] ?? { id, cust: omcOf(raw), plant: tidyPlant(raw), amt: 0, date: excelToDate(pick(r, 'RefDate')) }
+    cur.amt += -num(pick(r, 'Amount'))
+    invoiceBy[id] = cur
+  }
+  const invoices = Object.values(invoiceBy)
+    .map((row) => ({
+      id: row.id,
+      cust: row.cust,
+      plant: row.plant,
+      amt: crore(row.amt),
+      days: row.date ? Math.max(0, Math.round((end.getTime() - row.date.getTime()) / 86400000)) : 0,
+      owner: 'Unassigned',
+      next: '—',
+    }))
+    .filter((r) => r.amt)
+    .sort((a, b) => Math.abs(b.amt) - Math.abs(a.amt))
+    .slice(0, 12)
+  if (invoices.length) found.push('Invoices')
+
+  const bpRows = objects(wb, 'BP data')
+  const custSum: Record<string, number> = { IOCL: 0, BPCL: 0, HPCL: 0, Other: 0 }
+  for (const r of bpRows) {
+    const name = String(pick(r, 'Name') ?? '')
+    if (!name || /^name$|^customers/i.test(name)) continue
+    custSum[omcOf(name)] += num(pick(r, 'Balance')) || num(pick(r, 'OB'))
+  }
+  const custTotal = Object.values(custSum).reduce((s, v) => s + Math.abs(v), 0) || 1
+  const customers = Object.entries(custSum)
+    .map(([name, v]) => ({
+      name,
+      overdue: v > 0 ? crore(v) : 0,
+      share: Math.round((100 * Math.abs(v) / custTotal) * 10) / 10,
+      dso: 0,
+      notDue: 0,
+      mid: 0,
+      old: 0,
+      gross: crore(Math.abs(v)),
+    }))
+    .filter((c) => c.gross)
+    .sort((a, b) => b.gross - a.gross)
+  if (customers.length) found.push('Customers')
+
+  const idx = yearMonths.indexOf(close.month)
+  const gpAmt = Math.round((last.rev * last.gp / 100) * 10000) / 10000
+  if (bs.ar || bs.inv) found.push('Twc', 'Ageing')
+
   return {
     close,
     found,
     patch: {
-      monthly: metrics.map((row) => ({
-        m: row.m,
-        rev: row.rev,
-        gp: row.gp,
-        ebitda: row.ebitda,
-        ebitdaPct: row.ebitdaPct,
-        np: row.np,
-        rate: row.rate,
-      })),
+      monthly: monthlyRows,
       mix: last.mix,
       costLines: last.costLines,
-      orders: Object.values(ordersBy),
+      orders: orderRows,
       plants,
       contracts,
+      bridge: [
+        { name: 'Turnover', v: last.rev },
+        { name: 'Gross profit', v: gpAmt },
+        { name: 'EBITDA', v: last.ebitda },
+        { name: 'Net profit', v: last.np },
+      ],
+      intakeTrend: monthlyRows.map((r) => ({
+        m: r.m,
+        intake: Math.round(orderRows.reduce((s, o) => s + o.intake, 0) * 10000) / 10000,
+        billed: r.rev,
+        backlog: Math.round(orderRows.reduce((s, o) => s + o.backlog, 0) * 10000) / 10000,
+      })),
+      ageing: bs.ar ? [{ name: 'Trade receivables', v: bs.ar }] : [],
+      customers,
+      invoices,
+      cycle: [
+        { name: 'DSO', days: last.rev ? Math.round(bs.ar / (last.rev / 30)) : 0, target: 55, note: 'Trade receivables / monthly revenue' },
+        { name: 'DIO', days: 0, target: 38, note: 'Stock days — COGS not split on this close' },
+        { name: 'DPO', days: 0, target: 40, note: 'Payables days — COGS not split on this close' },
+      ],
+      twc: [{
+        m: close.month,
+        ar: bs.ar,
+        inv: bs.inv,
+        ap: bs.ap,
+        twc: Math.round((bs.ar + bs.inv - bs.ap) * 10000) / 10000,
+        pct: last.rev ? Math.round((100 * (bs.ar + bs.inv - bs.ap) / last.rev) * 10) / 10 : 0,
+      }],
+      warehouses: bs.inv ? [{ name: 'Inventories', region: 'All India', origin: 'Domestic', qty: 0, val: bs.inv, turns: null, dio: null, slow: 0, ret: 0, inScope: true }] : [],
+      varianceGrid: plants.map((p) => ({
+        plant: p.name,
+        region: '',
+        months: yearMonths.map((_, i) => (i === idx ? p.v : 0)),
+      })),
     },
   }
 }

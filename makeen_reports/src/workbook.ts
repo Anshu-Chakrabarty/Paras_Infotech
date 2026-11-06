@@ -1,5 +1,5 @@
 import * as XLSX from 'xlsx'
-import { sampleData, yearMonths, type AppData } from './data'
+import { emptyData, sampleData, yearMonths, type AppData } from './data'
 import { isNativeMis, parseNativeMis } from './nativeMis'
 
 type Row = Record<string, unknown>
@@ -56,7 +56,7 @@ export function parseWorkbook(buf: ArrayBuffer, current?: AppData): { data: AppD
   ]
   if (isNativeMis(wb)) {
     const native = parseNativeMis(wb)
-    const base = structuredClone(current ?? sampleData())
+    const base = emptyData()
     ;(Object.keys(native.patch) as (keyof AppData)[]).forEach((key) => {
       const rows = native.patch[key]
       if (Array.isArray(rows) && rows.length) (base[key] as unknown) = rows

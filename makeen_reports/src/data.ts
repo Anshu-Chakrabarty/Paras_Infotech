@@ -293,6 +293,37 @@ export type AppData = {
   ledgerTrend: typeof ledgerTrend
 }
 
+export function emptyData(): AppData {
+  return {
+    monthly: [],
+    mix: [],
+    plants: [],
+    bridge: [],
+    costLines: [],
+    orders: [],
+    intakeTrend: [],
+    ageing: [],
+    ageTrend: [],
+    customers: [],
+    invoices: [],
+    cycle: [],
+    cccTrend: [],
+    twc: [],
+    warehouses: [],
+    originShare: [],
+    returnsMonth: [],
+    returnReasons: [],
+    returnWh: [],
+    returnLines: [],
+    contracts: [],
+    engineers: [],
+    varianceGrid: [],
+    varianceExceptions: [],
+    ledger: [],
+    ledgerTrend: [],
+  }
+}
+
 export function sampleData(): AppData {
   return {
     monthly,
