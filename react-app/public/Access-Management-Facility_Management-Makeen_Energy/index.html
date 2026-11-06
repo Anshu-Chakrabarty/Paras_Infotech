@@ -85,7 +85,7 @@ table.grid td.none{color:var(--warn)}
 <div id="doneBox"></div>
 <div id="form"></div>
 </div></div></div>
-<div class="bar"><div class="in"><span id="progress2" style="font-size:14px;color:var(--soft)">Your answers are kept on this device until you submit.</span><span style="display:flex;gap:10px"><button class="btn ghost" id="dl" hidden>Download answers</button><button class="btn" id="review">Review and submit</button></span></div></div>
+<div class="bar"><div class="in"><span id="progress2" style="font-size:14px;color:var(--soft)"></span><span style="display:flex;gap:10px"><button class="btn ghost" id="dl" hidden>Download answers</button><button class="btn" id="review">Review and submit</button></span></div></div>
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mt"><div class="dlg">
 <h3 id="mt">Please confirm your selections</h3><div class="sub" id="msub"></div>
 <div class="body" id="mbody"></div>
@@ -139,12 +139,41 @@ const KEY="fm-access-draft-v1";
 let EMPS=[];
 let DES={};
 let DKEYS=[];
+let BYNUM={};
 const state={};
 const cards={};
 const navLinks={};
+let ready=false;
+let saveTimer=null;
 const norm=s=>s.toLowerCase().replace(/\s+/g," ").trim();
+function status(t){const el=document.getElementById("progress2");if(el)el.textContent=t||""}
+function packDraft(){
+ const draft={};
+ ALLQ.forEach(([id])=>{draft[id]={d:[...(state[id].d||[])],p:(state[id].p||[]).map(i=>String(EMPS[i][0]))}});
+ return draft;
+}
+function applyDraft(draft){
+ if(!draft||typeof draft!=="object")return;
+ ALLQ.forEach(([id])=>{
+  const row=draft[id];if(!row||!state[id])return;
+  state[id].d=(row.d||[]).filter(k=>DES[k]);
+  state[id].p=(row.p||[]).map(n=>{if(BYNUM[String(n)]!=null)return BYNUM[String(n)];const i=Number(n);return Number.isInteger(i)&&EMPS[i]?i:null}).filter(i=>i!=null);
+ });
+}
+function saveLocal(){try{localStorage.setItem(KEY,JSON.stringify({savedAt:Date.now(),draft:packDraft()}))}catch(e){}}
+function persistNow(){
+ if(!ready)return;
+ status("Saving…");
+ saveLocal();
+ fetch(SAVE_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({draft:packDraft()})})
+  .then(r=>{if(!r.ok)throw new Error("save");return r.json()})
+  .then(()=>status(""))
+  .catch(()=>status("Could not save. Kept on this device."));
+}
 function saveDraft(){
-  try{localStorage.setItem(KEY,JSON.stringify({state}))}catch(e){}
+ saveLocal();
+ clearTimeout(saveTimer);
+ saveTimer=setTimeout(persistNow,400);
 }
 function covered(q){const set=new Set();state[q].d.forEach(k=>DES[k]&&DES[k].idx.forEach(i=>set.add(i)));state[q].p.forEach(i=>set.add(i));return set}
 function el(t,a={},...c){const n=document.createElement(t);for(const k in a){if(k==="class")n.className=a[k];else if(k.startsWith("on"))n.addEventListener(k.slice(2),a[k]);else n.setAttribute(k,a[k])}c.flat().forEach(x=>n.append(x));return n}
@@ -188,20 +217,16 @@ function csv(p){const rows=[["Question","Designations","People","People covered"
 async function download(){const data=csv(payload());
  const url=URL.createObjectURL(new Blob([data],{type:"text/csv"}));const a=el("a",{href:url,download:"access-management-answers.csv"});document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000)}
 async function save(p){
- const r=await fetch(SAVE_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(p)});
+ const r=await fetch(SAVE_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({mode:"submit",draft:packDraft(),submittedAt:p.submittedAt,answers:p.answers})});
  const j=await r.json().catch(()=>({}));
  if(!r.ok||!j.ok) throw new Error(j.message||"save failed");
  return true;
 }
 function boot(people){
  EMPS=people;
- DES={};EMPS.forEach((e,i)=>{const k=norm(e[2]);(DES[k]||(DES[k]={label:e[2],idx:[]})).idx.push(i)});
+ DES={};BYNUM={};EMPS.forEach((e,i)=>{const k=norm(e[2]);(DES[k]||(DES[k]={label:e[2],idx:[]})).idx.push(i);BYNUM[String(e[0])]=i});
  DKEYS=Object.keys(DES).sort((a,b)=>DES[a].label.localeCompare(DES[b].label));
  ALLQ.forEach(q=>state[q[0]]={d:[],p:[]});
- try{
-  const s=JSON.parse(localStorage.getItem(KEY)||"null");
-  if(s&&s.state){for(const k in s.state)if(state[k])state[k]=s.state[k]}
- }catch(e){}
  document.addEventListener("click",closeAll);
  document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeAll();hideModal()}});
  const form=document.getElementById("form");
@@ -211,6 +236,21 @@ function boot(people){
   const card=el("div",{class:"q"},el("div",{class:"qt"},t),el("div",{class:"qd"},d),el("div",{class:"pickers"},pd,pp),chips,cover);
   cards[id]={pd,pp,chips,cover,card};s.append(card)});form.append(s)});
  ALLQ.forEach(q=>refresh(q[0]));
+ fetch(SAVE_URL,{cache:"no-store"}).then(r=>{if(!r.ok)throw new Error("load");return r.json()}).then(data=>{
+  const remote=data&&data.draft;
+  let local=null;try{local=JSON.parse(localStorage.getItem(KEY)||"null")}catch(e){}
+  if(remote&&Object.keys(remote).length)applyDraft(remote);
+  else if(local&&(local.draft||local.state)){
+   if(local.draft)applyDraft(local.draft);
+   else if(local.state){ALLQ.forEach(([id])=>{if(local.state[id]&&state[id])state[id]=local.state[id]})}
+  }
+  ALLQ.forEach(q=>refresh(q[0]));
+  ready=true;
+  if(!(remote&&Object.keys(remote).length)&&local&&(local.draft||local.state))persistNow();
+ }).catch(()=>{
+  try{const local=JSON.parse(localStorage.getItem(KEY)||"null");if(local&&(local.draft||local.state)){if(local.draft)applyDraft(local.draft);else if(local.state){ALLQ.forEach(([id])=>{if(local.state[id]&&state[id])state[id]=local.state[id]})};ALLQ.forEach(q=>refresh(q[0]))}}catch(e){}
+  ready=true;
+ });
  const modal=document.getElementById("modal");
  document.getElementById("back").onclick=hideModal;
  modal.addEventListener("click",e=>{if(e.target===modal)hideModal()});
@@ -229,8 +269,7 @@ function boot(people){
   let saved=false;try{saved=await save(p)}catch(e){saved=false}
   btn.disabled=false;btn.textContent="Yes, submit";hideModal();
   const box=document.getElementById("doneBox");box.innerHTML="";
-  box.append(saved?el("div",{class:"done-msg"},"Submitted. Thank you. If you need to change anything, update your answers and submit again."):el("div",{class:"done-msg warn"},"Your answers could not be sent. Press Download answers and email the file to the project team."));
-  if(saved){try{localStorage.removeItem(KEY)}catch(e){}}
+  box.append(saved?el("div",{class:"done-msg"},"Submitted. Thank you. Your answers stay on this page. If you need to change anything, update them and they save again."):el("div",{class:"done-msg warn"},"Your answers could not be sent. Press Download answers and email the file to the project team."));
   window.scrollTo({top:0,behavior:"smooth"})};
 }
 fetch("/Access-Management-Facility_Management-Makeen_Energy/people.json").then(r=>{if(!r.ok)throw new Error("people");return r.json()}).then(boot).catch(()=>{

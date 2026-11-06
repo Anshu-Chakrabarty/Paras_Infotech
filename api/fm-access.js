@@ -4,7 +4,20 @@ import { deliver, escapeHtml, readJson, sendJson } from './_mail.js'
 const PATH = 'fm-access.json'
 
 function empty() {
-  return { submissions: [] }
+  return { savedAt: 0, draft: {}, submissions: [] }
+}
+
+function normalize(raw) {
+  const data = raw && typeof raw === 'object' ? raw : {}
+  const latest = Array.isArray(data.submissions) && data.submissions.length
+    ? data.submissions[data.submissions.length - 1]
+    : null
+  return {
+    savedAt: Number(data.savedAt) || 0,
+    draft: data.draft && typeof data.draft === 'object' ? data.draft : {},
+    submissions: Array.isArray(data.submissions) ? data.submissions : [],
+    latest,
+  }
 }
 
 function csvFrom(payload) {
@@ -29,21 +42,24 @@ async function loadState() {
     if (!result || result.statusCode !== 200 || !result.stream) return empty()
     const text = await new Response(result.stream).text()
     if (!text.trim()) return empty()
-    const data = JSON.parse(text)
-    return { submissions: Array.isArray(data.submissions) ? data.submissions : [] }
+    return normalize(JSON.parse(text))
   } catch {
     return empty()
   }
 }
 
 async function saveState(state) {
-  await put(PATH, JSON.stringify(state), {
-    access: 'private',
-    allowOverwrite: true,
-    addRandomSuffix: false,
-    contentType: 'application/json',
-    cacheControlMaxAge: 60,
-  })
+  await put(
+    PATH,
+    JSON.stringify({ savedAt: state.savedAt, draft: state.draft, submissions: state.submissions }),
+    {
+      access: 'private',
+      allowOverwrite: true,
+      addRandomSuffix: false,
+      contentType: 'application/json',
+      cacheControlMaxAge: 60,
+    },
+  )
 }
 
 export default async function handler(req, res) {
@@ -55,39 +71,45 @@ export default async function handler(req, res) {
   try {
     if (req.method === 'GET') {
       const state = await loadState()
-      const latest = state.submissions[state.submissions.length - 1] || null
       return sendJson(res, 200, {
         ok: true,
+        savedAt: state.savedAt,
+        draft: state.draft,
         count: state.submissions.length,
-        latest,
+        latest: state.latest,
       })
     }
     if (req.method === 'POST') {
       const incoming = await readJson(req)
-      const submission = {
-        submittedAt: incoming.submittedAt || new Date().toISOString(),
-        filledBy: incoming.filledBy && typeof incoming.filledBy === 'object' ? incoming.filledBy : {},
-        answers: incoming.answers && typeof incoming.answers === 'object' ? incoming.answers : {},
-      }
       const state = await loadState()
-      state.submissions.push(submission)
-      await saveState(state)
-      try {
-        await deliver({
-          subject: 'MAKEEN FM Access Management submitted',
-          html: `
-            <p>Access Management submitted.</p>
-            <p><b>When:</b> ${escapeHtml(submission.submittedAt)}</p>
-          `,
-          attachment: {
-            filename: 'access-management-answers.csv',
-            content: csvFrom(submission),
-          },
-        })
-      } catch (mailError) {
-        console.error(mailError)
+      if (incoming.draft && typeof incoming.draft === 'object') {
+        state.draft = incoming.draft
       }
-      return sendJson(res, 200, { ok: true, submittedAt: submission.submittedAt })
+      state.savedAt = Date.now()
+      if (incoming.mode === 'submit') {
+        const submission = {
+          submittedAt: incoming.submittedAt || new Date().toISOString(),
+          answers: incoming.answers && typeof incoming.answers === 'object' ? incoming.answers : {},
+        }
+        state.submissions.push(submission)
+        try {
+          await deliver({
+            subject: 'MAKEEN FM Access Management submitted',
+            html: `
+              <p>Access Management submitted.</p>
+              <p><b>When:</b> ${escapeHtml(submission.submittedAt)}</p>
+            `,
+            attachment: {
+              filename: 'access-management-answers.csv',
+              content: csvFrom(submission),
+            },
+          })
+        } catch (mailError) {
+          console.error(mailError)
+        }
+      }
+      await saveState(state)
+      return sendJson(res, 200, { ok: true, savedAt: state.savedAt, draft: state.draft })
     }
     return sendJson(res, 405, { ok: false, message: 'Method not allowed' })
   } catch (error) {
