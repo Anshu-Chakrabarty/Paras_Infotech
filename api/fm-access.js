@@ -73,14 +73,11 @@ export default async function handler(req, res) {
       state.submissions.push(submission)
       await saveState(state)
       try {
-        const who = submission.filledBy || {}
         await deliver({
           subject: 'MAKEEN FM Access Management submitted',
           html: `
             <p>Access Management submitted.</p>
-            <p><b>Name:</b> ${escapeHtml(who.name || '')}<br/>
-            <b>Email:</b> ${escapeHtml(who.email || '')}<br/>
-            <b>When:</b> ${escapeHtml(submission.submittedAt)}</p>
+            <p><b>When:</b> ${escapeHtml(submission.submittedAt)}</p>
           `,
           attachment: {
             filename: 'access-management-answers.csv',

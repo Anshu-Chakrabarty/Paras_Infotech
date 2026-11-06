@@ -28,9 +28,6 @@ h1{margin:4px 0 10px;color:var(--navy);font-size:26px}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) h1,:root:not([data-theme="light"]) h2{color:#9cc3e4}}
 :root[data-theme="dark"] h1,:root[data-theme="dark"] h2{color:#9cc3e4}
 .intro{margin:0 0 6px;color:var(--soft);max-width:72ch}
-.who{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-end;margin:18px 0 8px;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:16px 18px}
-.who label{font-size:13px;color:var(--soft);display:block;margin-bottom:4px}
-.who input{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:8px 10px;min-width:260px}
 section.mod{margin:0 0 22px;padding:22px 20px 14px;border:1px solid var(--line);border-radius:8px;background:var(--card);scroll-margin-top:72px}
 section.mod>h2{margin:0 0 12px;color:var(--navy);font-size:18px}
 .q{border-top:1px solid var(--line);padding:14px 0 14px}
@@ -43,7 +40,7 @@ section.mod>h2{margin:0 0 12px;color:var(--navy);font-size:18px}
 .ms{position:relative}
 .ms>button{width:100%;text-align:left;font:inherit;font-size:15px;color:var(--ink);background:var(--card);border:1px solid #c9d1da;border-radius:4px;padding:8px 32px 8px 10px;cursor:pointer;position:relative}
 .ms>button::after{content:"";position:absolute;right:12px;top:50%;width:7px;height:7px;border-right:2px solid var(--soft);border-bottom:2px solid var(--soft);transform:translateY(-70%) rotate(45deg)}
-.ms>button:focus-visible,.panel input:focus-visible,button:focus-visible,a:focus-visible,.who input:focus-visible{outline:2px solid #2f6aa3;outline-offset:2px}
+.ms>button:focus-visible,.panel input:focus-visible,button:focus-visible,a:focus-visible{outline:2px solid #2f6aa3;outline-offset:2px}
 .panel{position:absolute;z-index:40;left:0;right:0;top:calc(100% + 4px);background:var(--card);border:1px solid var(--line);border-radius:6px;box-shadow:0 10px 28px rgba(11,46,74,.18);padding:8px;display:none}
 .ms.open .panel{display:block}
 .panel input[type=search]{width:100%;font:inherit;font-size:15px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:7px 9px;margin-bottom:6px}
@@ -85,16 +82,6 @@ table.grid td.none{color:var(--warn)}
 <div class="wrap">
 <h1>Access Management</h1>
 <p class="intro">For each question, choose the designations and/or the individual people who should have that access in the Facility Management portal. The Dashboard is open to everyone, so it is not asked here. Choosing a designation gives the access to everyone holding it. Leave a question empty if nobody should have it.</p>
-<div class="who">
-  <div>
-    <label for="whoName">Your name</label>
-    <input id="whoName" type="text" autocomplete="name" placeholder="Who is filling this">
-  </div>
-  <div>
-    <label for="whoMail">Your email</label>
-    <input id="whoMail" type="email" autocomplete="email" placeholder="So we can reach you">
-  </div>
-</div>
 <div id="doneBox"></div>
 <div id="form"></div>
 </div></div></div>
@@ -156,9 +143,8 @@ const state={};
 const cards={};
 const navLinks={};
 const norm=s=>s.toLowerCase().replace(/\s+/g," ").trim();
-function who(){return{name:(document.getElementById("whoName").value||"").trim(),email:(document.getElementById("whoMail").value||"").trim()}}
 function saveDraft(){
-  try{localStorage.setItem(KEY,JSON.stringify({state,who:who()}))}catch(e){}
+  try{localStorage.setItem(KEY,JSON.stringify({state}))}catch(e){}
 }
 function covered(q){const set=new Set();state[q].d.forEach(k=>DES[k]&&DES[k].idx.forEach(i=>set.add(i)));state[q].p.forEach(i=>set.add(i));return set}
 function el(t,a={},...c){const n=document.createElement(t);for(const k in a){if(k==="class")n.className=a[k];else if(k.startsWith("on"))n.addEventListener(k.slice(2),a[k]);else n.setAttribute(k,a[k])}c.flat().forEach(x=>n.append(x));return n}
@@ -195,7 +181,7 @@ function refresh(q){const c=cards[q];c.pd._label();c.pp._label();c.chips.innerHT
  const n=covered(q).size;c.cover.textContent=n?"Gives this access to "+n+(n>1?" people":" person")+".":"";
  c.card.classList.toggle("done",n>0);progress()}
 function progress(){const a=ALLQ.filter(q=>covered(q[0]).size>0).length;document.getElementById("progress").textContent=a+" of "+ALLQ.length+" answered";for(const m in navLinks){const L=navLinks[m];const d=L.ids.filter(i=>covered(i).size>0).length;L.a.querySelector(".cnt").textContent=d+"/"+L.ids.length;L.a.classList.toggle("full",d===L.ids.length)}}
-function payload(){const out={submittedAt:new Date().toISOString(),filledBy:who(),answers:{}};
+function payload(){const out={submittedAt:new Date().toISOString(),answers:{}};
  ALLQ.forEach(([id,t])=>{out.answers[id]={question:t,designations:state[id].d.map(k=>DES[k].label),people:state[id].p.map(i=>({employeeNumber:EMPS[i][0],name:EMPS[i][1],designation:EMPS[i][2],location:EMPS[i][3]})),coveredCount:covered(id).size}});return out}
 function csv(p){const rows=[["Question","Designations","People","People covered"]];ALLQ.forEach(([id])=>{const a=p.answers[id];rows.push([a.question,a.designations.join("; "),a.people.map(x=>x.name+" ("+x.designation+")").join("; "),a.coveredCount])});
  return rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(",")).join("\n")}
@@ -215,10 +201,7 @@ function boot(people){
  try{
   const s=JSON.parse(localStorage.getItem(KEY)||"null");
   if(s&&s.state){for(const k in s.state)if(state[k])state[k]=s.state[k]}
-  if(s&&s.who){document.getElementById("whoName").value=s.who.name||"";document.getElementById("whoMail").value=s.who.email||""}
  }catch(e){}
- document.getElementById("whoName").addEventListener("input",saveDraft);
- document.getElementById("whoMail").addEventListener("input",saveDraft);
  document.addEventListener("click",closeAll);
  document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeAll();hideModal()}});
  const form=document.getElementById("form");
@@ -232,7 +215,6 @@ function boot(people){
  document.getElementById("back").onclick=hideModal;
  modal.addEventListener("click",e=>{if(e.target===modal)hideModal()});
  document.getElementById("review").onclick=()=>{
-  if(!who().name){document.getElementById("whoName").focus();document.getElementById("doneBox").innerHTML="";document.getElementById("doneBox").append(el("div",{class:"done-msg warn"},"Please type your name at the top before submitting."));window.scrollTo({top:0,behavior:"smooth"});return}
   const body=document.getElementById("mbody");body.innerHTML="";let empty=0;
   const tb=el("table",{class:"grid"},el("tr",{},el("th",{},"Access"),el("th",{},"Designations"),el("th",{},"People"),el("th",{},"Total")));
   ALLQ.forEach(([id,t])=>{const st=state[id];const n=covered(id).size;
