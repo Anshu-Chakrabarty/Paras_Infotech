@@ -2,12 +2,24 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "redirects": [
-    { "source": "/bricks&bytes", "destination": "/bricks&bytes/", "permanent": false }
+    { "source": "/bricks&bytes", "destination": "/bricks&bytes/", "permanent": false },
+    { "source": "/makeen-fm", "destination": "/Requirements-Facility_Management-Makeen_Energy", "permanent": true },
+    { "source": "/makeen-fm/", "destination": "/Requirements-Facility_Management-Makeen_Energy/", "permanent": true },
+    { "source": "/business-requires-facility-management-makeen-energy", "destination": "/Requirements-Facility_Management-Makeen_Energy", "permanent": true },
+    { "source": "/business-requires-facility-management-makeen-energy/", "destination": "/Requirements-Facility_Management-Makeen_Energy/", "permanent": true },
+    { "source": "/business-requirements-facility-management-makeen-energy", "destination": "/Requirements-Facility_Management-Makeen_Energy", "permanent": true },
+    { "source": "/business-requirements-facility-management-makeen-energy/", "destination": "/Requirements-Facility_Management-Makeen_Energy/", "permanent": true },
+    { "source": "/access-management", "destination": "/Access-Management-Facility_Management-Makeen_Energy", "permanent": true },
+    { "source": "/access-management/", "destination": "/Access-Management-Facility_Management-Makeen_Energy/", "permanent": true }
   ],
   "rewrites": [
+    { "source": "/Requirements-Facility_Management-Makeen_Energy", "destination": "/Requirements-Facility_Management-Makeen_Energy/index.html" },
+    { "source": "/Requirements-Facility_Management-Makeen_Energy/", "destination": "/Requirements-Facility_Management-Makeen_Energy/index.html" },
+    { "source": "/Access-Management-Facility_Management-Makeen_Energy", "destination": "/Access-Management-Facility_Management-Makeen_Energy/index.html" },
+    { "source": "/Access-Management-Facility_Management-Makeen_Energy/", "destination": "/Access-Management-Facility_Management-Makeen_Energy/index.html" },
     { "source": "/makeen_reports", "destination": "/makeen_reports/index.html" },
     { "source": "/makeen_reports/", "destination": "/makeen_reports/index.html" },
     { "source": "/makeen_reports/:path((?!assets/).*)", "destination": "/makeen_reports/index.html" },
-    { "source": "/((?!api/|assets/|bricks&bytes|favicon\\.|apple-touch-icon\\.png).*)", "destination": "/index.html" }
+    { "source": "/((?!api/|assets/|bricks&bytes|favicon\\.|apple-touch-icon\\.png|Requirements-Facility_Management-Makeen_Energy|Access-Management-Facility_Management-Makeen_Energy|makeen_reports).*)", "destination": "/index.html" }
   ]
 }
