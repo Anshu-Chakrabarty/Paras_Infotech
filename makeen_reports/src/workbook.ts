@@ -1,5 +1,6 @@
 import * as XLSX from 'xlsx'
 import { sampleData, yearMonths, type AppData } from './data'
+import { isNativeMis, parseNativeMis } from './nativeMis'
 
 type Row = Record<string, unknown>
 
@@ -45,8 +46,23 @@ const fills: Record<string, string> = {
   'Gas equipment': '#64748b',
 }
 
-export function parseWorkbook(buf: ArrayBuffer, current?: AppData): { data: AppData; found: string[]; missing: string[] } {
+export function parseWorkbook(buf: ArrayBuffer, current?: AppData): { data: AppData; found: string[]; missing: string[]; close?: { year: string; month: string } } {
   const wb = XLSX.read(buf, { type: 'array', cellDates: true })
+  const all = [
+    'Monthly', 'Mix', 'Plants', 'Bridge', 'CostLines', 'Orders', 'IntakeTrend', 'Ageing', 'AgeTrend',
+    'Customers', 'Invoices', 'Cycle', 'CccTrend', 'Twc', 'Warehouses', 'OriginShare', 'ReturnsMonth',
+    'ReturnReasons', 'ReturnWh', 'ReturnLines', 'Contracts', 'Engineers', 'VarianceGrid', 'VarianceExceptions',
+    'Ledger', 'LedgerTrend',
+  ]
+  if (isNativeMis(wb)) {
+    const native = parseNativeMis(wb)
+    const base = structuredClone(current ?? sampleData())
+    ;(Object.keys(native.patch) as (keyof AppData)[]).forEach((key) => {
+      const rows = native.patch[key]
+      if (Array.isArray(rows) && rows.length) (base[key] as unknown) = rows
+    })
+    return { data: base, found: native.found, missing: all.filter((s) => !native.found.includes(s)), close: native.close }
+  }
   const base = structuredClone(current ?? sampleData())
   const found: string[] = []
   const take = (label: string, names: string[], map: (rows: Row[]) => void) => {
@@ -328,12 +344,6 @@ export function parseWorkbook(buf: ArrayBuffer, current?: AppData): { data: AppD
     })).filter((r) => r.m)
   })
 
-  const all = [
-    'Monthly', 'Mix', 'Plants', 'Bridge', 'CostLines', 'Orders', 'IntakeTrend', 'Ageing', 'AgeTrend',
-    'Customers', 'Invoices', 'Cycle', 'CccTrend', 'Twc', 'Warehouses', 'OriginShare', 'ReturnsMonth',
-    'ReturnReasons', 'ReturnWh', 'ReturnLines', 'Contracts', 'Engineers', 'VarianceGrid', 'VarianceExceptions',
-    'Ledger', 'LedgerTrend',
-  ]
   return { data: base, found, missing: all.filter((s) => !found.includes(s)) }
 }
 

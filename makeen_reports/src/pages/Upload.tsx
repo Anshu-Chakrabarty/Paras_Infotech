@@ -69,7 +69,11 @@ export function Upload() {
       setParsed(out.data)
       setFound(out.found)
       setMissing(out.missing)
-      if (!out.found.length) setErr('No matching sheets. Download the template, paste next month’s figures, then upload that file.')
+      if (out.close) {
+        setYear(out.close.year)
+        setMonth(out.close.month)
+      }
+      if (!out.found.length) setErr('No matching sheets. The MAKEEN MIS file (P&L Consolidated / Monthly P&L) or the downloadable template both work.')
       else setErr('')
     } catch (e) {
       setErr(e instanceof Error ? e.message : 'Could not read that workbook.')
@@ -223,7 +227,7 @@ export function Upload() {
         <div className="grid gap-4 md:grid-cols-2">
           <div className="rounded-2xl border border-line bg-card p-5">
             <div className="text-[13px] font-semibold">1. Template</div>
-            <p className="mt-1 text-[12px] text-mute">Same sheets and headers the site already displays. Paste next month’s figures into this file — do not invent new column names.</p>
+            <p className="mt-1 text-[12px] text-mute">The monthly MIS workbook from finance (P&amp;L Consolidated, Monthly P&amp;L, Order intake, Data) uploads as-is. This template is only needed if you are typing figures by hand.</p>
             <button
               type="button"
               onClick={() => downloadBuf(buildTemplate(), 'MAKEEN-finance-template.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')}
@@ -233,8 +237,8 @@ export function Upload() {
             </button>
           </div>
           <div className="rounded-2xl border border-line bg-card p-5">
-            <div className="text-[13px] font-semibold">2. Upload the formatted file</div>
-            <p className="mt-1 text-[12px] text-mute">.xlsx only. Sheets that are present replace that block. Sheets you leave out keep the figures from the month you are viewing.</p>
+            <div className="text-[13px] font-semibold">2. Upload the month’s Excel</div>
+            <p className="mt-1 text-[12px] text-mute">.xlsx only. Native MIS files map P&amp;L, mix, plants, orders and FM contracts. Other pages keep the figures from the month you are viewing.</p>
             <div className="mt-3 grid grid-cols-2 gap-2">
               <label className="text-[12px] text-mute">
                 Year

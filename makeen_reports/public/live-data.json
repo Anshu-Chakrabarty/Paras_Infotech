@@ -1,0 +1,677 @@
+{
+  "version": 2,
+  "active": "2026-02",
+  "file": "MIS for the month of Feb 26.xlsx",
+  "uploadedAt": "2026-11-06T07:27:41Z",
+  "packs": [
+    {
+      "id": "2026-01",
+      "year": "2026",
+      "month": "Jan",
+      "file": "MIS for the month of JAN 26.xlsx",
+      "at": "2026-11-06T07:27:34Z",
+      "source": "published",
+      "data": {
+        "monthly": [
+          {
+            "m": "Jan",
+            "rev": 23.704,
+            "gp": 13.9,
+            "ebitda": 0.8763,
+            "ebitdaPct": 3.7,
+            "np": -1.0513,
+            "rate": 97.2
+          }
+        ],
+        "mix": [
+          {
+            "name": "Projects",
+            "value": 1.2675,
+            "fill": "#0f766e"
+          },
+          {
+            "name": "Service",
+            "value": 0.9194,
+            "fill": "#16a34a"
+          },
+          {
+            "name": "Parts & Components",
+            "value": 5.6662,
+            "fill": "#65a30d"
+          },
+          {
+            "name": "Gas equipment",
+            "value": 0.8863,
+            "fill": "#64748b"
+          },
+          {
+            "name": "FM",
+            "value": 14.9646,
+            "fill": "#a16207"
+          }
+        ],
+        "plants": [
+          {
+            "name": "HPCL YEDIYUR",
+            "v": 4.2196
+          },
+          {
+            "name": "IOCL Nagpur",
+            "v": 1.4772
+          },
+          {
+            "name": "Chennai Petroleum Corporation Ltd",
+            "v": 1.2937
+          },
+          {
+            "name": "BPCL Gummidipundi",
+            "v": 1.0211
+          },
+          {
+            "name": "IOCL Motihari",
+            "v": 1.0112
+          },
+          {
+            "name": "BPCL Surat",
+            "v": 0.9046
+          },
+          {
+            "name": "HPCL Warangal",
+            "v": 0.8391
+          },
+          {
+            "name": "IOCL Tirunelvelli",
+            "v": 0.8342
+          },
+          {
+            "name": "HPCL Chandrapur",
+            "v": 0.7642
+          },
+          {
+            "name": "IOCL Gorakhpur",
+            "v": 0.762
+          },
+          {
+            "name": "BPCL Dharwad",
+            "v": 0.6843
+          },
+          {
+            "name": "BPCL Bareilly",
+            "v": 0.6825
+          }
+        ],
+        "costLines": [
+          {
+            "name": "Staff costs",
+            "actual": 101.4,
+            "plan": 101.4
+          },
+          {
+            "name": "Overheads",
+            "actual": 74.7,
+            "plan": 74.7
+          },
+          {
+            "name": "Sales expense",
+            "actual": 7.9,
+            "plan": 7.9
+          },
+          {
+            "name": "G&A",
+            "actual": 57.8,
+            "plan": 57.8
+          }
+        ],
+        "orders": [
+          {
+            "name": "Service",
+            "intake": 9.286,
+            "budget": 9.286,
+            "billed": 0.9194,
+            "backlog": 10.2053,
+            "b2b": 10.1,
+            "cover": 0,
+            "reserved": false
+          },
+          {
+            "name": "FM",
+            "intake": 0.0,
+            "budget": 0.0,
+            "billed": 14.9646,
+            "backlog": 0.0,
+            "b2b": 0.0,
+            "cover": 0,
+            "reserved": false
+          },
+          {
+            "name": "Projects",
+            "intake": 16.2489,
+            "budget": 16.2489,
+            "billed": 1.2675,
+            "backlog": 17.5164,
+            "b2b": 12.82,
+            "cover": 0,
+            "reserved": false
+          },
+          {
+            "name": "Parts & Components",
+            "intake": 0.0,
+            "budget": 0.0,
+            "billed": 5.6662,
+            "backlog": 0.0,
+            "b2b": 0.0,
+            "cover": 0,
+            "reserved": false
+          },
+          {
+            "name": "Gas equipment",
+            "intake": 0.0,
+            "budget": 0.0,
+            "billed": 0.8863,
+            "backlog": 0.0,
+            "b2b": 0.0,
+            "cover": 0,
+            "reserved": false
+          }
+        ],
+        "contracts": [
+          {
+            "plant": "HPCL YEDIYUR",
+            "omc": "HPCL",
+            "region": "",
+            "reported": "FM",
+            "amc": "",
+            "end": "",
+            "days": 0,
+            "rev": 4.2196,
+            "eng": 0,
+            "cm": 0,
+            "status": "Active"
+          },
+          {
+            "plant": "IOCL Nagpur",
+            "omc": "IOCL",
+            "region": "",
+            "reported": "FM",
+            "amc": "",
+            "end": "",
+            "days": 0,
+            "rev": 1.4772,
+            "eng": 0,
+            "cm": 0,
+            "status": "Active"
+          },
+          {
+            "plant": "Chennai Petroleum Corporation Ltd",
+            "omc": "Other",
+            "region": "",
+            "reported": "FM",
+            "amc": "",
+            "end": "",
+            "days": 0,
+            "rev": 1.2937,
+            "eng": 0,
+            "cm": 0,
+            "status": "Active"
+          },
+          {
+            "plant": "BPCL Gummidipundi",
+            "omc": "BPCL",
+            "region": "",
+            "reported": "FM",
+            "amc": "",
+            "end": "",
+            "days": 0,
+            "rev": 1.0211,
+            "eng": 0,
+            "cm": 0,
+            "status": "Active"
+          },
+          {
+            "plant": "IOCL Motihari",
+            "omc": "IOCL",
+            "region": "",
+            "reported": "FM",
+            "amc": "",
+            "end": "",
+            "days": 0,
+            "rev": 1.0112,
+            "eng": 0,
+            "cm": 0,
+            "status": "Active"
+          },
+          {
+            "plant": "BPCL Surat",
+            "omc": "BPCL",
+            "region": "",
+            "reported": "FM",
+            "amc": "",
+            "end": "",
+            "days": 0,
+            "rev": 0.9046,
+            "eng": 0,
+            "cm": 0,
+            "status": "Active"
+          },
+          {
+            "plant": "HPCL Warangal",
+            "omc": "HPCL",
+            "region": "",
+            "reported": "FM",
+            "amc": "",
+            "end": "",
+            "days": 0,
+            "rev": 0.8391,
+            "eng": 0,
+            "cm": 0,
+            "status": "Active"
+          },
+          {
+            "plant": "IOCL Tirunelvelli",
+            "omc": "IOCL",
+            "region": "",
+            "reported": "FM",
+            "amc": "",
+            "end": "",
+            "days": 0,
+            "rev": 0.8342,
+            "eng": 0,
+            "cm": 0,
+            "status": "Active"
+          },
+          {
+            "plant": "HPCL Chandrapur",
+            "omc": "HPCL",
+            "region": "",
+            "reported": "FM",
+            "amc": "",
+            "end": "",
+            "days": 0,
+            "rev": 0.7642,
+            "eng": 0,
+            "cm": 0,
+            "status": "Active"
+          },
+          {
+            "plant": "IOCL Gorakhpur",
+            "omc": "IOCL",
+            "region": "",
+            "reported": "FM",
+            "amc": "",
+            "end": "",
+            "days": 0,
+            "rev": 0.762,
+            "eng": 0,
+            "cm": 0,
+            "status": "Active"
+          },
+          {
+            "plant": "BPCL Dharwad",
+            "omc": "BPCL",
+            "region": "",
+            "reported": "FM",
+            "amc": "",
+            "end": "",
+            "days": 0,
+            "rev": 0.6843,
+            "eng": 0,
+            "cm": 0,
+            "status": "Active"
+          },
+          {
+            "plant": "BPCL Bareilly",
+            "omc": "BPCL",
+            "region": "",
+            "reported": "FM",
+            "amc": "",
+            "end": "",
+            "days": 0,
+            "rev": 0.6825,
+            "eng": 0,
+            "cm": 0,
+            "status": "Active"
+          }
+        ]
+      }
+    },
+    {
+      "id": "2026-02",
+      "year": "2026",
+      "month": "Feb",
+      "file": "MIS for the month of Feb 26.xlsx",
+      "at": "2026-11-06T07:27:41Z",
+      "source": "published",
+      "data": {
+        "monthly": [
+          {
+            "m": "Jan",
+            "rev": 23.704,
+            "gp": 13.9,
+            "ebitda": 0.8763,
+            "ebitdaPct": 3.7,
+            "np": -1.0513,
+            "rate": 97.2
+          },
+          {
+            "m": "Feb",
+            "rev": 20.4399,
+            "gp": 18.4,
+            "ebitda": 4.0263,
+            "ebitdaPct": 17.0,
+            "np": 5.9539,
+            "rate": 97.2
+          }
+        ],
+        "mix": [
+          {
+            "name": "Projects",
+            "value": 0.27,
+            "fill": "#0f766e"
+          },
+          {
+            "name": "Service",
+            "value": 1.0236,
+            "fill": "#16a34a"
+          },
+          {
+            "name": "Parts & Components",
+            "value": 4.5603,
+            "fill": "#65a30d"
+          },
+          {
+            "name": "Gas equipment",
+            "value": 0.2195,
+            "fill": "#64748b"
+          },
+          {
+            "name": "FM",
+            "value": 14.3665,
+            "fill": "#a16207"
+          }
+        ],
+        "plants": [
+          {
+            "name": "HPCL YEDIYUR",
+            "v": 2.6074
+          },
+          {
+            "name": "Chennai Petroleum Corporation Ltd",
+            "v": 1.222
+          },
+          {
+            "name": "BPCL Gummidipundi",
+            "v": 0.9685
+          },
+          {
+            "name": "IOCL Motihari",
+            "v": 0.9539
+          },
+          {
+            "name": "BPCL Surat",
+            "v": 0.9302
+          },
+          {
+            "name": "IOCL Tirunelvelli",
+            "v": 0.832
+          },
+          {
+            "name": "IOCL Gorakhpur",
+            "v": 0.7879
+          },
+          {
+            "name": "HPCL Chandrapur",
+            "v": 0.7845
+          },
+          {
+            "name": "HPCL Warangal",
+            "v": 0.7632
+          },
+          {
+            "name": "BPCL Bareilly",
+            "v": 0.7137
+          },
+          {
+            "name": "BPCL Dharwad",
+            "v": 0.6737
+          },
+          {
+            "name": "HPCL Barhi",
+            "v": 0.5891
+          }
+        ],
+        "costLines": [
+          {
+            "name": "Staff costs",
+            "actual": 101.0,
+            "plan": 101.0
+          },
+          {
+            "name": "Overheads",
+            "actual": -73.9,
+            "plan": -73.9
+          },
+          {
+            "name": "Sales expense",
+            "actual": 3.7,
+            "plan": 3.7
+          },
+          {
+            "name": "G&A",
+            "actual": -57.8,
+            "plan": -57.8
+          }
+        ],
+        "orders": [
+          {
+            "name": "Service",
+            "intake": 8.2623,
+            "budget": 8.2623,
+            "billed": 1.0236,
+            "backlog": 10.2053,
+            "b2b": 8.07,
+            "cover": 0,
+            "reserved": false
+          },
+          {
+            "name": "FM",
+            "intake": 0.0,
+            "budget": 0.0,
+            "billed": 14.3665,
+            "backlog": 0.0,
+            "b2b": 0.0,
+            "cover": 0,
+            "reserved": false
+          },
+          {
+            "name": "Projects",
+            "intake": 15.9789,
+            "budget": 15.9789,
+            "billed": 0.27,
+            "backlog": 17.5164,
+            "b2b": 59.18,
+            "cover": 0,
+            "reserved": false
+          },
+          {
+            "name": "Parts & Components",
+            "intake": 0.0,
+            "budget": 0.0,
+            "billed": 4.5603,
+            "backlog": 0.0,
+            "b2b": 0.0,
+            "cover": 0,
+            "reserved": false
+          },
+          {
+            "name": "Gas equipment",
+            "intake": 0.0,
+            "budget": 0.0,
+            "billed": 0.2195,
+            "backlog": 0.0,
+            "b2b": 0.0,
+            "cover": 0,
+            "reserved": false
+          }
+        ],
+        "contracts": [
+          {
+            "plant": "HPCL YEDIYUR",
+            "omc": "HPCL",
+            "region": "",
+            "reported": "FM",
+            "amc": "",
+            "end": "",
+            "days": 0,
+            "rev": 2.6074,
+            "eng": 0,
+            "cm": 0,
+            "status": "Active"
+          },
+          {
+            "plant": "Chennai Petroleum Corporation Ltd",
+            "omc": "Other",
+            "region": "",
+            "reported": "FM",
+            "amc": "",
+            "end": "",
+            "days": 0,
+            "rev": 1.222,
+            "eng": 0,
+            "cm": 0,
+            "status": "Active"
+          },
+          {
+            "plant": "BPCL Gummidipundi",
+            "omc": "BPCL",
+            "region": "",
+            "reported": "FM",
+            "amc": "",
+            "end": "",
+            "days": 0,
+            "rev": 0.9685,
+            "eng": 0,
+            "cm": 0,
+            "status": "Active"
+          },
+          {
+            "plant": "IOCL Motihari",
+            "omc": "IOCL",
+            "region": "",
+            "reported": "FM",
+            "amc": "",
+            "end": "",
+            "days": 0,
+            "rev": 0.9539,
+            "eng": 0,
+            "cm": 0,
+            "status": "Active"
+          },
+          {
+            "plant": "BPCL Surat",
+            "omc": "BPCL",
+            "region": "",
+            "reported": "FM",
+            "amc": "",
+            "end": "",
+            "days": 0,
+            "rev": 0.9302,
+            "eng": 0,
+            "cm": 0,
+            "status": "Active"
+          },
+          {
+            "plant": "IOCL Tirunelvelli",
+            "omc": "IOCL",
+            "region": "",
+            "reported": "FM",
+            "amc": "",
+            "end": "",
+            "days": 0,
+            "rev": 0.832,
+            "eng": 0,
+            "cm": 0,
+            "status": "Active"
+          },
+          {
+            "plant": "IOCL Gorakhpur",
+            "omc": "IOCL",
+            "region": "",
+            "reported": "FM",
+            "amc": "",
+            "end": "",
+            "days": 0,
+            "rev": 0.7879,
+            "eng": 0,
+            "cm": 0,
+            "status": "Active"
+          },
+          {
+            "plant": "HPCL Chandrapur",
+            "omc": "HPCL",
+            "region": "",
+            "reported": "FM",
+            "amc": "",
+            "end": "",
+            "days": 0,
+            "rev": 0.7845,
+            "eng": 0,
+            "cm": 0,
+            "status": "Active"
+          },
+          {
+            "plant": "HPCL Warangal",
+            "omc": "HPCL",
+            "region": "",
+            "reported": "FM",
+            "amc": "",
+            "end": "",
+            "days": 0,
+            "rev": 0.7632,
+            "eng": 0,
+            "cm": 0,
+            "status": "Active"
+          },
+          {
+            "plant": "BPCL Bareilly",
+            "omc": "BPCL",
+            "region": "",
+            "reported": "FM",
+            "amc": "",
+            "end": "",
+            "days": 0,
+            "rev": 0.7137,
+            "eng": 0,
+            "cm": 0,
+            "status": "Active"
+          },
+          {
+            "plant": "BPCL Dharwad",
+            "omc": "BPCL",
+            "region": "",
+            "reported": "FM",
+            "amc": "",
+            "end": "",
+            "days": 0,
+            "rev": 0.6737,
+            "eng": 0,
+            "cm": 0,
+            "status": "Active"
+          },
+          {
+            "plant": "HPCL Barhi",
+            "omc": "HPCL",
+            "region": "",
+            "reported": "FM",
+            "amc": "",
+            "end": "",
+            "days": 0,
+            "rev": 0.5891,
+            "eng": 0,
+            "cm": 0,
+            "status": "Active"
+          }
+        ]
+      }
+    }
+  ]
+}
