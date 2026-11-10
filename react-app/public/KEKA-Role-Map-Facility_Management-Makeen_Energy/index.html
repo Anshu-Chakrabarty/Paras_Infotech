@@ -122,17 +122,17 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 <header class="top"><span class="t">MAKEEN Energy India</span><span class="right" id="progress"></span></header>
 <div class="wrap">
 <h1>KEKA job title → Facility role</h1>
-<p class="lead">KEKA has job titles (Technician, Plant Manager, and so on). This portal has 14 roles. This page maps one to the other, in two steps.</p>
+<p class="lead">KEKA has job titles (Technician, Plant Manager, and so on). First say who needs a login to Facility Management and Service Management. Then map those titles to a portal role.</p>
 <div class="tabs" role="tablist">
   <button type="button" id="pill1" class="on" role="tab" aria-selected="true">
     <span class="k">STEP 1 OF 2</span>
     <span class="l">Who can sign in?</span>
-    <span class="s">Yes or No for each KEKA title. Names are listed so you can see who they are.</span>
+    <span class="s">Yes or No: do they need a login to Facility Management and Service Management? Names are listed so you can see who they are.</span>
   </button>
   <button type="button" id="pill2" role="tab" aria-selected="false">
     <span class="k">STEP 2 OF 2</span>
     <span class="l">What role do they get?</span>
-    <span class="s">Only titles you marked Yes. Pick a Facility role. What that role can do is shown next to it.</span>
+    <span class="s">Only titles you marked Yes. Pick their role. What that role can do is shown next to it.</span>
   </button>
 </div>
 <div class="how" id="how"></div>
@@ -199,8 +199,8 @@ let ready=false;
 let saveTimer=null;
 let filter="all";
 let qfind="";
-const HOW1="On this step, look at each KEKA job title and the names under it. Answer Yes or No: do they need a Facility login? On the names list you can select many at once, Remove them, or Put them back. Remove one name with the button on that row.";
-const HOW2="These are only the titles you marked Yes. Pick a Facility role. The box on the right tells you what that role means and what they can do. You can still select names in bulk, Remove them, or Put them back.";
+const HOW1="On this step, look at each KEKA job title and the names under it. Answer Yes or No: do they need a login to Facility Management and Service Management? On the names list you can select many at once, Remove them, or Put them back. Remove one name with the button on that row.";
+const HOW2="These are only the titles you marked Yes for Facility Management and Service Management. Pick a portal role. The box on the right tells you what that role means and what they can do. You can still select names in bulk, Remove them, or Put them back.";
 const norm=s=>s.toLowerCase().replace(/\s+/g," ").trim();
 function el(t,a={},...c){const n=document.createElement(t);for(const k in a){if(k==="class")n.className=a[k];else if(k.startsWith("on"))n.addEventListener(k.slice(2),a[k]);else if(a[k]===false||a[k]==null){}else if(a[k]===true)n.setAttribute(k,"");else n.setAttribute(k,a[k])}c.flat().forEach(x=>{if(x!=null)n.append(x)});return n}
 function status(t){const n=document.getElementById("progress2");if(n)n.textContent=t||""}
@@ -240,7 +240,7 @@ function answers(){
  });
 }
 function csv(){
- const rows=[["KEKA designation","People in KEKA","Facility login","Dropped","Portal role","People who get login"]];
+ const rows=[["KEKA designation","People in KEKA","Facility / Service Management login","Dropped","Portal role","People who get login"]];
  answers().forEach(a=>rows.push([a.designation,a.peopleCount,a.access,a.dropped.map(x=>x.name).join("; "),a.role,a.people.map(x=>x.name+" ("+(x.location||"")+")").join("; ")]));
  return rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(",")).join("\n");
 }
@@ -323,8 +323,8 @@ function desCard(d){
   el("div",{class:"ttl"},d.label),
   el("div",{class:"meta"},"KEKA designation · "+d.people.length+" "+(d.people.length===1?"person holds":"people hold")+" this title")
  );
- if(oftenNoLogin(d.label)&&s.access!=="yes")top.append(el("div",{class:"hint"},"This title looks like sales, HR, piping or SCM. Most of these do not need a Facility login — still confirm."));
- top.append(el("p",{class:"ask"},"Do these people need a login to Facility Management?"));
+ if(oftenNoLogin(d.label)&&s.access!=="yes")top.append(el("div",{class:"hint"},"This title looks like sales, HR, piping or SCM. Most of these do not need a Facility / Service Management login — still confirm."));
+ top.append(el("p",{class:"ask"},"Do these people need a login to Facility Management and Service Management?"));
  const yes=el("button",{class:"btn yes"+(s.access==="yes"?" on":""),type:"button",onclick:()=>setAccess(d,"yes")},"Yes — they need a login");
  const no=el("button",{class:"btn no"+(s.access==="no"?" on":""),type:"button",onclick:()=>setAccess(d,"no")},"No — they do not");
  top.append(el("div",{class:"choice"},yes,no));
@@ -339,15 +339,15 @@ function roleRow(d){
   el("div",{class:"meta"},peopleOf(d).length+" of "+d.people.length+" people from this title will get the role you pick")
  );
  card.append(top);
- const sel=el("select",{class:"role","aria-label":"Facility role for "+d.label});
- sel.append(el("option",{value:""},"Choose a Facility role"));
+ const sel=el("select",{class:"role","aria-label":"Portal role for "+d.label});
+ sel.append(el("option",{value:""},"Choose a portal role"));
  ROLES.forEach(r=>sel.append(el("option",{value:r.id},r.id)));
  sel.value=s.role||"";
  const panel=el("div",{});
  function show(){panel.innerHTML="";panel.append(roleCard(sel.value))}
  sel.addEventListener("change",()=>{state[d.key].role=sel.value;show();progress();saveDraft()});
  show();
- card.append(el("div",{class:"rolebox"},el("div",{},el("label",{},"Facility role for this title"),sel),panel));
+ card.append(el("div",{class:"rolebox"},el("div",{},el("label",{},"Portal role for this title"),sel),panel));
  card.append(nameTable(d));
  return card;
 }
@@ -368,7 +368,7 @@ function paintStep1(){
  const search=el("input",{type:"search",placeholder:"Search a KEKA title or a person’s name"});search.value=qfind;
  search.addEventListener("input",()=>{qfind=search.value;paintStep1()});
  const seg=el("div",{class:"seg"});
- [["all","All titles"],["open","Still waiting"],["yes","Yes — need login"],["no","No login"]].forEach(([id,lab])=>{
+ [["all","All titles"],["open","Still waiting"],["yes","Yes — Facility / Service login"],["no","No login"]].forEach(([id,lab])=>{
   seg.append(el("button",{type:"button",class:filter===id?"on":"",onclick:()=>{filter=id;paintStep1()}},lab));
  });
  tools.append(search,seg);box.append(tools);
@@ -446,14 +446,14 @@ function boot(people){
  document.getElementById("review").onclick=()=>{
   const yes=yesList();const missing=yes.filter(d=>!state[d.key].role);
   const body=document.getElementById("mbody");body.innerHTML="";
-  const tb=el("table",{class:"grid"},el("tr",{},el("th",{},"KEKA title"),el("th",{},"People"),el("th",{},"Facility role"),el("th",{},"Names")));
+  const tb=el("table",{class:"grid"},el("tr",{},el("th",{},"KEKA title"),el("th",{},"People"),el("th",{},"Portal role"),el("th",{},"Names")));
   yes.forEach(d=>{
    tb.append(el("tr",{},el("td",{},d.label),el("td",{},String(peopleOf(d).length)),el("td",{},state[d.key].role||"—"),el("td",{},peopleOf(d).map(p=>p[1]).join(", "))));
   });
   const no=DES.filter(d=>state[d.key].access==="no");
   if(no.length)tb.append(el("tr",{},el("td",{},"No login ("+no.length+" titles)"),el("td",{colspan:"3"},no.map(d=>d.label).join(", "))));
   body.append(tb);
-  document.getElementById("msub").textContent=(missing.length?missing.length+" title"+(missing.length>1?"s have":" has")+" no role yet. ":"")+"Titles marked Yes will get the Facility role you picked. Submit?";
+  document.getElementById("msub").textContent=(missing.length?missing.length+" title"+(missing.length>1?"s have":" has")+" no role yet. ":"")+"Titles marked Yes will get a login to Facility Management and Service Management, with the role you picked. Submit?";
   document.getElementById("modal").classList.add("show");document.getElementById("confirm").focus();
  };
  document.getElementById("confirm").onclick=async()=>{
