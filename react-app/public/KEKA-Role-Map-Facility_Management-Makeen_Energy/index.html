@@ -28,6 +28,8 @@ h1{margin:4px 0 8px;color:var(--navy);font-size:26px}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) h1{color:#9cc3e4}}
 :root[data-theme="dark"] h1{color:#9cc3e4}
 .lead{margin:0 0 16px;color:var(--soft);max-width:70ch}
+.tabs.sys{margin-bottom:12px}
+.tabs.sys button .l{font-size:18px}
 .tabs{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:8px;overflow:hidden;margin:0 0 16px;background:var(--card)}
 .tabs button{font:inherit;text-align:left;background:var(--card);color:var(--ink);border:0;border-right:1px solid var(--line);padding:14px 16px;cursor:pointer}
 .tabs button:last-child{border-right:0}
@@ -111,9 +113,11 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 <div class="app">
 <aside>
   <div class="brand">MAKEEN ENERGY</div>
-  <div class="sub">Facility Management</div>
+  <div class="sub">KEKA designation to role</div>
   <nav>
-    <a href="#step1" id="nav1" class="on">Step 1 — Who can sign in<small id="c1">0 of 0 answered</small></a>
+    <a href="#fm" id="navfm" class="on">Facility Management<small>Separate login and roles</small></a>
+    <a href="#sm" id="navsm">Service Management<small>Separate login and roles</small></a>
+    <a href="#step1" id="nav1">Step 1 — Who can sign in<small id="c1">0 of 0 answered</small></a>
     <a href="#step2" id="nav2">Step 2 — What role do they get<small id="c2">0 of 0 have a role</small></a>
   </nav>
   <a class="out" href="/Access-Management-Facility_Management-Makeen_Energy/">Access Management</a>
@@ -121,18 +125,30 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 <div class="main">
 <header class="top"><span class="t">MAKEEN Energy India</span><span class="right" id="progress"></span></header>
 <div class="wrap">
-<h1>KEKA job title → Facility role</h1>
-<p class="lead">KEKA has job titles (Technician, Plant Manager, and so on). First say who needs a login to Facility Management and Service Management. Then map those titles to a portal role.</p>
-<div class="tabs" role="tablist">
+<h1>KEKA job title → portal role</h1>
+<p class="lead">Facility Management and Service Management are separate. Open one tab, say who can sign in to that system, then pick their role. Answers on one tab do not copy to the other.</p>
+<div class="tabs sys" role="tablist" aria-label="System">
+  <button type="button" id="sysfm" class="on" role="tab" aria-selected="true">
+    <span class="k">SYSTEM</span>
+    <span class="l">Facility Management</span>
+    <span class="s">Who gets an FM login, and which FM role.</span>
+  </button>
+  <button type="button" id="syssm" role="tab" aria-selected="false">
+    <span class="k">SYSTEM</span>
+    <span class="l">Service Management</span>
+    <span class="s">Who gets an SM login, and which SM role.</span>
+  </button>
+</div>
+<div class="tabs" role="tablist" aria-label="Steps">
   <button type="button" id="pill1" class="on" role="tab" aria-selected="true">
     <span class="k">STEP 1 OF 2</span>
     <span class="l">Who can sign in?</span>
-    <span class="s">Yes or No: do they need a login to Facility Management and Service Management? Names are listed so you can see who they are.</span>
+    <span class="s" id="pill1s">Yes or No for this system. Names are listed so you can see who they are.</span>
   </button>
   <button type="button" id="pill2" role="tab" aria-selected="false">
     <span class="k">STEP 2 OF 2</span>
     <span class="l">What role do they get?</span>
-    <span class="s">Only titles you marked Yes. Pick their role. What that role can do is shown next to it.</span>
+    <span class="s">Only titles you marked Yes on this tab. Pick their role. What that role can do is shown next to it.</span>
   </button>
 </div>
 <div class="how" id="how"></div>
@@ -190,35 +206,47 @@ function suggestedRole(d){
 }
 function oftenNoLogin(d){return suggestedRole(d)==="No FM login"}
 const SAVE_URL="/api/fm-role-map";
-const KEY="fm-role-map-draft-v1";
+const KEY="fm-role-map-draft-v2";
+const OLDKEY="fm-role-map-draft-v1";
 const PEOPLE_URL="/KEKA-Role-Map-Facility_Management-Makeen_Energy/people.json";
+const SYS={fm:{id:"fm",name:"Facility Management"},sm:{id:"sm",name:"Service Management"}};
 let DES=[];
-const state={};
+const state={fm:{},sm:{}};
+let sys="fm";
 let step=1;
 let ready=false;
 let saveTimer=null;
 let filter="all";
 let qfind="";
-const HOW1="On this step, look at each KEKA job title and the names under it. Answer Yes or No: do they need a login to Facility Management and Service Management? On the names list you can select many at once, Remove them, or Put them back. Remove one name with the button on that row.";
-const HOW2="These are only the titles you marked Yes for Facility Management and Service Management. Pick a portal role. The box on the right tells you what that role means and what they can do. You can still select names in bulk, Remove them, or Put them back.";
+function sysName(){return SYS[sys].name}
+function emptyRow(){return {access:null,drop:[],role:""}}
+function st(d){return state[sys][d.key]}
+function how1(){return "You are on "+sysName()+". Look at each KEKA job title and the names under it. Answer Yes or No: do they need a login to "+sysName()+"? On the names list you can select many at once, Remove them, or Put them back."}
+function how2(){return "You are still on "+sysName()+". These are only the titles you marked Yes for this system. Pick a portal role. The box on the right tells you what that role means and what they can do."}
 const norm=s=>s.toLowerCase().replace(/\s+/g," ").trim();
 function el(t,a={},...c){const n=document.createElement(t);for(const k in a){if(k==="class")n.className=a[k];else if(k.startsWith("on"))n.addEventListener(k.slice(2),a[k]);else if(a[k]===false||a[k]==null){}else if(a[k]===true)n.setAttribute(k,"");else n.setAttribute(k,a[k])}c.flat().forEach(x=>{if(x!=null)n.append(x)});return n}
 function status(t){const n=document.getElementById("progress2");if(n)n.textContent=t||""}
-function peopleOf(d){return d.people.filter(p=>!(state[d.key].drop||[]).includes(String(p[0])))}
-function yesList(){return DES.filter(d=>state[d.key].access==="yes")}
-function packDraft(){
+function peopleOf(d){return d.people.filter(p=>!(st(d).drop||[]).includes(String(p[0])))}
+function yesList(){return DES.filter(d=>st(d).access==="yes")}
+function packOne(pack){
  const draft={};
- DES.forEach(d=>{const s=state[d.key];draft[d.key]={access:s.access,drop:[...(s.drop||[])],role:s.role||""}});
+ DES.forEach(d=>{const s=pack[d.key]||emptyRow();draft[d.key]={access:s.access,drop:[...(s.drop||[])],role:s.role||""}});
  return draft;
+}
+function packDraft(){return {fm:packOne(state.fm),sm:packOne(state.sm)}}
+function applyOne(pack,src){
+ if(!src||typeof src!=="object")return;
+ DES.forEach(d=>{
+  const row=src[d.key];if(!row||!pack[d.key])return;
+  if(row.access==="yes"||row.access==="no")pack[d.key].access=row.access;
+  pack[d.key].drop=Array.isArray(row.drop)?row.drop.map(String):[];
+  if(typeof row.role==="string")pack[d.key].role=row.role;
+ });
 }
 function applyDraft(draft){
  if(!draft||typeof draft!=="object")return;
- DES.forEach(d=>{
-  const row=draft[d.key];if(!row)return;
-  if(row.access==="yes"||row.access==="no")state[d.key].access=row.access;
-  state[d.key].drop=Array.isArray(row.drop)?row.drop.map(String):[];
-  if(typeof row.role==="string")state[d.key].role=row.role;
- });
+ if(draft.fm||draft.sm){applyOne(state.fm,draft.fm);applyOne(state.sm,draft.sm);return}
+ applyOne(state.fm,draft);
 }
 function saveLocal(){try{localStorage.setItem(KEY,JSON.stringify({savedAt:Date.now(),draft:packDraft()}))}catch(e){}}
 function persistNow(){
@@ -231,17 +259,20 @@ function persistNow(){
   .catch(()=>status("Could not save. Kept on this device."));
 }
 function saveDraft(){saveLocal();clearTimeout(saveTimer);saveTimer=setTimeout(persistNow,400)}
-function answers(){
- return DES.map(d=>{
-  const s=state[d.key];
+function answersFor(which){
+ const prev=sys;sys=which;
+ const rows=DES.map(d=>{
+  const s=st(d);
   const dropped=(s.drop||[]).map(n=>d.people.find(p=>String(p[0])===String(n))).filter(Boolean).map(p=>({employeeNumber:p[0],name:p[1],location:p[3]}));
   const people=s.access==="yes"?peopleOf(d).map(p=>({employeeNumber:p[0],name:p[1],location:p[3]})):[];
-  return {designation:d.label,peopleCount:d.people.length,access:s.access||"not decided",dropped,role:s.access==="yes"?(s.role||""):"No FM login",people};
+  return {system:SYS[which].name,designation:d.label,peopleCount:d.people.length,access:s.access||"not decided",dropped,role:s.access==="yes"?(s.role||""):"No login",people};
  });
+ sys=prev;return rows;
 }
+function answers(){return answersFor("fm").concat(answersFor("sm"))}
 function csv(){
- const rows=[["KEKA designation","People in KEKA","Facility / Service Management login","Dropped","Portal role","People who get login"]];
- answers().forEach(a=>rows.push([a.designation,a.peopleCount,a.access,a.dropped.map(x=>x.name).join("; "),a.role,a.people.map(x=>x.name+" ("+(x.location||"")+")").join("; ")]));
+ const rows=[["System","KEKA designation","People in KEKA","Login","Dropped","Portal role","People who get login"]];
+ answers().forEach(a=>rows.push([a.system,a.designation,a.peopleCount,a.access,a.dropped.map(x=>x.name).join("; "),a.role,a.people.map(x=>x.name+" ("+(x.location||"")+")").join("; ")]));
  return rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(",")).join("\n");
 }
 function download(){const url=URL.createObjectURL(new Blob([csv()],{type:"text/csv"}));const a=el("a",{href:url,download:"keka-designation-to-role-map.csv"});document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000)}
@@ -257,17 +288,19 @@ function roleCard(id){
  );
 }
 function setAccess(d,v){
- state[d.key].access=v;
- if(v==="no")state[d.key].role="";
- else if(!state[d.key].role){const sug=suggestedRole(d.label);if(sug&&sug!=="No FM login")state[d.key].role=sug}
+ const s=st(d);
+ s.access=v;
+ if(v==="no")s.role="";
+ else if(!s.role){const sug=suggestedRole(d.label);if(sug&&sug!=="No FM login")s.role=sug}
  paint();saveDraft();
 }
 function togglePerson(d,num,on){
- const drop=state[d.key].drop||[];
+ const s=st(d);
+ const drop=s.drop||[];
  const i=drop.indexOf(String(num));
  if(!on&&i<0)drop.push(String(num));
  if(on&&i>=0)drop.splice(i,1);
- state[d.key].drop=drop;
+ s.drop=drop;
  saveDraft();progress();
 }
 function nameTable(d){
@@ -285,7 +318,7 @@ function nameTable(d){
   const rows=visible();tbody.innerHTML="";
   rows.forEach(p=>{
    const id=String(p[0]);
-   const kept=!(state[d.key].drop||[]).includes(id);
+   const kept=!(st(d).drop||[]).includes(id);
    const tr=el("tr",{class:kept?"":"off"});
    const cb=el("input",{type:"checkbox",title:"Select "+p[1]});cb.checked=selected.has(id);
    cb.addEventListener("change",()=>{if(cb.checked)selected.add(id);else selected.delete(id);draw()});
@@ -317,14 +350,14 @@ function nameTable(d){
  return box;
 }
 function desCard(d){
- const s=state[d.key];
+ const s=st(d);
  const card=el("div",{class:"card"+(s.access==="yes"?" yes":s.access==="no"?" no":"")});
  const top=el("div",{class:"top"},
   el("div",{class:"ttl"},d.label),
   el("div",{class:"meta"},"KEKA designation · "+d.people.length+" "+(d.people.length===1?"person holds":"people hold")+" this title")
  );
- if(oftenNoLogin(d.label)&&s.access!=="yes")top.append(el("div",{class:"hint"},"This title looks like sales, HR, piping or SCM. Most of these do not need a Facility / Service Management login — still confirm."));
- top.append(el("p",{class:"ask"},"Do these people need a login to Facility Management and Service Management?"));
+ if(oftenNoLogin(d.label)&&s.access!=="yes")top.append(el("div",{class:"hint"},"This title looks like sales, HR, piping or SCM. Most of these do not need a "+sysName()+" login — still confirm."));
+ top.append(el("p",{class:"ask"},"Do these people need a login to "+sysName()+"?"));
  const yes=el("button",{class:"btn yes"+(s.access==="yes"?" on":""),type:"button",onclick:()=>setAccess(d,"yes")},"Yes — they need a login");
  const no=el("button",{class:"btn no"+(s.access==="no"?" on":""),type:"button",onclick:()=>setAccess(d,"no")},"No — they do not");
  top.append(el("div",{class:"choice"},yes,no));
@@ -332,31 +365,31 @@ function desCard(d){
  return card;
 }
 function roleRow(d){
- const s=state[d.key];
+ const s=st(d);
  const card=el("div",{class:"card yes"});
  const top=el("div",{class:"top"},
   el("div",{class:"ttl"},d.label),
-  el("div",{class:"meta"},peopleOf(d).length+" of "+d.people.length+" people from this title will get the role you pick")
+  el("div",{class:"meta"},peopleOf(d).length+" of "+d.people.length+" people from this title will get the "+sysName()+" role you pick")
  );
  card.append(top);
- const sel=el("select",{class:"role","aria-label":"Portal role for "+d.label});
+ const sel=el("select",{class:"role","aria-label":sysName()+" role for "+d.label});
  sel.append(el("option",{value:""},"Choose a portal role"));
  ROLES.forEach(r=>sel.append(el("option",{value:r.id},r.id)));
  sel.value=s.role||"";
  const panel=el("div",{});
  function show(){panel.innerHTML="";panel.append(roleCard(sel.value))}
- sel.addEventListener("change",()=>{state[d.key].role=sel.value;show();progress();saveDraft()});
+ sel.addEventListener("change",()=>{st(d).role=sel.value;show();progress();saveDraft()});
  show();
- card.append(el("div",{class:"rolebox"},el("div",{},el("label",{},"Portal role for this title"),sel),panel));
+ card.append(el("div",{class:"rolebox"},el("div",{},el("label",{},"Portal role for this title on "+sysName()),sel),panel));
  card.append(nameTable(d));
  return card;
 }
 function visibleDes(){
  const f=norm(qfind);
  return DES.filter(d=>{
-  if(filter==="yes"&&state[d.key].access!=="yes")return false;
-  if(filter==="no"&&state[d.key].access!=="no")return false;
-  if(filter==="open"&&state[d.key].access)return false;
+  if(filter==="yes"&&st(d).access!=="yes")return false;
+  if(filter==="no"&&st(d).access!=="no")return false;
+  if(filter==="open"&&st(d).access)return false;
   if(!f)return true;
   if(norm(d.label).includes(f))return true;
   return d.people.some(p=>norm(p[1]+" "+(p[3]||"")).includes(f));
@@ -368,7 +401,7 @@ function paintStep1(){
  const search=el("input",{type:"search",placeholder:"Search a KEKA title or a person’s name"});search.value=qfind;
  search.addEventListener("input",()=>{qfind=search.value;paintStep1()});
  const seg=el("div",{class:"seg"});
- [["all","All titles"],["open","Still waiting"],["yes","Yes — Facility / Service login"],["no","No login"]].forEach(([id,lab])=>{
+ [["all","All titles"],["open","Still waiting"],["yes","Yes — need login"],["no","No login"]].forEach(([id,lab])=>{
   seg.append(el("button",{type:"button",class:filter===id?"on":"",onclick:()=>{filter=id;paintStep1()}},lab));
  });
  tools.append(search,seg);box.append(tools);
@@ -382,18 +415,18 @@ function paintStep2(){
   ...ROLES.map(r=>el("div",{class:"one"},el("b",{},r.id),el("p",{},r.desc),el("ul",{},...r.access.map(x=>el("li",{},x)))))));
  box.append(legend);
  const yes=yesList();
- if(!yes.length){box.append(el("div",{class:"empty"},"Step 2 is empty until you mark Yes on step 1. Click “Who can sign in?” and answer Yes or No for each title."));return}
+ if(!yes.length){box.append(el("div",{class:"empty"},"Step 2 for "+sysName()+" is empty until you mark Yes on step 1 of this tab."));return}
  yes.forEach(d=>box.append(roleRow(d)));
 }
 function progress(){
- const decided=DES.filter(d=>state[d.key].access).length;
+ const decided=DES.filter(d=>st(d).access).length;
  const yes=yesList();
- const mapped=yes.filter(d=>state[d.key].role).length;
+ const mapped=yes.filter(d=>st(d).role).length;
  document.getElementById("c1").textContent=decided+" of "+DES.length+" titles answered";
  document.getElementById("c2").textContent=(yes.length?mapped+" of "+yes.length+" have a role":"No titles on this step yet");
- document.getElementById("progress").textContent=step===1?(decided+" of "+DES.length+" titles answered"):(mapped+" of "+yes.length+" titles have a role");
+ document.getElementById("progress").textContent=sysName()+" · "+(step===1?(decided+" of "+DES.length+" titles answered"):(mapped+" of "+yes.length+" titles have a role"));
  const nPeople=yes.reduce((n,d)=>n+peopleOf(d).length,0);
- document.getElementById("to2").textContent=yes.length?("Go to step 2 — choose roles ("+yes.length+" titles, "+nPeople+" people)"):"Go to step 2 — choose roles";
+ document.getElementById("to2").textContent=yes.length?("Go to step 2 — choose "+sysName()+" roles ("+yes.length+" titles, "+nPeople+" people)"):"Go to step 2 — choose roles";
  document.getElementById("to2").disabled=yes.length===0&&step===1;
 }
 function showStep(n){
@@ -410,11 +443,22 @@ function showStep(n){
  document.getElementById("back2").hidden=n!==2;
  document.getElementById("review").hidden=n!==2;
  document.getElementById("how").innerHTML=n===1
-  ?"<b>What to do on this step</b><p>"+HOW1+"</p>"
-  :"<b>What to do on this step</b><p>"+HOW2+"</p>";
+  ?"<b>What to do on this step</b><p>"+how1()+"</p>"
+  :"<b>What to do on this step</b><p>"+how2()+"</p>";
+ const s1=document.getElementById("pill1s");if(s1)s1.textContent="Yes or No: do they need a login to "+sysName()+"? Names are listed so you can see who they are.";
  if(n===1)paintStep1();else paintStep2();
  progress();
  window.scrollTo({top:0,behavior:"smooth"});
+}
+function showSys(id){
+ sys=id;
+ document.getElementById("sysfm").classList.toggle("on",id==="fm");
+ document.getElementById("syssm").classList.toggle("on",id==="sm");
+ document.getElementById("sysfm").setAttribute("aria-selected",id==="fm"?"true":"false");
+ document.getElementById("syssm").setAttribute("aria-selected",id==="sm"?"true":"false");
+ document.getElementById("navfm").classList.toggle("on",id==="fm");
+ document.getElementById("navsm").classList.toggle("on",id==="sm");
+ showStep(step);
 }
 function paint(){if(step===1)paintStep1();else paintStep2();progress()}
 function hideModal(){document.getElementById("modal").classList.remove("show")}
@@ -432,7 +476,11 @@ function boot(people){
   (map[key]||(map[key]={key,label,people:[]})).people.push(e);
  });
  DES=Object.values(map).sort((a,b)=>b.people.length-a.people.length||a.label.localeCompare(b.label));
- DES.forEach(d=>{d.people.sort((a,b)=>String(a[1]).localeCompare(String(b[1])));state[d.key]={access:null,drop:[],role:""}});
+ DES.forEach(d=>{d.people.sort((a,b)=>String(a[1]).localeCompare(String(b[1])));state.fm[d.key]=emptyRow();state.sm[d.key]=emptyRow()});
+ document.getElementById("sysfm").onclick=()=>showSys("fm");
+ document.getElementById("syssm").onclick=()=>showSys("sm");
+ document.getElementById("navfm").onclick=e=>{e.preventDefault();showSys("fm")};
+ document.getElementById("navsm").onclick=e=>{e.preventDefault();showSys("sm")};
  document.getElementById("pill1").onclick=()=>showStep(1);
  document.getElementById("pill2").onclick=()=>showStep(2);
  document.getElementById("nav1").onclick=e=>{e.preventDefault();showStep(1)};
@@ -444,16 +492,20 @@ function boot(people){
  document.getElementById("modal").addEventListener("click",e=>{if(e.target.id==="modal")hideModal()});
  document.addEventListener("keydown",e=>{if(e.key==="Escape")hideModal()});
  document.getElementById("review").onclick=()=>{
-  const yes=yesList();const missing=yes.filter(d=>!state[d.key].role);
   const body=document.getElementById("mbody");body.innerHTML="";
-  const tb=el("table",{class:"grid"},el("tr",{},el("th",{},"KEKA title"),el("th",{},"People"),el("th",{},"Portal role"),el("th",{},"Names")));
-  yes.forEach(d=>{
-   tb.append(el("tr",{},el("td",{},d.label),el("td",{},String(peopleOf(d).length)),el("td",{},state[d.key].role||"—"),el("td",{},peopleOf(d).map(p=>p[1]).join(", "))));
+  const tb=el("table",{class:"grid"},el("tr",{},el("th",{},"System"),el("th",{},"KEKA title"),el("th",{},"People"),el("th",{},"Portal role"),el("th",{},"Names")));
+  let missing=0;
+  answers().forEach(a=>{
+   if(a.access!=="yes")return;
+   if(!a.role)missing++;
+   tb.append(el("tr",{},el("td",{},a.system),el("td",{},a.designation),el("td",{},String(a.people.length)),el("td",{},a.role||"—"),el("td",{},a.people.map(p=>p.name).join(", "))));
   });
-  const no=DES.filter(d=>state[d.key].access==="no");
-  if(no.length)tb.append(el("tr",{},el("td",{},"No login ("+no.length+" titles)"),el("td",{colspan:"3"},no.map(d=>d.label).join(", "))));
+  const noFm=answersFor("fm").filter(a=>a.access==="no");
+  const noSm=answersFor("sm").filter(a=>a.access==="no");
+  if(noFm.length)tb.append(el("tr",{},el("td",{},"Facility Management"),el("td",{},"No login ("+noFm.length+" titles)"),el("td",{colspan:"3"},noFm.map(a=>a.designation).join(", "))));
+  if(noSm.length)tb.append(el("tr",{},el("td",{},"Service Management"),el("td",{},"No login ("+noSm.length+" titles)"),el("td",{colspan:"3"},noSm.map(a=>a.designation).join(", "))));
   body.append(tb);
-  document.getElementById("msub").textContent=(missing.length?missing.length+" title"+(missing.length>1?"s have":" has")+" no role yet. ":"")+"Titles marked Yes will get a login to Facility Management and Service Management, with the role you picked. Submit?";
+  document.getElementById("msub").textContent=(missing?missing+" title"+(missing>1?"s have":" has")+" no role yet. ":"")+"Submit both Facility Management and Service Management maps?";
   document.getElementById("modal").classList.add("show");document.getElementById("confirm").focus();
  };
  document.getElementById("confirm").onclick=async()=>{
@@ -467,14 +519,14 @@ function boot(people){
  };
  fetch(SAVE_URL,{cache:"no-store"}).then(r=>{if(!r.ok)throw new Error("load");return r.json()}).then(data=>{
   const remote=data&&data.draft;
-  let local=null;try{local=JSON.parse(localStorage.getItem(KEY)||"null")}catch(e){}
+  let local=null;try{local=JSON.parse(localStorage.getItem(KEY)||localStorage.getItem(OLDKEY)||"null")}catch(e){}
   if(remote&&Object.keys(remote).length)applyDraft(remote);
   else if(local&&local.draft)applyDraft(local.draft);
   ready=true;
   showStep(1);
   if(!(remote&&Object.keys(remote).length)&&local&&local.draft)persistNow();
  }).catch(()=>{
-  try{const local=JSON.parse(localStorage.getItem(KEY)||"null");if(local&&local.draft)applyDraft(local.draft)}catch(e){}
+  try{const local=JSON.parse(localStorage.getItem(KEY)||localStorage.getItem(OLDKEY)||"null");if(local&&local.draft)applyDraft(local.draft)}catch(e){}
   ready=true;showStep(1);
  });
 }
