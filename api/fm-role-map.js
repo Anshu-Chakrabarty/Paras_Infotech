@@ -31,7 +31,7 @@ function csvFrom(payload) {
       a.access || '',
       Array.isArray(a.dropped) ? a.dropped.map((x) => x.name || '').join('; ') : '',
       a.role || '',
-      Array.isArray(a.people) ? a.people.map((x) => `${x.name || ''} (${x.location || ''})`).join('; ') : '',
+      Array.isArray(a.people) ? a.people.map((x) => `${x.name || ''} <${x.email || ''}> (${x.location || ''})`).join('; ') : '',
     ])
   }
   return rows.map((r) => r.map((v) => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\n')

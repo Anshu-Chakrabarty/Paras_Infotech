@@ -76,6 +76,11 @@ h1{margin:4px 0 8px;color:var(--navy);font-size:26px}
 .who th,.who td{padding:6px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:middle}
 .who th{background:var(--card);position:sticky;top:0}
 .who tr.off{opacity:.5;text-decoration:line-through}
+.who tr.need td.email,.need{color:var(--no);font-weight:700}
+.who td.email{font-size:13px;word-break:break-all}
+.mailin{width:100%;font:inherit;font-size:15px;color:var(--ink);background:var(--card);border:1px solid #c9d1da;border-radius:4px;padding:8px 10px}
+.mailin.bad{border-color:var(--no)}
+.err{color:var(--no);font-size:13px;margin:0 22px 8px}
 .rolebox{display:grid;grid-template-columns:minmax(240px,280px) 1fr;gap:14px;align-items:start;padding:0 16px 16px}
 @media (max-width:760px){.rolebox{grid-template-columns:1fr}}
 .rolebox label{display:block;font-weight:700;margin-bottom:6px}
@@ -126,7 +131,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 <header class="top"><span class="t">MAKEEN Energy India</span><span class="right" id="progress"></span></header>
 <div class="wrap">
 <h1>KEKA job title → portal role</h1>
-<p class="lead">Facility Management and Service Management are separate. Open one tab, say who can sign in to that system, then pick their role. Answers on one tab do not copy to the other.</p>
+<p class="lead">Facility Management and Service Management are separate. Open one tab, say who can sign in to that system, then pick their role. Answers on one tab do not copy to the other. Anyone who will use the system needs an email so we can create their login.</p>
 <div class="tabs sys" role="tablist" aria-label="System">
   <button type="button" id="sysfm" class="on" role="tab" aria-selected="true">
     <span class="k">SYSTEM</span>
@@ -166,6 +171,12 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 <h3 id="mt">Please confirm the map</h3><div class="sub" id="msub"></div>
 <div class="body" id="mbody"></div>
 <div class="acts"><button class="btn ghost" id="back">Go back and change</button><button class="btn" id="confirm">Yes, submit</button></div></div></div>
+<div class="modal" id="emailModal" role="dialog" aria-modal="true" aria-labelledby="emt"><div class="dlg">
+<h3 id="emt">Email is required to create a login</h3>
+<div class="sub" id="emsub">KEKA has no email for these people. Type an email for each person. You cannot go to step 2 until every field is filled.</div>
+<p class="err" id="emerr" hidden>Fill every email. Each one must look like name@company.com.</p>
+<div class="body" id="embody"></div>
+<div class="acts"><button class="btn ghost" type="button" id="emailBack">Stay on step 1</button><button class="btn" type="button" id="emailSave">Save emails and go to step 2</button></div></div></div>
 <script>
 const ROLES=[
  {id:"Admin",desc:"Runs the portal set-up: people, this map, and plants.",access:["Search, Submit, Download and Approve on every Facility module","People, this designation map, and notices","Delete a plant, reopen an approved row, or replace a file after Approve"]},
@@ -206,8 +217,9 @@ function suggestedRole(d){
 }
 function oftenNoLogin(d){return suggestedRole(d)==="No FM login"}
 const SAVE_URL="/api/fm-role-map";
-const KEY="fm-role-map-draft-v2";
-const OLDKEY="fm-role-map-draft-v1";
+const KEY="fm-role-map-draft-v3";
+const OLDKEY="fm-role-map-draft-v2";
+const OLDKEY1="fm-role-map-draft-v1";
 const PEOPLE_URL="/KEKA-Role-Map-Facility_Management-Makeen_Energy/people.json";
 const SYS={fm:{id:"fm",name:"Facility Management"},sm:{id:"sm",name:"Service Management"}};
 let DES=[];
@@ -218,10 +230,23 @@ let ready=false;
 let saveTimer=null;
 let filter="all";
 let qfind="";
+const emails={};
+const EMAIL_RE=/^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 function sysName(){return SYS[sys].name}
 function emptyRow(){return {access:null,drop:[],role:""}}
 function st(d){return state[sys][d.key]}
-function how1(){return "You are on "+sysName()+". Look at each KEKA job title and the names under it. Answer Yes or No: do they need a login to "+sysName()+"? On the names list you can select many at once, Remove them, or Put them back."}
+function workEmail(p){return String(p[4]||"").trim()}
+function personalEmail(p){return String(p[5]||"").trim()}
+function kekaEmail(p){return workEmail(p)||personalEmail(p)}
+function loginEmail(p){return String(emails[String(p[0])]||"").trim()||kekaEmail(p)}
+function missingEmail(p){return !EMAIL_RE.test(loginEmail(p))}
+function selectedPeople(){
+ const seen=new Set();const out=[];
+ yesList().forEach(d=>peopleOf(d).forEach(p=>{const id=String(p[0]);if(seen.has(id))return;seen.add(id);out.push(p)}));
+ return out;
+}
+function missingEmailPeople(){return selectedPeople().filter(missingEmail)}
+function how1(){return "You are on "+sysName()+". Look at each KEKA job title and the names under it. Answer Yes or No: do they need a login to "+sysName()+"? Names show the KEKA email when we have one. If a person will use the system and KEKA has no email, you must type one before step 2."}
 function how2(){return "You are still on "+sysName()+". These are only the titles you marked Yes for this system. Pick a portal role. The box on the right tells you what that role means and what they can do."}
 const norm=s=>s.toLowerCase().replace(/\s+/g," ").trim();
 function el(t,a={},...c){const n=document.createElement(t);for(const k in a){if(k==="class")n.className=a[k];else if(k.startsWith("on"))n.addEventListener(k.slice(2),a[k]);else if(a[k]===false||a[k]==null){}else if(a[k]===true)n.setAttribute(k,"");else n.setAttribute(k,a[k])}c.flat().forEach(x=>{if(x!=null)n.append(x)});return n}
@@ -233,7 +258,7 @@ function packOne(pack){
  DES.forEach(d=>{const s=pack[d.key]||emptyRow();draft[d.key]={access:s.access,drop:[...(s.drop||[])],role:s.role||""}});
  return draft;
 }
-function packDraft(){return {fm:packOne(state.fm),sm:packOne(state.sm)}}
+function packDraft(){return {fm:packOne(state.fm),sm:packOne(state.sm),emails:{...emails}}}
 function applyOne(pack,src){
  if(!src||typeof src!=="object")return;
  DES.forEach(d=>{
@@ -245,6 +270,9 @@ function applyOne(pack,src){
 }
 function applyDraft(draft){
  if(!draft||typeof draft!=="object")return;
+ if(draft.emails&&typeof draft.emails==="object"){
+  Object.keys(draft.emails).forEach(k=>{const v=String(draft.emails[k]||"").trim();if(EMAIL_RE.test(v))emails[String(k)]=v});
+ }
  if(draft.fm||draft.sm){applyOne(state.fm,draft.fm);applyOne(state.sm,draft.sm);return}
  applyOne(state.fm,draft);
 }
@@ -263,8 +291,8 @@ function answersFor(which){
  const prev=sys;sys=which;
  const rows=DES.map(d=>{
   const s=st(d);
-  const dropped=(s.drop||[]).map(n=>d.people.find(p=>String(p[0])===String(n))).filter(Boolean).map(p=>({employeeNumber:p[0],name:p[1],location:p[3]}));
-  const people=s.access==="yes"?peopleOf(d).map(p=>({employeeNumber:p[0],name:p[1],location:p[3]})):[];
+  const dropped=(s.drop||[]).map(n=>d.people.find(p=>String(p[0])===String(n))).filter(Boolean).map(p=>({employeeNumber:p[0],name:p[1],location:p[3],email:loginEmail(p)}));
+  const people=s.access==="yes"?peopleOf(d).map(p=>({employeeNumber:p[0],name:p[1],location:p[3],email:loginEmail(p)})):[];
   return {system:SYS[which].name,designation:d.label,peopleCount:d.people.length,access:s.access||"not decided",dropped,role:s.access==="yes"?(s.role||""):"No login",people};
  });
  sys=prev;return rows;
@@ -272,7 +300,7 @@ function answersFor(which){
 function answers(){return answersFor("fm").concat(answersFor("sm"))}
 function csv(){
  const rows=[["System","KEKA designation","People in KEKA","Login","Dropped","Portal role","People who get login"]];
- answers().forEach(a=>rows.push([a.system,a.designation,a.peopleCount,a.access,a.dropped.map(x=>x.name).join("; "),a.role,a.people.map(x=>x.name+" ("+(x.location||"")+")").join("; ")]));
+ answers().forEach(a=>rows.push([a.system,a.designation,a.peopleCount,a.access,a.dropped.map(x=>x.name).join("; "),a.role,a.people.map(x=>x.name+" <"+(x.email||"")+"> ("+(x.location||"")+")").join("; ")]));
  return rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(",")).join("\n");
 }
 function download(){const url=URL.createObjectURL(new Blob([csv()],{type:"text/csv"}));const a=el("a",{href:url,download:"keka-designation-to-role-map.csv"});document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000)}
@@ -310,7 +338,7 @@ function nameTable(d){
  const tbody=el("tbody",{});
  const allCb=el("input",{type:"checkbox",title:"Select all names in this list"});
  const box=el("div",{class:"who"});
- function visible(){const f=norm(find.value);return d.people.filter(p=>!f||norm(p[1]+" "+(p[3]||"")+p[0]).includes(f))}
+ function visible(){const f=norm(find.value);return d.people.filter(p=>!f||norm(p[1]+" "+(p[3]||"")+p[0]+" "+loginEmail(p)).includes(f))}
  function idsOf(rows){return rows.map(p=>String(p[0]))}
  function removeIds(ids){ids.forEach(n=>togglePerson(d,n,false));ids.forEach(n=>selected.delete(n));draw()}
  function keepIds(ids){ids.forEach(n=>togglePerson(d,n,true));draw()}
@@ -319,19 +347,23 @@ function nameTable(d){
   rows.forEach(p=>{
    const id=String(p[0]);
    const kept=!(st(d).drop||[]).includes(id);
-   const tr=el("tr",{class:kept?"":"off"});
+   const miss=kept&&st(d).access==="yes"&&missingEmail(p);
+   const tr=el("tr",{class:(kept?"":"off")+(miss?" need":"")});
    const cb=el("input",{type:"checkbox",title:"Select "+p[1]});cb.checked=selected.has(id);
    cb.addEventListener("change",()=>{if(cb.checked)selected.add(id);else selected.delete(id);draw()});
+   const mail=loginEmail(p);
+   const mailCell=el("td",{class:"email"},mail||(miss?"Email needed":"No KEKA email"));
    const act=kept
     ?el("button",{class:"btn tiny drop",type:"button",onclick:()=>removeIds([id])},"Remove")
     :el("button",{class:"btn tiny ghost",type:"button",onclick:()=>keepIds([id])},"Put back");
-   tr.append(el("td",{},cb),el("td",{},p[1]),el("td",{},p[3]||"—"),el("td",{},p[0]||"—"),el("td",{},act));
+   tr.append(el("td",{},cb),el("td",{},p[1]),el("td",{},p[3]||"—"),mailCell,el("td",{},p[0]||"—"),el("td",{},act));
    tbody.append(tr);
   });
   const vis=idsOf(rows);allCb.checked=vis.length>0&&vis.every(id=>selected.has(id));allCb.indeterminate=vis.some(id=>selected.has(id))&&!allCb.checked;
   const kept=peopleOf(d).length;
-  count.textContent=kept+" of "+d.people.length+" will get a login"+(selected.size?" · "+selected.size+" selected":"");
-  if(!rows.length)tbody.append(el("tr",{},el("td",{colspan:"5"},"No name matches.")));
+  const need=st(d).access==="yes"?peopleOf(d).filter(missingEmail).length:0;
+  count.textContent=kept+" of "+d.people.length+" will get a login"+(need?" · "+need+" need an email":"")+(selected.size?" · "+selected.size+" selected":"");
+  if(!rows.length)tbody.append(el("tr",{},el("td",{colspan:"6"},"No name matches.")));
  }
  allCb.addEventListener("change",()=>{const vis=idsOf(visible());if(allCb.checked)vis.forEach(id=>selected.add(id));else vis.forEach(id=>selected.delete(id));draw()});
  find.addEventListener("input",draw);
@@ -344,7 +376,7 @@ function nameTable(d){
  box.append(
   el("div",{class:"bar2"},count,find),
   acts,
-  el("div",{class:"scroll"},el("table",{},el("thead",{},el("tr",{},el("th",{},allCb),el("th",{},"Name"),el("th",{},"Plant / location"),el("th",{},"KEKA code"),el("th",{},"Edit"))),tbody))
+  el("div",{class:"scroll"},el("table",{},el("thead",{},el("tr",{},el("th",{},allCb),el("th",{},"Name"),el("th",{},"Plant / location"),el("th",{},"Email"),el("th",{},"KEKA code"),el("th",{},"Edit"))),tbody))
  );
  draw();
  return box;
@@ -426,7 +458,10 @@ function progress(){
  document.getElementById("c2").textContent=(yes.length?mapped+" of "+yes.length+" have a role":"No titles on this step yet");
  document.getElementById("progress").textContent=sysName()+" · "+(step===1?(decided+" of "+DES.length+" titles answered"):(mapped+" of "+yes.length+" titles have a role"));
  const nPeople=yes.reduce((n,d)=>n+peopleOf(d).length,0);
- document.getElementById("to2").textContent=yes.length?("Go to step 2 — choose "+sysName()+" roles ("+yes.length+" titles, "+nPeople+" people)"):"Go to step 2 — choose roles";
+ const missN=missingEmailPeople().length;
+ document.getElementById("to2").textContent=missN
+  ?("Add missing emails ("+missN+") then go to step 2")
+  :(yes.length?("Go to step 2 — choose "+sysName()+" roles ("+yes.length+" titles, "+nPeople+" people)"):"Go to step 2 — choose roles");
  document.getElementById("to2").disabled=yes.length===0&&step===1;
 }
 function showStep(n){
@@ -458,10 +493,51 @@ function showSys(id){
  document.getElementById("syssm").setAttribute("aria-selected",id==="sm"?"true":"false");
  document.getElementById("navfm").classList.toggle("on",id==="fm");
  document.getElementById("navsm").classList.toggle("on",id==="sm");
- showStep(step);
+ if(step===2)requestStep2();else showStep(1);
 }
 function paint(){if(step===1)paintStep1();else paintStep2();progress()}
 function hideModal(){document.getElementById("modal").classList.remove("show")}
+function hideEmailModal(){document.getElementById("emailModal").classList.remove("show")}
+function requestStep2(){
+ if(!yesList().length){showStep(1);return}
+ const miss=missingEmailPeople();
+ if(miss.length){openEmailModal(miss);return}
+ showStep(2);
+}
+function openEmailModal(list){
+ const body=document.getElementById("embody");body.innerHTML="";
+ document.getElementById("emerr").hidden=true;
+ document.getElementById("emsub").textContent=list.length+(list.length===1?" person has":" people have")+" no email in KEKA and will get a "+sysName()+" login. Type an email for each person. You cannot go to step 2 until every field is filled.";
+ const tb=el("table",{class:"grid"},el("tr",{},el("th",{},"Name"),el("th",{},"KEKA title"),el("th",{},"Plant / location"),el("th",{},"KEKA code"),el("th",{},"Email (required)")));
+ list.forEach(p=>{
+  const inp=el("input",{class:"mailin",type:"email",required:"","aria-required":"true",placeholder:"name@company.com","aria-label":"Email for "+p[1]});
+  inp.value=emails[String(p[0])]||"";
+  inp.dataset.code=String(p[0]);
+  tb.append(el("tr",{},el("td",{},p[1]),el("td",{},p[2]||"—"),el("td",{},p[3]||"—"),el("td",{},p[0]),el("td",{},inp)));
+ });
+ body.append(tb);
+ document.getElementById("emailModal").classList.add("show");
+ const first=body.querySelector("input");if(first)first.focus();
+}
+function saveEmailsAndGo(){
+ const inputs=[...document.querySelectorAll("#embody input[type=email]")];
+ const used=new Set();
+ selectedPeople().forEach(p=>{if(!missingEmail(p)){const e=loginEmail(p).toLowerCase();if(e)used.add(e)}});
+ let bad=0;const next={};
+ inputs.forEach(inp=>{
+  const v=String(inp.value||"").trim().toLowerCase();
+  const ok=EMAIL_RE.test(v)&&!used.has(v)&&!next[v];
+  inp.classList.toggle("bad",!ok);
+  if(!ok)bad++;else next[v]=inp.dataset.code;
+ });
+ if(bad){
+  document.getElementById("emerr").hidden=false;
+  document.getElementById("emerr").textContent="Fill every email. Each one must look like name@company.com and must be unique.";
+  return;
+ }
+ inputs.forEach(inp=>{emails[inp.dataset.code]=String(inp.value||"").trim().toLowerCase()});
+ saveDraft();hideEmailModal();showStep(2);
+}
 async function save(p){
  const r=await fetch(SAVE_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({mode:"submit",draft:packDraft(),submittedAt:p.submittedAt,answers:p.answers})});
  const j=await r.json().catch(()=>({}));
@@ -482,23 +558,28 @@ function boot(people){
  document.getElementById("navfm").onclick=e=>{e.preventDefault();showSys("fm")};
  document.getElementById("navsm").onclick=e=>{e.preventDefault();showSys("sm")};
  document.getElementById("pill1").onclick=()=>showStep(1);
- document.getElementById("pill2").onclick=()=>showStep(2);
+ document.getElementById("pill2").onclick=()=>requestStep2();
  document.getElementById("nav1").onclick=e=>{e.preventDefault();showStep(1)};
- document.getElementById("nav2").onclick=e=>{e.preventDefault();showStep(2)};
- document.getElementById("to2").onclick=()=>showStep(2);
+ document.getElementById("nav2").onclick=e=>{e.preventDefault();requestStep2()};
+ document.getElementById("to2").onclick=()=>requestStep2();
  document.getElementById("back2").onclick=()=>showStep(1);
  document.getElementById("dl").hidden=false;document.getElementById("dl").onclick=download;
  document.getElementById("back").onclick=hideModal;
+ document.getElementById("emailBack").onclick=hideEmailModal;
+ document.getElementById("emailSave").onclick=saveEmailsAndGo;
  document.getElementById("modal").addEventListener("click",e=>{if(e.target.id==="modal")hideModal()});
- document.addEventListener("keydown",e=>{if(e.key==="Escape")hideModal()});
+ document.getElementById("emailModal").addEventListener("click",e=>{if(e.target.id==="emailModal")hideEmailModal()});
+ document.addEventListener("keydown",e=>{if(e.key==="Escape"){hideModal();hideEmailModal()}});
  document.getElementById("review").onclick=()=>{
   const body=document.getElementById("mbody");body.innerHTML="";
+  const missMail=missingEmailPeople();
+  if(missMail.length){openEmailModal(missMail);return}
   const tb=el("table",{class:"grid"},el("tr",{},el("th",{},"System"),el("th",{},"KEKA title"),el("th",{},"People"),el("th",{},"Portal role"),el("th",{},"Names")));
   let missing=0;
   answers().forEach(a=>{
    if(a.access!=="yes")return;
    if(!a.role)missing++;
-   tb.append(el("tr",{},el("td",{},a.system),el("td",{},a.designation),el("td",{},String(a.people.length)),el("td",{},a.role||"—"),el("td",{},a.people.map(p=>p.name).join(", "))));
+   tb.append(el("tr",{},el("td",{},a.system),el("td",{},a.designation),el("td",{},String(a.people.length)),el("td",{},a.role||"—"),el("td",{},a.people.map(p=>p.name+(p.email?" <"+p.email+">":"")).join(", "))));
   });
   const noFm=answersFor("fm").filter(a=>a.access==="no");
   const noSm=answersFor("sm").filter(a=>a.access==="no");
@@ -519,14 +600,14 @@ function boot(people){
  };
  fetch(SAVE_URL,{cache:"no-store"}).then(r=>{if(!r.ok)throw new Error("load");return r.json()}).then(data=>{
   const remote=data&&data.draft;
-  let local=null;try{local=JSON.parse(localStorage.getItem(KEY)||localStorage.getItem(OLDKEY)||"null")}catch(e){}
+  let local=null;try{local=JSON.parse(localStorage.getItem(KEY)||localStorage.getItem(OLDKEY)||localStorage.getItem(OLDKEY1)||"null")}catch(e){}
   if(remote&&Object.keys(remote).length)applyDraft(remote);
   else if(local&&local.draft)applyDraft(local.draft);
   ready=true;
   showStep(1);
   if(!(remote&&Object.keys(remote).length)&&local&&local.draft)persistNow();
  }).catch(()=>{
-  try{const local=JSON.parse(localStorage.getItem(KEY)||localStorage.getItem(OLDKEY)||"null");if(local&&local.draft)applyDraft(local.draft)}catch(e){}
+  try{const local=JSON.parse(localStorage.getItem(KEY)||localStorage.getItem(OLDKEY)||localStorage.getItem(OLDKEY1)||"null");if(local&&local.draft)applyDraft(local.draft)}catch(e){}
   ready=true;showStep(1);
  });
 }
