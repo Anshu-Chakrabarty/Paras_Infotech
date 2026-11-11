@@ -131,7 +131,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 <header class="top"><span class="t">MAKEEN Energy India</span><span class="right" id="progress"></span></header>
 <div class="wrap">
 <h1>KEKA job title → portal role</h1>
-<p class="lead">Facility Management and Service Management are separate. Open one tab, say who can sign in to that system, then pick their role. Answers on one tab do not copy to the other. Anyone who will use the system needs a Makeen email so we can create their login. KEKA has that email for some people. For the rest you must type one.</p>
+<p class="lead">Facility Management and Service Management are separate. Open one tab, say who can sign in to that system, then pick their role. Answers on one tab do not copy to the other. Anyone who will use the system needs a Makeen working email (@makeenenergy.com). KEKA has that for some people. For the rest you must type one.</p>
 <div class="tabs sys" role="tablist" aria-label="System">
   <button type="button" id="sysfm" class="on" role="tab" aria-selected="true">
     <span class="k">SYSTEM</span>
@@ -173,7 +173,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 <div class="acts"><button class="btn ghost" id="back">Go back and change</button><button class="btn" id="confirm">Yes, submit</button></div></div></div>
 <div class="modal" id="emailModal" role="dialog" aria-modal="true" aria-labelledby="emt"><div class="dlg">
 <h3 id="emt">Email is required to create a login</h3>
-<div class="sub" id="emsub">KEKA has no Makeen email for these people. Type an email for each person. You cannot go to step 2 until every field is filled.</div>
+<div class="sub" id="emsub">KEKA has no @makeenenergy.com address for these people. Type an email for each person. You cannot go to step 2 until every field is filled.</div>
 <p class="err" id="emerr" hidden>Fill every email. Each one must look like name@company.com.</p>
 <div class="body" id="embody"></div>
 <div class="acts"><button class="btn ghost" type="button" id="emailBack">Stay on step 1</button><button class="btn" type="button" id="emailSave">Save emails and go to step 2</button></div></div></div>
@@ -237,7 +237,7 @@ function sysName(){return SYS[sys].name}
 function emptyRow(){return {access:null,drop:[],role:""}}
 function st(d){return state[sys][d.key]}
 function workEmail(p){return String(p[4]||"").trim()}
-function isMakeenEmail(e){return EMAIL_RE.test(e)&&/@makeen/i.test(e)}
+function isMakeenEmail(e){return /@makeenenergy\.com$/i.test(String(e||"").trim())}
 function kekaEmail(p){const w=workEmail(p);return isMakeenEmail(w)?w:""}
 function loginEmail(p){return String(emails[String(p[0])]||"").trim()||kekaEmail(p)}
 function missingEmail(p){return !EMAIL_RE.test(loginEmail(p))}
@@ -247,7 +247,7 @@ function selectedPeople(){
  return out;
 }
 function missingEmailPeople(){return selectedPeople().filter(missingEmail)}
-function how1(){return "You are on "+sysName()+". Look at each KEKA job title and the names under it. Answer Yes or No: do they need a login to "+sysName()+"? Names show the Makeen email when KEKA has one. Gmail and other personal emails are not used. If a person will use the system and there is no Makeen email, you must type one before step 2."}
+function how1(){return "You are on "+sysName()+". Look at each KEKA job title and the names under it. Answer Yes or No: do they need a login to "+sysName()+"? Names show the Makeen working email (@makeenenergy.com) when KEKA has one. Gmail is never shown. If a person will use the system and there is no @makeenenergy.com address, you must type one before step 2."}
 function how2(){return "You are still on "+sysName()+". These are only the titles you marked Yes for this system. Pick a portal role. The box on the right tells you what that role means and what they can do."}
 const norm=s=>s.toLowerCase().replace(/\s+/g," ").trim();
 function el(t,a={},...c){const n=document.createElement(t);for(const k in a){if(k==="class")n.className=a[k];else if(k.startsWith("on"))n.addEventListener(k.slice(2),a[k]);else if(a[k]===false||a[k]==null){}else if(a[k]===true)n.setAttribute(k,"");else n.setAttribute(k,a[k])}c.flat().forEach(x=>{if(x!=null)n.append(x)});return n}
@@ -353,8 +353,8 @@ function nameTable(d){
    const tr=el("tr",{class:(kept?"":"off")+(miss?" need":"")});
    const cb=el("input",{type:"checkbox",title:"Select "+p[1]});cb.checked=selected.has(id);
    cb.addEventListener("change",()=>{if(cb.checked)selected.add(id);else selected.delete(id);draw()});
-   const mail=loginEmail(p);
-   const mailCell=el("td",{class:"email"},mail||(miss?"Email needed":"No Makeen email"));
+   const shown=kekaEmail(p)||(emails[id]||"").trim();
+   const mailCell=el("td",{class:"email"},shown||(miss?"Email needed":"No @makeenenergy.com"));
    const act=kept
     ?el("button",{class:"btn tiny drop",type:"button",onclick:()=>removeIds([id])},"Remove")
     :el("button",{class:"btn tiny ghost",type:"button",onclick:()=>keepIds([id])},"Put back");
@@ -516,7 +516,7 @@ function openEmailModal(list,next){
  emailAfterSave=next||"stay";
  const body=document.getElementById("embody");body.innerHTML="";
  document.getElementById("emerr").hidden=true;
- document.getElementById("emsub").textContent=list.length+(list.length===1?" person has":" people have")+" no Makeen email in KEKA and will get a "+sysName()+" login. Type an email for each person. Step 2 stays closed until every field is filled.";
+ document.getElementById("emsub").textContent=list.length+(list.length===1?" person has":" people have")+" no @makeenenergy.com address in KEKA and will get a "+sysName()+" login. Type an email for each person. Step 2 stays closed until every field is filled.";
  document.getElementById("emailSave").textContent=emailAfterSave==="step2"?"Save emails and go to step 2":"Save emails";
  const tb=el("table",{class:"grid"},el("tr",{},el("th",{},"Name"),el("th",{},"KEKA title"),el("th",{},"Plant / location"),el("th",{},"KEKA code"),el("th",{},"Email (required)")));
  list.forEach(p=>{
