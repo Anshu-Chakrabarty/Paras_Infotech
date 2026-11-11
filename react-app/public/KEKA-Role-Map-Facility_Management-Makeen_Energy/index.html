@@ -230,6 +230,7 @@ let ready=false;
 let saveTimer=null;
 let filter="all";
 let qfind="";
+let emailAfterSave="stay";
 const emails={};
 const EMAIL_RE=/^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 function sysName(){return SYS[sys].name}
@@ -321,6 +322,7 @@ function setAccess(d,v){
  if(v==="no")s.role="";
  else if(!s.role){const sug=suggestedRole(d.label);if(sug&&sug!=="No FM login")s.role=sug}
  paint();saveDraft();
+ if(v==="yes")askMissingEmails(peopleOf(d),"stay");
 }
 function togglePerson(d,num,on){
  const s=st(d);
@@ -341,7 +343,7 @@ function nameTable(d){
  function visible(){const f=norm(find.value);return d.people.filter(p=>!f||norm(p[1]+" "+(p[3]||"")+p[0]+" "+loginEmail(p)).includes(f))}
  function idsOf(rows){return rows.map(p=>String(p[0]))}
  function removeIds(ids){ids.forEach(n=>togglePerson(d,n,false));ids.forEach(n=>selected.delete(n));draw()}
- function keepIds(ids){ids.forEach(n=>togglePerson(d,n,true));draw()}
+ function keepIds(ids){ids.forEach(n=>togglePerson(d,n,true));draw();if(st(d).access==="yes")askMissingEmails(d.people.filter(p=>ids.includes(String(p[0]))),"stay")}
  function draw(){
   const rows=visible();tbody.innerHTML="";
   rows.forEach(p=>{
@@ -368,7 +370,7 @@ function nameTable(d){
  allCb.addEventListener("change",()=>{const vis=idsOf(visible());if(allCb.checked)vis.forEach(id=>selected.add(id));else vis.forEach(id=>selected.delete(id));draw()});
  find.addEventListener("input",draw);
  const acts=el("div",{class:"acts2"},
-  el("button",{class:"btn tiny ghost",type:"button",onclick:()=>{idsOf(visible()).forEach(id=>selected.add(id));draw()}},"Select all"),
+  el("button",{class:"btn tiny ghost",type:"button",onclick:()=>{const vis=visible();idsOf(vis).forEach(id=>selected.add(id));draw();if(st(d).access==="yes")askMissingEmails(vis.filter(p=>!(st(d).drop||[]).includes(String(p[0]))),"stay")}},"Select all"),
   el("button",{class:"btn tiny ghost",type:"button",onclick:()=>{selected.clear();draw()}},"Clear selection"),
   el("button",{class:"btn tiny drop",type:"button",onclick:()=>removeIds([...selected])},"Remove selected"),
   el("button",{class:"btn tiny ghost",type:"button",onclick:()=>keepIds([...selected])},"Put selected back")
@@ -465,6 +467,7 @@ function progress(){
  document.getElementById("to2").disabled=yes.length===0&&step===1;
 }
 function showStep(n){
+ if(n===2&&missingEmailPeople().length){askMissingEmails(missingEmailPeople(),"step2");return}
  step=n;
  document.getElementById("step1").hidden=n!==1;
  document.getElementById("step2").hidden=n!==2;
@@ -498,16 +501,23 @@ function showSys(id){
 function paint(){if(step===1)paintStep1();else paintStep2();progress()}
 function hideModal(){document.getElementById("modal").classList.remove("show")}
 function hideEmailModal(){document.getElementById("emailModal").classList.remove("show")}
+function askMissingEmails(list,next){
+ const miss=(list||[]).filter(missingEmail);
+ if(!miss.length)return false;
+ openEmailModal(miss,next);
+ return true;
+}
 function requestStep2(){
  if(!yesList().length){showStep(1);return}
- const miss=missingEmailPeople();
- if(miss.length){openEmailModal(miss);return}
+ if(askMissingEmails(missingEmailPeople(),"step2"))return;
  showStep(2);
 }
-function openEmailModal(list){
+function openEmailModal(list,next){
+ emailAfterSave=next||"stay";
  const body=document.getElementById("embody");body.innerHTML="";
  document.getElementById("emerr").hidden=true;
- document.getElementById("emsub").textContent=list.length+(list.length===1?" person has":" people have")+" no email in KEKA and will get a "+sysName()+" login. Type an email for each person. You cannot go to step 2 until every field is filled.";
+ document.getElementById("emsub").textContent=list.length+(list.length===1?" person has":" people have")+" no email in KEKA and will get a "+sysName()+" login. Type an email for each person. Step 2 stays closed until every field is filled.";
+ document.getElementById("emailSave").textContent=emailAfterSave==="step2"?"Save emails and go to step 2":"Save emails";
  const tb=el("table",{class:"grid"},el("tr",{},el("th",{},"Name"),el("th",{},"KEKA title"),el("th",{},"Plant / location"),el("th",{},"KEKA code"),el("th",{},"Email (required)")));
  list.forEach(p=>{
   const inp=el("input",{class:"mailin",type:"email",required:"","aria-required":"true",placeholder:"name@company.com","aria-label":"Email for "+p[1]});
@@ -536,7 +546,9 @@ function saveEmailsAndGo(){
   return;
  }
  inputs.forEach(inp=>{emails[inp.dataset.code]=String(inp.value||"").trim().toLowerCase()});
- saveDraft();hideEmailModal();showStep(2);
+ saveDraft();hideEmailModal();
+ if(emailAfterSave==="step2")requestStep2();
+ else{paint();progress()}
 }
 async function save(p){
  const r=await fetch(SAVE_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({mode:"submit",draft:packDraft(),submittedAt:p.submittedAt,answers:p.answers})});
@@ -572,8 +584,7 @@ function boot(people){
  document.addEventListener("keydown",e=>{if(e.key==="Escape"){hideModal();hideEmailModal()}});
  document.getElementById("review").onclick=()=>{
   const body=document.getElementById("mbody");body.innerHTML="";
-  const missMail=missingEmailPeople();
-  if(missMail.length){openEmailModal(missMail);return}
+  if(askMissingEmails(missingEmailPeople(),"stay"))return;
   const tb=el("table",{class:"grid"},el("tr",{},el("th",{},"System"),el("th",{},"KEKA title"),el("th",{},"People"),el("th",{},"Portal role"),el("th",{},"Names")));
   let missing=0;
   answers().forEach(a=>{
