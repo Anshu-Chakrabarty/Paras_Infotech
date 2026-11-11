@@ -131,7 +131,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 <header class="top"><span class="t">MAKEEN Energy India</span><span class="right" id="progress"></span></header>
 <div class="wrap">
 <h1>KEKA job title → portal role</h1>
-<p class="lead">Facility Management and Service Management are separate. Open one tab, say who can sign in to that system, then pick their role. Answers on one tab do not copy to the other. Anyone who will use the system needs a Makeen working email (@makeenenergy.com). KEKA has that for some people. For the rest you must type one.</p>
+<p class="lead">Facility Management and Service Management are separate. Open one tab, say who can sign in to that system, then pick their role. Answers on one tab do not copy to the other. Names show a Makeen working email (@makeenenergy.com) when KEKA has one. If it is missing you can type it — that helps create their login — or continue to step 2 without it.</p>
 <div class="tabs sys" role="tablist" aria-label="System">
   <button type="button" id="sysfm" class="on" role="tab" aria-selected="true">
     <span class="k">SYSTEM</span>
@@ -172,11 +172,11 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 <div class="body" id="mbody"></div>
 <div class="acts"><button class="btn ghost" id="back">Go back and change</button><button class="btn" id="confirm">Yes, submit</button></div></div></div>
 <div class="modal" id="emailModal" role="dialog" aria-modal="true" aria-labelledby="emt"><div class="dlg">
-<h3 id="emt">Email is required to create a login</h3>
-<div class="sub" id="emsub">KEKA has no @makeenenergy.com address for these people. Type an email for each person. You cannot go to step 2 until every field is filled.</div>
-<p class="err" id="emerr" hidden>Fill every email. Each one must look like name@company.com.</p>
+<h3 id="emt">These people have no Makeen email</h3>
+<div class="sub" id="emsub">KEKA has no @makeenenergy.com address for these people. You may type an email now. If you skip, you can still go to step 2 and review.</div>
+<p class="err" id="emerr" hidden>If you type an email, it must look like name@company.com.</p>
 <div class="body" id="embody"></div>
-<div class="acts"><button class="btn ghost" type="button" id="emailBack">Stay on step 1</button><button class="btn" type="button" id="emailSave">Save emails and go to step 2</button></div></div></div>
+<div class="acts"><button class="btn ghost" type="button" id="emailBack">Continue without filling</button><button class="btn" type="button" id="emailSave">Save filled emails</button></div></div></div>
 <script>
 const ROLES=[
  {id:"Admin",desc:"Runs the portal set-up: people, this map, and plants.",access:["Search, Submit, Download and Approve on every Facility module","People, this designation map, and notices","Delete a plant, reopen an approved row, or replace a file after Approve"]},
@@ -247,7 +247,7 @@ function selectedPeople(){
  return out;
 }
 function missingEmailPeople(){return selectedPeople().filter(missingEmail)}
-function how1(){return "You are on "+sysName()+". Look at each KEKA job title and the names under it. Answer Yes or No: do they need a login to "+sysName()+"? Names show the Makeen working email (@makeenenergy.com) when KEKA has one. Gmail is never shown. If a person will use the system and there is no @makeenenergy.com address, you must type one before step 2."}
+function how1(){return "You are on "+sysName()+". Look at each KEKA job title and the names under it. Answer Yes or No: do they need a login to "+sysName()+"? Names show the Makeen working email (@makeenenergy.com) when KEKA has one. Gmail is never shown. If KEKA has no Makeen email, a note will list those people. Filling an email is helpful. Skipping is allowed — you can still go to step 2 and review."}
 function how2(){return "You are still on "+sysName()+". These are only the titles you marked Yes for this system. Pick a portal role. The box on the right tells you what that role means and what they can do."}
 const norm=s=>s.toLowerCase().replace(/\s+/g," ").trim();
 function el(t,a={},...c){const n=document.createElement(t);for(const k in a){if(k==="class")n.className=a[k];else if(k.startsWith("on"))n.addEventListener(k.slice(2),a[k]);else if(a[k]===false||a[k]==null){}else if(a[k]===true)n.setAttribute(k,"");else n.setAttribute(k,a[k])}c.flat().forEach(x=>{if(x!=null)n.append(x)});return n}
@@ -460,14 +460,10 @@ function progress(){
  document.getElementById("c2").textContent=(yes.length?mapped+" of "+yes.length+" have a role":"No titles on this step yet");
  document.getElementById("progress").textContent=sysName()+" · "+(step===1?(decided+" of "+DES.length+" titles answered"):(mapped+" of "+yes.length+" titles have a role"));
  const nPeople=yes.reduce((n,d)=>n+peopleOf(d).length,0);
- const missN=missingEmailPeople().length;
- document.getElementById("to2").textContent=missN
-  ?("Add missing emails ("+missN+") then go to step 2")
-  :(yes.length?("Go to step 2 — choose "+sysName()+" roles ("+yes.length+" titles, "+nPeople+" people)"):"Go to step 2 — choose roles");
+ document.getElementById("to2").textContent=yes.length?("Go to step 2 — choose "+sysName()+" roles ("+yes.length+" titles, "+nPeople+" people)"):"Go to step 2 — choose roles";
  document.getElementById("to2").disabled=yes.length===0&&step===1;
 }
 function showStep(n){
- if(n===2&&missingEmailPeople().length){askMissingEmails(missingEmailPeople(),"step2");return}
  step=n;
  document.getElementById("step1").hidden=n!==1;
  document.getElementById("step2").hidden=n!==2;
@@ -496,7 +492,7 @@ function showSys(id){
  document.getElementById("syssm").setAttribute("aria-selected",id==="sm"?"true":"false");
  document.getElementById("navfm").classList.toggle("on",id==="fm");
  document.getElementById("navsm").classList.toggle("on",id==="sm");
- if(step===2)requestStep2();else showStep(1);
+ showStep(step);
 }
 function paint(){if(step===1)paintStep1();else paintStep2();progress()}
 function hideModal(){document.getElementById("modal").classList.remove("show")}
@@ -507,20 +503,14 @@ function askMissingEmails(list,next){
  openEmailModal(miss,next);
  return true;
 }
-function requestStep2(){
- if(!yesList().length){showStep(1);return}
- if(askMissingEmails(missingEmailPeople(),"step2"))return;
- showStep(2);
-}
 function openEmailModal(list,next){
  emailAfterSave=next||"stay";
  const body=document.getElementById("embody");body.innerHTML="";
  document.getElementById("emerr").hidden=true;
- document.getElementById("emsub").textContent=list.length+(list.length===1?" person has":" people have")+" no @makeenenergy.com address in KEKA and will get a "+sysName()+" login. Type an email for each person. Step 2 stays closed until every field is filled.";
- document.getElementById("emailSave").textContent=emailAfterSave==="step2"?"Save emails and go to step 2":"Save emails";
- const tb=el("table",{class:"grid"},el("tr",{},el("th",{},"Name"),el("th",{},"KEKA title"),el("th",{},"Plant / location"),el("th",{},"KEKA code"),el("th",{},"Email (required)")));
+ document.getElementById("emsub").textContent=list.length+(list.length===1?" person has":" people have")+" no @makeenenergy.com address in KEKA. You may type an email now. If you skip, you can still go to step 2 and review.";
+ const tb=el("table",{class:"grid"},el("tr",{},el("th",{},"Name"),el("th",{},"KEKA title"),el("th",{},"Plant / location"),el("th",{},"KEKA code"),el("th",{},"Email (optional)")));
  list.forEach(p=>{
-  const inp=el("input",{class:"mailin",type:"email",required:"","aria-required":"true",placeholder:"name@company.com","aria-label":"Email for "+p[1]});
+  const inp=el("input",{class:"mailin",type:"email",placeholder:"name@makeenenergy.com (optional)","aria-label":"Optional email for "+p[1]});
   inp.value=emails[String(p[0])]||"";
   inp.dataset.code=String(p[0]);
   tb.append(el("tr",{},el("td",{},p[1]),el("td",{},p[2]||"—"),el("td",{},p[3]||"—"),el("td",{},p[0]),el("td",{},inp)));
@@ -531,24 +521,28 @@ function openEmailModal(list,next){
 }
 function saveEmailsAndGo(){
  const inputs=[...document.querySelectorAll("#embody input[type=email]")];
+ const editing=new Set(inputs.map(inp=>inp.dataset.code));
  const used=new Set();
- selectedPeople().forEach(p=>{if(!missingEmail(p)){const e=loginEmail(p).toLowerCase();if(e)used.add(e)}});
+ selectedPeople().forEach(p=>{if(editing.has(String(p[0])))return;const e=loginEmail(p).toLowerCase();if(EMAIL_RE.test(e))used.add(e)});
  let bad=0;const next={};
  inputs.forEach(inp=>{
   const v=String(inp.value||"").trim().toLowerCase();
+  if(!v){inp.classList.remove("bad");return}
   const ok=EMAIL_RE.test(v)&&!used.has(v)&&!next[v];
   inp.classList.toggle("bad",!ok);
   if(!ok)bad++;else next[v]=inp.dataset.code;
  });
  if(bad){
   document.getElementById("emerr").hidden=false;
-  document.getElementById("emerr").textContent="Fill every email. Each one must look like name@company.com and must be unique.";
+  document.getElementById("emerr").textContent="Leave a row blank to skip it. If you type an email, it must look like name@company.com and must be unique.";
   return;
  }
- inputs.forEach(inp=>{emails[inp.dataset.code]=String(inp.value||"").trim().toLowerCase()});
+ inputs.forEach(inp=>{
+  const v=String(inp.value||"").trim().toLowerCase();
+  if(EMAIL_RE.test(v))emails[inp.dataset.code]=v;
+ });
  saveDraft();hideEmailModal();
- if(emailAfterSave==="step2")requestStep2();
- else{paint();progress()}
+ paint();progress();
 }
 async function save(p){
  const r=await fetch(SAVE_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({mode:"submit",draft:packDraft(),submittedAt:p.submittedAt,answers:p.answers})});
@@ -570,10 +564,10 @@ function boot(people){
  document.getElementById("navfm").onclick=e=>{e.preventDefault();showSys("fm")};
  document.getElementById("navsm").onclick=e=>{e.preventDefault();showSys("sm")};
  document.getElementById("pill1").onclick=()=>showStep(1);
- document.getElementById("pill2").onclick=()=>requestStep2();
+ document.getElementById("pill2").onclick=()=>showStep(2);
  document.getElementById("nav1").onclick=e=>{e.preventDefault();showStep(1)};
- document.getElementById("nav2").onclick=e=>{e.preventDefault();requestStep2()};
- document.getElementById("to2").onclick=()=>requestStep2();
+ document.getElementById("nav2").onclick=e=>{e.preventDefault();showStep(2)};
+ document.getElementById("to2").onclick=()=>showStep(2);
  document.getElementById("back2").onclick=()=>showStep(1);
  document.getElementById("dl").hidden=false;document.getElementById("dl").onclick=download;
  document.getElementById("back").onclick=hideModal;
@@ -584,7 +578,6 @@ function boot(people){
  document.addEventListener("keydown",e=>{if(e.key==="Escape"){hideModal();hideEmailModal()}});
  document.getElementById("review").onclick=()=>{
   const body=document.getElementById("mbody");body.innerHTML="";
-  if(askMissingEmails(missingEmailPeople(),"stay"))return;
   const tb=el("table",{class:"grid"},el("tr",{},el("th",{},"System"),el("th",{},"KEKA title"),el("th",{},"People"),el("th",{},"Portal role"),el("th",{},"Names")));
   let missing=0;
   answers().forEach(a=>{
