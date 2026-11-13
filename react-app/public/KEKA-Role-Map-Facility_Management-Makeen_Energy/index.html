@@ -126,7 +126,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 <header class="top"><span class="t">MAKEEN Energy India</span><span class="right" id="progress"></span></header>
 <div class="wrap">
 <h1>KEKA job title → portal role</h1>
-<p class="lead">Facility Management and Service Management are separate. Open one tab, say Yes or No for each KEKA title, tick the people who should get a login, then pick their role. Only ticked names go to step 2. Answers on one tab do not copy to the other.</p>
+<p class="lead">Facility Management and Service Management are separate. Open one tab, say who can sign in to that system, then pick their role. Answers on one tab do not copy to the other.</p>
 <div class="tabs sys" role="tablist" aria-label="System">
   <button type="button" id="sysfm" class="on" role="tab" aria-selected="true">
     <span class="k">SYSTEM</span>
@@ -143,7 +143,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
   <button type="button" id="pill1" class="on" role="tab" aria-selected="true">
     <span class="k">STEP 1 OF 2</span>
     <span class="l">Who can sign in?</span>
-    <span class="s" id="pill1s">Yes or No, then tick the names who should get a login.</span>
+    <span class="s" id="pill1s">Yes or No for this system. Names are listed so you can see who they are.</span>
   </button>
   <button type="button" id="pill2" role="tab" aria-selected="false">
     <span class="k">STEP 2 OF 2</span>
@@ -206,10 +206,11 @@ function suggestedRole(d){
 }
 function oftenNoLogin(d){return suggestedRole(d)==="No FM login"}
 const SAVE_URL="/api/fm-role-map";
-const KEY="fm-role-map-draft-v5";
-const OLDKEY="fm-role-map-draft-v4";
-const OLDKEY1="fm-role-map-draft-v2";
-const OLDKEY2="fm-role-map-draft-v1";
+const KEY="fm-role-map-draft-v6";
+const OLDKEY="fm-role-map-draft-v5";
+const OLDKEY1="fm-role-map-draft-v4";
+const OLDKEY2="fm-role-map-draft-v2";
+const OLDKEY3="fm-role-map-draft-v1";
 const PEOPLE_URL="/KEKA-Role-Map-Facility_Management-Makeen_Energy/people.json";
 const SYS={fm:{id:"fm",name:"Facility Management"},sm:{id:"sm",name:"Service Management"}};
 let DES=[];
@@ -221,24 +222,19 @@ let saveTimer=null;
 let filter="all";
 let qfind="";
 function sysName(){return SYS[sys].name}
-function emptyRow(){return {access:null,keep:[],role:""}}
+function emptyRow(){return {access:null,drop:[],role:""}}
 function st(d){return state[sys][d.key]}
 function allIds(d){return d.people.map(p=>String(p[0]))}
-function how1(){return "You are on "+sysName()+". For each KEKA job title, answer Yes or No: do they need a login? Yes does not take everyone. Tick the names who should get a login. Only those names go to step 2."}
-function how2(){return "You are still on "+sysName()+". These are only the titles you marked Yes, and only the names you ticked on step 1. Pick a portal role. The box on the right tells you what that role means and what they can do."}
+function how1(){return "You are on "+sysName()+". Look at each KEKA job title and the names under it. Answer Yes or No: do they need a login to "+sysName()+"? If Yes, everyone on the list gets a login. Remove a name if that person should not. Step 2 shows only the names you keep."}
+function how2(){return "You are still on "+sysName()+". These are only the titles you marked Yes, and only the names you kept on step 1. Pick a portal role. The box on the right tells you what that role means and what they can do."}
 const norm=s=>s.toLowerCase().replace(/\s+/g," ").trim();
 function el(t,a={},...c){const n=document.createElement(t);for(const k in a){if(k==="class")n.className=a[k];else if(k.startsWith("on"))n.addEventListener(k.slice(2),a[k]);else if(a[k]===false||a[k]==null){}else if(a[k]===true)n.setAttribute(k,"");else n.setAttribute(k,a[k])}c.flat().forEach(x=>{if(x!=null)n.append(x)});return n}
 function status(t){const n=document.getElementById("progress2");if(n)n.textContent=t||""}
-function peopleOf(d){const keep=new Set((st(d).keep||[]).map(String));return d.people.filter(p=>keep.has(String(p[0])))}
+function peopleOf(d){return d.people.filter(p=>!(st(d).drop||[]).includes(String(p[0])))}
 function yesList(){return DES.filter(d=>st(d).access==="yes")}
 function packOne(pack){
  const draft={};
- DES.forEach(d=>{
-  const s=pack[d.key]||emptyRow();
-  const keep=[...(s.keep||[])].map(String);
-  const drop=allIds(d).filter(id=>!keep.includes(id));
-  draft[d.key]={access:s.access,keep,drop,role:s.role||""};
- });
+ DES.forEach(d=>{const s=pack[d.key]||emptyRow();draft[d.key]={access:s.access,drop:[...(s.drop||[])],role:s.role||""}});
  return draft;
 }
 function packDraft(){return {fm:packOne(state.fm),sm:packOne(state.sm)}}
@@ -247,11 +243,10 @@ function applyOne(pack,src){
  DES.forEach(d=>{
   const row=src[d.key];if(!row||!pack[d.key])return;
   if(row.access==="yes"||row.access==="no")pack[d.key].access=row.access;
-  if(Array.isArray(row.keep))pack[d.key].keep=row.keep.map(String);
-  else if(row.access==="yes"&&Array.isArray(row.drop)&&row.drop.length){
-   const drop=new Set(row.drop.map(String));
-   pack[d.key].keep=allIds(d).filter(id=>!drop.has(id));
-  }else pack[d.key].keep=[];
+  if(Array.isArray(row.keep)){
+   const keep=new Set(row.keep.map(String));
+   pack[d.key].drop=allIds(d).filter(id=>!keep.has(id));
+  }else pack[d.key].drop=Array.isArray(row.drop)?row.drop.map(String):[];
   if(typeof row.role==="string")pack[d.key].role=row.role;
  });
 }
@@ -275,8 +270,7 @@ function answersFor(which){
  const prev=sys;sys=which;
  const rows=DES.map(d=>{
   const s=st(d);
-  const keep=new Set((s.keep||[]).map(String));
-  const dropped=d.people.filter(p=>s.access==="yes"&&!keep.has(String(p[0]))).map(p=>({employeeNumber:p[0],name:p[1],location:p[3]}));
+  const dropped=(s.drop||[]).map(n=>d.people.find(p=>String(p[0])===String(n))).filter(Boolean).map(p=>({employeeNumber:p[0],name:p[1],location:p[3]}));
   const people=s.access==="yes"?peopleOf(d).map(p=>({employeeNumber:p[0],name:p[1],location:p[3]})):[];
   return {system:SYS[which].name,designation:d.label,peopleCount:d.people.length,access:s.access||"not decided",dropped,role:s.access==="yes"?(s.role||""):"No login",people};
  });
@@ -303,17 +297,17 @@ function roleCard(id){
 function setAccess(d,v){
  const s=st(d);
  s.access=v;
- if(v==="no"){s.role="";s.keep=[]}
- else{
-  if(!s.role){const sug=suggestedRole(d.label);if(sug&&sug!=="No FM login")s.role=sug}
-  if(!(s.keep||[]).length&&d.people.length===1)s.keep=[String(d.people[0][0])];
- }
+ if(v==="no")s.role="";
+ else if(!s.role){const sug=suggestedRole(d.label);if(sug&&sug!=="No FM login")s.role=sug}
  paint();saveDraft();
 }
 function togglePerson(d,num,on){
- const keep=new Set((st(d).keep||[]).map(String));
- if(on)keep.add(String(num));else keep.delete(String(num));
- st(d).keep=[...keep];
+ const s=st(d);
+ const drop=s.drop||[];
+ const i=drop.indexOf(String(num));
+ if(!on&&i<0)drop.push(String(num));
+ if(on&&i>=0)drop.splice(i,1);
+ s.drop=drop;
  saveDraft();progress();
 }
 function nameTable(d,pick){
@@ -321,55 +315,57 @@ function nameTable(d,pick){
  if(!pick){
   const box=el("div",{class:"who"});
   if(!keptPeople.length){
-   box.append(el("div",{class:"bar2"},el("span",{},"No names ticked on step 1. Go back and tick who should get a login.")));
+   box.append(el("div",{class:"bar2"},el("span",{},"No names kept on step 1. Go back and put people back, or mark Yes.")));
    return box;
   }
   const tbody=el("tbody",{});
   keptPeople.forEach(p=>tbody.append(el("tr",{},el("td",{},p[1]),el("td",{},p[3]||"—"),el("td",{},p[0]||"—"))));
   box.append(
-   el("div",{class:"bar2"},el("span",{},keptPeople.length+(keptPeople.length===1?" person":" people")+" ticked on step 1")),
+   el("div",{class:"bar2"},el("span",{},keptPeople.length+" of "+d.people.length+" will get a login")),
    el("div",{class:"scroll"},el("table",{},el("thead",{},el("tr",{},el("th",{},"Name"),el("th",{},"Plant / location"),el("th",{},"KEKA code"))),tbody))
   );
   return box;
  }
+ const selected=new Set();
  const find=el("input",{type:"search",placeholder:"Find a name"});
  const count=el("span",{});
  const tbody=el("tbody",{});
- const allCb=el("input",{type:"checkbox",title:"Tick all names in this list"});
+ const allCb=el("input",{type:"checkbox",title:"Select all names in this list"});
  const box=el("div",{class:"who"});
  function visible(){const f=norm(find.value);return d.people.filter(p=>!f||norm(p[1]+" "+(p[3]||"")+p[0]).includes(f))}
  function idsOf(rows){return rows.map(p=>String(p[0]))}
+ function removeIds(ids){ids.forEach(n=>togglePerson(d,n,false));ids.forEach(n=>selected.delete(n));draw()}
+ function keepIds(ids){ids.forEach(n=>togglePerson(d,n,true));draw()}
  function draw(){
   const rows=visible();tbody.innerHTML="";
-  const keep=new Set((st(d).keep||[]).map(String));
   rows.forEach(p=>{
    const id=String(p[0]);
-   const kept=keep.has(id);
+   const kept=!(st(d).drop||[]).includes(id);
    const tr=el("tr",{class:kept?"":"off"});
-   const cb=el("input",{type:"checkbox",title:"Give "+p[1]+" a login"});cb.checked=kept;
-   cb.addEventListener("change",()=>{togglePerson(d,id,cb.checked);draw()});
-   tr.append(el("td",{},cb),el("td",{},p[1]),el("td",{},p[3]||"—"),el("td",{},p[0]||"—"));
+   const cb=el("input",{type:"checkbox",title:"Select "+p[1]});cb.checked=selected.has(id);
+   cb.addEventListener("change",()=>{if(cb.checked)selected.add(id);else selected.delete(id);draw()});
+   const act=kept
+    ?el("button",{class:"btn tiny drop",type:"button",onclick:()=>removeIds([id])},"Remove")
+    :el("button",{class:"btn tiny ghost",type:"button",onclick:()=>keepIds([id])},"Put back");
+   tr.append(el("td",{},cb),el("td",{},p[1]),el("td",{},p[3]||"—"),el("td",{},p[0]||"—"),el("td",{},act));
    tbody.append(tr);
   });
-  const vis=idsOf(rows);allCb.checked=vis.length>0&&vis.every(id=>keep.has(id));allCb.indeterminate=vis.some(id=>keep.has(id))&&!allCb.checked;
-  count.textContent=peopleOf(d).length+" of "+d.people.length+" ticked — only ticked names go to step 2";
-  if(!rows.length)tbody.append(el("tr",{},el("td",{colspan:"4"},"No name matches.")));
+  const vis=idsOf(rows);allCb.checked=vis.length>0&&vis.every(id=>selected.has(id));allCb.indeterminate=vis.some(id=>selected.has(id))&&!allCb.checked;
+  count.textContent=peopleOf(d).length+" of "+d.people.length+" will get a login"+(selected.size?" · "+selected.size+" selected":"");
+  if(!rows.length)tbody.append(el("tr",{},el("td",{colspan:"5"},"No name matches.")));
  }
- allCb.addEventListener("change",()=>{
-  const vis=idsOf(visible());
-  const keep=new Set((st(d).keep||[]).map(String));
-  if(allCb.checked)vis.forEach(id=>keep.add(id));else vis.forEach(id=>keep.delete(id));
-  st(d).keep=[...keep];saveDraft();progress();draw();
- });
+ allCb.addEventListener("change",()=>{const vis=idsOf(visible());if(allCb.checked)vis.forEach(id=>selected.add(id));else vis.forEach(id=>selected.delete(id));draw()});
  find.addEventListener("input",draw);
  const acts=el("div",{class:"acts2"},
-  el("button",{class:"btn tiny ghost",type:"button",onclick:()=>{st(d).keep=allIds(d);saveDraft();progress();draw()}},"Tick all"),
-  el("button",{class:"btn tiny ghost",type:"button",onclick:()=>{st(d).keep=[];saveDraft();progress();draw()}},"Clear ticks")
+  el("button",{class:"btn tiny ghost",type:"button",onclick:()=>{const vis=visible();idsOf(vis).forEach(id=>selected.add(id));draw()}},"Select all"),
+  el("button",{class:"btn tiny ghost",type:"button",onclick:()=>{selected.clear();draw()}},"Clear selection"),
+  el("button",{class:"btn tiny drop",type:"button",onclick:()=>removeIds([...selected])},"Remove selected"),
+  el("button",{class:"btn tiny ghost",type:"button",onclick:()=>keepIds([...selected])},"Put selected back")
  );
  box.append(
   el("div",{class:"bar2"},count,find),
   acts,
-  el("div",{class:"scroll"},el("table",{},el("thead",{},el("tr",{},el("th",{},allCb),el("th",{},"Name"),el("th",{},"Plant / location"),el("th",{},"KEKA code"))),tbody))
+  el("div",{class:"scroll"},el("table",{},el("thead",{},el("tr",{},el("th",{},allCb),el("th",{},"Name"),el("th",{},"Plant / location"),el("th",{},"KEKA code"),el("th",{},"Edit"))),tbody))
  );
  draw();
  return box;
@@ -386,7 +382,6 @@ function desCard(d){
  const yes=el("button",{class:"btn yes"+(s.access==="yes"?" on":""),type:"button",onclick:()=>setAccess(d,"yes")},"Yes — they need a login");
  const no=el("button",{class:"btn no"+(s.access==="no"?" on":""),type:"button",onclick:()=>setAccess(d,"no")},"No — they do not");
  top.append(el("div",{class:"choice"},yes,no));
- if(s.access==="yes")top.append(el("div",{class:"hint"},"Tick the names who should get a login. Only ticked names go to step 2."));
  card.append(top,nameTable(d,true));
  return card;
 }
@@ -395,7 +390,7 @@ function roleRow(d){
  const card=el("div",{class:"card yes"});
  const top=el("div",{class:"top"},
   el("div",{class:"ttl"},d.label),
-  el("div",{class:"meta"},peopleOf(d).length+" of "+d.people.length+" people ticked on step 1 will get the "+sysName()+" role you pick")
+  el("div",{class:"meta"},peopleOf(d).length+" of "+d.people.length+" people from this title will get the "+sysName()+" role you pick")
  );
  card.append(top);
  const sel=el("select",{class:"role","aria-label":sysName()+" role for "+d.label});
@@ -471,7 +466,7 @@ function showStep(n){
  document.getElementById("how").innerHTML=n===1
   ?"<b>What to do on this step</b><p>"+how1()+"</p>"
   :"<b>What to do on this step</b><p>"+how2()+"</p>";
- const s1=document.getElementById("pill1s");if(s1)s1.textContent="Yes or No, then tick the names who should get a login to "+sysName()+".";
+ const s1=document.getElementById("pill1s");if(s1)s1.textContent="Yes or No: do they need a login to "+sysName()+"? Names are listed so you can see who they are.";
  if(n===1)paintStep1();else paintStep2();
  progress();
  window.scrollTo({top:0,behavior:"smooth"});
@@ -545,14 +540,14 @@ function boot(people){
  };
  fetch(SAVE_URL,{cache:"no-store"}).then(r=>{if(!r.ok)throw new Error("load");return r.json()}).then(data=>{
   const remote=data&&data.draft;
-  let local=null;try{local=JSON.parse(localStorage.getItem(KEY)||localStorage.getItem(OLDKEY)||localStorage.getItem(OLDKEY1)||localStorage.getItem(OLDKEY2)||"null")}catch(e){}
+  let local=null;try{local=JSON.parse(localStorage.getItem(KEY)||localStorage.getItem(OLDKEY)||localStorage.getItem(OLDKEY1)||localStorage.getItem(OLDKEY2)||localStorage.getItem(OLDKEY3)||"null")}catch(e){}
   if(remote&&Object.keys(remote).length)applyDraft(remote);
   else if(local&&local.draft)applyDraft(local.draft);
   ready=true;
   showStep(1);
   if(!(remote&&Object.keys(remote).length)&&local&&local.draft)persistNow();
  }).catch(()=>{
-  try{const local=JSON.parse(localStorage.getItem(KEY)||localStorage.getItem(OLDKEY)||localStorage.getItem(OLDKEY1)||localStorage.getItem(OLDKEY2)||"null");if(local&&local.draft)applyDraft(local.draft)}catch(e){}
+  try{const local=JSON.parse(localStorage.getItem(KEY)||localStorage.getItem(OLDKEY)||localStorage.getItem(OLDKEY1)||localStorage.getItem(OLDKEY2)||localStorage.getItem(OLDKEY3)||"null");if(local&&local.draft)applyDraft(local.draft)}catch(e){}
   ready=true;showStep(1);
  });
 }
