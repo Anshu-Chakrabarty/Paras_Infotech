@@ -33,6 +33,14 @@ h1{margin:4px 0 8px;color:var(--navy);font-size:26px}
 .how p{margin:0 0 8px}
 .how p:last-child{margin:0}
 .how ul{margin:8px 0 0;padding-left:20px}
+.tabs{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:8px;overflow:hidden;margin:0 0 16px;background:var(--card)}
+.tabs button{font:inherit;text-align:left;background:var(--card);color:var(--ink);border:0;border-right:1px solid var(--line);padding:14px 16px;cursor:pointer}
+.tabs button:last-child{border-right:0}
+.tabs button:hover{background:var(--bg)}
+.tabs button.on{background:var(--navy);color:#fff}
+.tabs button .k{display:block;font-size:11px;font-weight:700;letter-spacing:.06em;opacity:.75;margin-bottom:4px}
+.tabs button .l{display:block;font-size:17px;font-weight:700}
+.tabs button .s{display:block;font-size:13px;margin-top:4px;opacity:.9}
 .tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:0 0 14px}
 .tools input[type=search]{font:inherit;font-size:15px;color:var(--ink);background:var(--card);border:1px solid #c9d1da;border-radius:4px;padding:8px 10px;min-width:220px;flex:1}
 .seg{display:flex;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--card)}
@@ -79,7 +87,7 @@ table.grid th{background:var(--bg)}
 .done-msg{background:var(--okbg);color:var(--ok);border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin:14px 0}
 .done-msg.warn{background:var(--warnbg);color:var(--warn)}
 button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid #2f6aa3;outline-offset:2px}
-@media (max-width:900px){.app{grid-template-columns:1fr}aside{position:relative;height:auto}.bar{left:0}.wrap{padding:22px 16px 140px}table.who .hide-sm{display:none}}
+@media (max-width:900px){.app{grid-template-columns:1fr}aside{position:relative;height:auto}.bar{left:0}.wrap{padding:22px 16px 140px}.tabs{grid-template-columns:1fr}table.who .hide-sm{display:none}}
 </style></head>
 <body>
 <div class="app">
@@ -87,30 +95,38 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid #2f6a
   <div class="brand">MAKEEN ENERGY</div>
   <div class="sub">Search · Submit · Download</div>
   <nav id="nav"></nav>
-  <a class="out" href="/keka-designation-to-role-map/">KEKA designation → role</a>
-  <a class="out" href="/Access-Management-Facility_Management-Makeen_Energy/" style="margin-top:0">Access Management</a>
 </aside>
 <div class="main">
 <header class="top"><span class="t">MAKEEN Energy India</span><span class="right" id="progress"></span></header>
 <div class="wrap">
 <h1>Who can Search, Submit and Download</h1>
-<p class="lead">These are the people you kept on the KEKA map. We have filled Search, Submit, Download and Approve from the portal role you already picked. Tick or untick if that person should get something different.</p>
-<div class="how">
-  <b>How to read the four ticks</b>
-  <p><b>Search</b> — open the list, filter plant and date, look at a row. Every login usually has this.</p>
-  <p><b>Submit</b> — type / edit. What they type depends on the role (shown on each group).</p>
-  <p><b>Download</b> — Excel and PDF of the open list or row.</p>
-  <p><b>Approve</b> — lock a submitted Daily or Monthly, or send it back with a reason.</p>
-  <p>Service Management has nobody kept on your map yet, so this page is Facility Management only.</p>
+<p class="lead">These are the people you kept on the KEKA map. Step 1 is our suggestion — change any tick. Step 2 is the review. Submit only from step 2.</p>
+<div class="tabs" role="tablist" aria-label="Steps">
+  <button type="button" id="pill1" class="on" role="tab" aria-selected="true">
+    <span class="k">STEP 1 OF 2</span>
+    <span class="l">Our suggestion</span>
+    <span class="s">Search, Submit, Download and Approve for each person. Change a tick if they should get something different.</span>
+  </button>
+  <button type="button" id="pill2" role="tab" aria-selected="false">
+    <span class="k">STEP 2 OF 2</span>
+    <span class="l">Review and submit</span>
+    <span class="s">Check every person, then submit. This is the last step.</span>
+  </button>
 </div>
+<div class="how" id="how"></div>
 <div id="doneBox"></div>
+<div id="step1">
 <div class="tools" id="tools"></div>
 <div id="list"></div>
+</div>
+<div id="step2" hidden></div>
 </div></div></div>
 <div class="bar"><div class="in"><span id="progress2" style="font-size:14px;color:var(--soft)"></span><span style="display:flex;gap:10px;flex-wrap:wrap">
 <button class="btn ghost" id="resetAll" type="button">Reset all to our suggestion</button>
 <button class="btn ghost" id="dl" type="button">Download answers</button>
-<button class="btn" id="review" type="button">Review and submit</button>
+<button class="btn ghost" id="back2" type="button" hidden>Back to step 1</button>
+<button class="btn" id="to2" type="button">Go to step 2 — review and submit</button>
+<button class="btn" id="review" type="button" hidden>Submit</button>
 </span></div></div>
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mt"><div class="dlg">
 <h3 id="mt">Please confirm the rights</h3><div class="sub" id="msub"></div>
@@ -157,6 +173,7 @@ let PEOPLE=[];
 const state={};
 let qfind="";
 let filter="all";
+let step=1;
 let ready=false;
 let saveTimer=null;
 function el(t,a={},...c){const n=document.createElement(t);for(const k in a){if(k==="class")n.className=a[k];else if(k.startsWith("on"))n.addEventListener(k.slice(2).toLowerCase(),a[k]);else n.setAttribute(k,a[k])}c.flat().forEach(x=>{if(x!=null)n.append(typeof x==="string"?document.createTextNode(x):x)});return n}
@@ -223,6 +240,9 @@ function rightBtns(p){
 }
 function paintNav(){
  const nav=document.getElementById("nav");nav.innerHTML="";
+ nav.append(el("a",{href:"#step1",class:step===1?"on":"",onclick:e=>{e.preventDefault();showStep(1)}},"Step 1 — Our suggestion",el("small",{},PEOPLE.length+" people")));
+ nav.append(el("a",{href:"#step2",class:step===2?"on":"",onclick:e=>{e.preventDefault();showStep(2)}},"Step 2 — Review and submit",el("small",{},"Submit only from here")));
+ if(step!==1)return;
  const counts={};
  PEOPLE.forEach(p=>{const r=roleOf(p);counts[r]=(counts[r]||0)+1});
  [["all","All selected people",PEOPLE.length],["changed","You changed",PEOPLE.filter(changed).length]].forEach(([id,lab,n])=>{
@@ -230,7 +250,7 @@ function paintNav(){
  });
  ROLES.forEach(r=>{
   if(!counts[r.id])return;
-  nav.append(el("a",{href:"#"+r.id,class:filter===r.id?"on":"",onclick:e=>{e.preventDefault();filter=r.id;paint()}},r.id,el("small",{},counts[r.id]+" people")));
+  nav.append(el("a",{href:"#"+r.id,class:filter===r.id?"on":"",onclick:e=>{e.preventDefault();filter=id;paint()}},r.id,el("small",{},counts[r.id]+" people")));
  });
 }
 function paintTools(){
@@ -280,10 +300,50 @@ function paintList(){
 }
 function progress(){
  const n=PEOPLE.filter(changed).length;
- document.getElementById("progress").textContent=PEOPLE.length+" logins · "+n+" changed from our suggestion";
- status(n?n+" of "+PEOPLE.length+" people differ from our suggestion":"All "+PEOPLE.length+" people still match our suggestion");
+ document.getElementById("progress").textContent=step===1
+  ?("Step 1 of 2 · "+PEOPLE.length+" logins · "+n+" changed")
+  :("Step 2 of 2 · review and submit");
+ status(step===1
+  ?(n?n+" of "+PEOPLE.length+" people differ from our suggestion":"All "+PEOPLE.length+" people still match our suggestion")
+  :"Check the list, then submit");
 }
-function paint(){paintNav();paintTools();paintList();progress()}
+function paintReview(){
+ const box=document.getElementById("step2");box.innerHTML="";
+ const ans=answers();
+ const nChange=ans.filter(a=>a.changed).length;
+ box.append(el("p",{class:"lead"},nChange
+  ?nChange+" people differ from our suggestion. Check the list, then submit."
+  :"Every person still matches our suggestion. Submit that as confirmed."));
+ const tb=el("table",{class:"grid"},el("tr",{},el("th",{},"Name"),el("th",{},"Designation"),el("th",{},"Plant / system"),el("th",{},"Portal role"),el("th",{},"Your ticks"),el("th",{},"")));
+ ans.forEach(a=>{
+  tb.append(el("tr",{},el("td",{},a.name),el("td",{},a.designation),el("td",{},a.location+" · "+a.system),el("td",{},a.role),el("td",{},a.choice),el("td",{},a.changed?"Changed":"Suggestion")));
+ });
+ box.append(tb);
+}
+function paint(){
+ paintNav();
+ if(step===1){paintTools();paintList()}
+ else paintReview();
+ progress();
+}
+function showStep(n){
+ step=n;
+ document.getElementById("step1").hidden=n!==1;
+ document.getElementById("step2").hidden=n!==2;
+ document.getElementById("pill1").classList.toggle("on",n===1);
+ document.getElementById("pill2").classList.toggle("on",n===2);
+ document.getElementById("pill1").setAttribute("aria-selected",n===1?"true":"false");
+ document.getElementById("pill2").setAttribute("aria-selected",n===2?"true":"false");
+ document.getElementById("resetAll").hidden=n!==1;
+ document.getElementById("back2").hidden=n!==2;
+ document.getElementById("to2").hidden=n!==1;
+ document.getElementById("review").hidden=n!==2;
+ document.getElementById("how").innerHTML=n===1
+  ?"<b>Step 1 — our suggestion</b><p><b>Search</b> — open the list. <b>Submit</b> — type / edit. <b>Download</b> — Excel and PDF. <b>Approve</b> — lock or return a day or month. Change any tick, then go to step 2.</p>"
+  :"<b>Step 2 — review and submit</b><p>This is the last step. Check every person. Go back to step 1 if a tick is wrong. Submit only when this list is right.</p>";
+ paint();
+ window.scrollTo({top:0,behavior:"smooth"});
+}
 function hideModal(){document.getElementById("modal").classList.remove("show")}
 async function save(p){
  const r=await fetch(SAVE_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({mode:"submit",draft:packDraft(),submittedAt:p.submittedAt,answers:p.answers})});
@@ -296,6 +356,10 @@ function boot(data){
  PEOPLE.forEach(p=>{state[p.id]={...suggested(roleOf(p))}});
  document.getElementById("dl").onclick=download;
  document.getElementById("resetAll").onclick=resetAll;
+ document.getElementById("pill1").onclick=()=>showStep(1);
+ document.getElementById("pill2").onclick=()=>showStep(2);
+ document.getElementById("to2").onclick=()=>showStep(2);
+ document.getElementById("back2").onclick=()=>showStep(1);
  document.getElementById("back").onclick=hideModal;
  document.getElementById("modal").addEventListener("click",e=>{if(e.target.id==="modal")hideModal()});
  document.addEventListener("keydown",e=>{if(e.key==="Escape")hideModal()});
@@ -327,11 +391,11 @@ function boot(data){
   let local=null;try{local=JSON.parse(localStorage.getItem(KEY)||"null")}catch(e){}
   if(remote&&Object.keys(remote).length)applyDraft(remote);
   else if(local&&local.draft)applyDraft(local.draft);
-  ready=true;paint();
+  ready=true;showStep(1);
   if(!(remote&&Object.keys(remote).length)&&local&&local.draft)persistNow();
  }).catch(()=>{
   try{const local=JSON.parse(localStorage.getItem(KEY)||"null");if(local&&local.draft)applyDraft(local.draft)}catch(e){}
-  ready=true;paint();
+  ready=true;showStep(1);
  });
 }
 fetch(PEOPLE_URL).then(r=>{if(!r.ok)throw new Error("people");return r.json()}).then(boot).catch(()=>{
