@@ -18,21 +18,27 @@ aside .sub{padding:0 20px 14px;color:#c5d0da;font-size:12px}
 aside a{display:block;color:#e8eef4;text-decoration:none;padding:10px 20px;font-size:13px}
 aside a:hover,aside a.on{background:#143a58}
 aside a small{display:block;color:#9fb4c9;font-size:12px;margin-top:2px}
-aside a.out{margin-top:18px;color:#9fb4c9}
 .main{min-width:0}
 header.top{background:#0b2e4a;color:#fff;padding:12px 28px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:30;gap:12px;flex-wrap:wrap}
 header.top .t{font-weight:700}
 header.top .right{font-size:14px;color:#dfe7ee}
-.wrap{max-width:1120px;margin:0 auto;padding:28px 32px 120px}
+.wrap{max-width:1180px;margin:0 auto;padding:28px 32px 120px}
 h1{margin:4px 0 8px;color:var(--navy);font-size:26px}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) h1,:root:not([data-theme="light"]) h2{color:#9cc3e4}}
-:root[data-theme="dark"] h1,:root[data-theme="dark"] h2{color:#9cc3e4}
-.lead{margin:0 0 16px;color:var(--soft);max-width:78ch}
+h2{margin:0 0 8px;color:var(--navy);font-size:18px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) h1,:root:not([data-theme="light"]) h2,:root:not([data-theme="light"]) h3{color:#9cc3e4}}
+:root[data-theme="dark"] h1,:root[data-theme="dark"] h2,:root[data-theme="dark"] h3{color:#9cc3e4}
+.lead{margin:0 0 16px;color:var(--soft);max-width:82ch}
+.primer{margin:0 0 16px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:900px){.primer{grid-template-columns:1fr}}
+.primer .box{border:1px solid var(--line);border-radius:8px;background:var(--card);padding:12px 14px}
+.primer .box h3{margin:0 0 6px;color:var(--navy);font-size:16px}
+.primer .box p{margin:0 0 8px;font-size:14.5px}
+.primer .box p:last-child{margin:0}
+.primer .box .n{color:var(--soft);font-size:13px}
 .how{margin:0 0 16px;padding:12px 14px;border:1px solid var(--line);border-radius:8px;background:var(--card)}
 .how b{display:block;color:var(--navy);margin-bottom:4px}
 .how p{margin:0 0 8px}
 .how p:last-child{margin:0}
-.how ul{margin:8px 0 0;padding-left:20px}
 .tabs{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:8px;overflow:hidden;margin:0 0 16px;background:var(--card)}
 .tabs button{font:inherit;text-align:left;background:var(--card);color:var(--ink);border:0;border-right:1px solid var(--line);padding:14px 16px;cursor:pointer}
 .tabs button:last-child{border-right:0}
@@ -47,45 +53,46 @@ h1{margin:4px 0 8px;color:var(--navy);font-size:26px}
 .seg button{font:inherit;font-size:13.5px;border:0;background:transparent;color:var(--ink);padding:7px 12px;cursor:pointer}
 .seg button.on{background:var(--navy);color:#fff}
 .card{border:1px solid var(--line);border-radius:8px;background:var(--card);margin:0 0 16px;overflow:hidden}
-.card h2{margin:0;padding:14px 16px 4px;font-size:18px;color:var(--navy)}
-.card .sug{padding:0 16px 12px;color:var(--soft);font-size:14.5px}
+.card>h2{padding:14px 16px 4px}
+.card .sug{padding:0 16px 10px;color:var(--soft);font-size:14.5px}
 .card .sug b{color:var(--ink)}
 .card .acts{padding:0 16px 12px;display:flex;gap:8px;flex-wrap:wrap}
-table.who{width:100%;border-collapse:collapse;font-size:14px}
-table.who th,table.who td{padding:8px 10px;text-align:left;border-top:1px solid var(--line);vertical-align:middle}
-table.who th{background:var(--bg);font-weight:700;position:sticky;top:0}
-table.who tr.changed{background:var(--warnbg)}
+.g{font-size:12px;font-weight:700;letter-spacing:.04em;color:var(--soft);padding:8px 10px 0}
+table.who,table.mtx{width:100%;border-collapse:collapse;font-size:13.5px}
+table.who th,table.who td,table.mtx th,table.mtx td{padding:7px 10px;text-align:left;border-top:1px solid var(--line);vertical-align:middle}
+table.who th,table.mtx th{background:var(--bg);font-weight:700}
+table.who tr.changed,table.mtx tr.changed{background:var(--warnbg)}
 table.who .name{font-weight:700}
 table.who .meta{color:var(--soft);font-size:13px}
 .rights{display:flex;gap:6px;flex-wrap:wrap}
 .btn{font:inherit;font-weight:700;border-radius:4px;padding:9px 18px;cursor:pointer;border:1px solid #0b2e4a;background:#0b2e4a;color:#fff}
 .btn.ghost{background:transparent;color:var(--ink);border-color:#c9d1da}
 .btn.tiny{font-size:13px;padding:5px 10px}
-.btn.yes,.btn.no{background:transparent;padding:6px 10px;font-size:13px}
+.btn.yes,.btn.no{background:transparent;padding:5px 9px;font-size:12.5px}
 .btn.yes{color:var(--ok);border-color:var(--ok)}
 .btn.no{color:var(--soft);border-color:#c9d1da}
 .btn.yes.on{background:var(--ok);color:#fff;border-color:var(--ok)}
-.btn.no.on{background:transparent;color:var(--soft)}
 .btn[disabled]{opacity:.55;cursor:not-allowed}
 .chip{display:inline-block;background:var(--okbg);color:var(--ok);border-radius:4px;padding:2px 8px;font-size:12.5px;font-weight:700}
-.chip.sm{background:var(--warnbg);color:var(--warn)}
 .mark{font-size:12.5px;color:var(--warn);font-weight:700}
 .mark.ok{color:var(--ok)}
 .empty{color:var(--soft);padding:18px 4px}
+.na{color:var(--soft);font-size:12.5px}
 .bar{position:fixed;z-index:30;left:268px;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);padding:12px 32px calc(12px + env(safe-area-inset-bottom,0px))}
-.bar .in{max-width:1120px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.bar .in{max-width:1180px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
 .modal{position:fixed;inset:0;background:rgba(11,20,32,.7);display:none;align-items:center;justify-content:center;padding:18px;z-index:60}
 .modal.show{display:flex}
-.dlg{background:var(--card);color:var(--ink);border-radius:8px;max-width:980px;width:100%;max-height:86vh;display:flex;flex-direction:column;border-top:6px solid #0b2e4a}
+.dlg{background:var(--card);color:var(--ink);border-radius:8px;max-width:1040px;width:100%;max-height:86vh;display:flex;flex-direction:column;border-top:6px solid #0b2e4a}
 .dlg h3{margin:0;padding:18px 22px 6px;font-size:20px}
 .dlg .sub{padding:0 22px 12px;color:var(--soft);font-size:15px}
 .dlg .body{overflow:auto;padding:0 22px 10px;border-top:1px solid var(--line)}
-table.grid{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px}
+table.grid{width:100%;border-collapse:collapse;margin:12px 0;font-size:13.5px}
 table.grid th,table.grid td{border:1px solid var(--line);padding:7px 8px;text-align:left;vertical-align:top}
 table.grid th{background:var(--bg)}
 .dlg .acts{display:flex;justify-content:flex-end;gap:10px;padding:14px 22px;border-top:1px solid var(--line)}
 .done-msg{background:var(--okbg);color:var(--ok);border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin:14px 0}
 .done-msg.warn{background:var(--warnbg);color:var(--warn)}
+.person-mods{padding:0 10px 12px;background:var(--bg)}
 button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid #2f6aa3;outline-offset:2px}
 @media (max-width:900px){.app{grid-template-columns:1fr}aside{position:relative;height:auto}.bar{left:0}.wrap{padding:22px 16px 140px}.tabs{grid-template-columns:1fr}table.who .hide-sm{display:none}}
 </style></head>
@@ -100,17 +107,39 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid #2f6a
 <header class="top"><span class="t">MAKEEN Energy India</span><span class="right" id="progress"></span></header>
 <div class="wrap">
 <h1>Who can Search, Submit and Download</h1>
-<p class="lead">These are the people you kept on the KEKA map. Step 1 is our suggestion — change any tick. Step 2 is the review. Submit only from step 2.</p>
+<p class="lead">These are the accesses for MIS, Exception, licences and the other modules. Search, Submit, Download and Approve sit on that module’s page. Dashboard is open to every login, so it is not asked. Change a tick if a person should get something different, then go to step 2 and submit.</p>
+<div class="primer">
+  <div class="box">
+    <h3>MIS</h3>
+    <p><b>Daily MIS</b> — Search the day. Submit types the daily figures. Download Excel/PDF. Approve locks or returns the day.</p>
+    <p><b>Monthly MIS</b> — Search the month. Submit types only the month-only fields. Daily totals come from approved Daily MIS. Download. Approve locks or returns the month.</p>
+    <p><b>Cumulative Daily</b> — read only. Search the dates and look at the table. No Submit.</p>
+    <p><b>Management Review</b> — pack of Daily + Exception + Monthly already entered. Search and Download. No Submit.</p>
+    <p><b>Graphs</b> — charts from Daily and Monthly. Search and Download. No Submit.</p>
+  </div>
+  <div class="box">
+    <h3>Exception</h3>
+    <p><b>Daily Exceptions</b> — Search the 13-point safety check. Submit types the check. Download. There is no Approve on this page.</p>
+    <h3 style="margin-top:12px">Licences</h3>
+    <p><b>Statutory and Mandatory</b> — Search and Download the licence file. Submit adds or edits the licence.</p>
+    <p><b>Internal testing</b> — same ticks as licences, for internal tests.</p>
+    <h3 style="margin-top:12px">Other modules</h3>
+    <p><b>Plant master</b> — Search plant details. Submit edits the plant. Create or delete a plant stays Admin.</p>
+    <p><b>Audit</b> — Search observations. Submit adds or updates an audit line. Download.</p>
+    <p><b>People</b> — load KEKA, assign plant, turn login on or off. Admin only unless you tick it here.</p>
+    <p class="n">If every tick is off on a module, that module is Hidden — it is not in their menu.</p>
+  </div>
+</div>
 <div class="tabs" role="tablist" aria-label="Steps">
   <button type="button" id="pill1" class="on" role="tab" aria-selected="true">
     <span class="k">STEP 1 OF 2</span>
-    <span class="l">Our suggestion</span>
-    <span class="s">Search, Submit, Download and Approve for each person. Change a tick if they should get something different.</span>
+    <span class="l">Our suggestion by module</span>
+    <span class="s">Ticks are filled from the portal role. Change any module for a person or for the whole role.</span>
   </button>
   <button type="button" id="pill2" role="tab" aria-selected="false">
     <span class="k">STEP 2 OF 2</span>
     <span class="l">Review and submit</span>
-    <span class="s">Check every person, then submit. This is the last step.</span>
+    <span class="s">Check every module, then submit. This is the last step.</span>
   </button>
 </div>
 <div class="how" id="how"></div>
@@ -135,30 +164,48 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid #2f6a
 <script>
 const KEYS=["search","submit","download","approve"];
 const LABELS={search:"Search",submit:"Submit",download:"Download",approve:"Approve"};
-const ROLES=[
- {id:"Admin",submitOn:"Every Facility module, plus People and notices.",rights:{search:true,submit:true,download:true,approve:true}},
- {id:"Plant Manager",submitOn:"Plant master, Audit and Licences. Does not type Daily MIS.",rights:{search:true,submit:true,download:true,approve:true}},
- {id:"Dy Plant Incharge",submitOn:"Daily MIS, Daily Exception, and the month-only fields on Monthly MIS.",rights:{search:true,submit:true,download:false,approve:false}},
- {id:"Maintenance Officer",submitOn:"Daily MIS, Daily Exception, and the month-only fields on Monthly MIS.",rights:{search:true,submit:true,download:false,approve:false}},
- {id:"Operation Officer",submitOn:"Daily MIS, Daily Exception, and the month-only fields on Monthly MIS.",rights:{search:true,submit:true,download:false,approve:false}},
- {id:"Sr. Operations and Maintenance Officer",submitOn:"Daily MIS, Daily Exception, and the month-only fields on Monthly MIS.",rights:{search:true,submit:true,download:false,approve:false}},
- {id:"Accounts Officer",submitOn:"Does not type plant reports.",rights:{search:true,submit:false,download:true,approve:false}},
- {id:"Asst Manager HSSE",submitOn:"Daily Exception and Audit. Does not type Daily MIS.",rights:{search:true,submit:true,download:true,approve:false}},
- {id:"Safety Officer",submitOn:"Daily Exception and Audit. Does not type Daily MIS.",rights:{search:true,submit:true,download:true,approve:false}},
- {id:"QHSE Head",submitOn:"Does not type plant reports unless you tick Submit.",rights:{search:true,submit:false,download:true,approve:false}},
- {id:"FM Co-ordinator",submitOn:"Does not type plant reports unless you tick Submit.",rights:{search:true,submit:false,download:true,approve:false}},
- {id:"Zonal Manager",submitOn:"Does not type plant reports unless you tick Submit.",rights:{search:true,submit:false,download:true,approve:false}},
- {id:"Management",submitOn:"Does not type plant reports unless you tick Submit.",rights:{search:true,submit:false,download:true,approve:false}},
- {id:"Staff",submitOn:"Search only, unless you tick more.",rights:{search:true,submit:false,download:false,approve:false}}
+const GROUPS=["MIS","Exception","Licences","Other"];
+const MODULES=[
+ {id:"daily",group:"MIS",title:"Daily MIS",keys:["search","submit","download","approve"]},
+ {id:"monthly",group:"MIS",title:"Monthly MIS",keys:["search","submit","download","approve"]},
+ {id:"cumul",group:"MIS",title:"Cumulative Daily",keys:["search","download"]},
+ {id:"review",group:"MIS",title:"Management Review",keys:["search","download"]},
+ {id:"graphs",group:"MIS",title:"Graphs",keys:["search","download"]},
+ {id:"exc",group:"Exception",title:"Daily Exceptions",keys:["search","submit","download"]},
+ {id:"lic",group:"Licences",title:"Statutory and Mandatory",keys:["search","submit","download"]},
+ {id:"test",group:"Licences",title:"Internal testing",keys:["search","submit","download"]},
+ {id:"plant",group:"Other",title:"Plant master",keys:["search","submit","download"]},
+ {id:"audit",group:"Other",title:"Audit",keys:["search","submit","download"]},
+ {id:"people",group:"Other",title:"People",keys:["search","submit"]}
 ];
-const ROLEMAP=Object.fromEntries(ROLES.map(r=>[r.id,r]));
+const ROLES=["Admin","Plant Manager","Dy Plant Incharge","Maintenance Officer","Operation Officer","Sr. Operations and Maintenance Officer","Accounts Officer","Asst Manager HSSE","Safety Officer","QHSE Head","FM Co-ordinator","Zonal Manager","Management","Staff"];
+function R(se,su,dl,ap){return {search:!!se,submit:!!su,download:!!dl,approve:!!ap}}
+const SD=R(1,0,1,0), S=R(1,0,0,0), TYPE=R(1,1,0,0), SDA=R(1,0,1,1), ALL=R(1,1,1,1), TYPEDL=R(1,1,1,0), PMSUB=R(1,1,1,0), H=R(0,0,0,0);
+const VIEW={daily:SD,monthly:SD,cumul:SD,review:SD,graphs:SD,exc:SD,lic:SD,test:SD,plant:SD,audit:SD,people:H};
+const TYPING={daily:TYPE,monthly:TYPE,cumul:S,review:S,graphs:S,exc:TYPE,lic:S,test:S,plant:S,audit:S,people:H};
+const SAFETY={daily:SD,monthly:SD,cumul:SD,review:SD,graphs:SD,exc:TYPEDL,lic:SD,test:SD,plant:SD,audit:TYPEDL,people:H};
+const STAFF={daily:S,monthly:S,cumul:S,review:S,graphs:S,exc:S,lic:S,test:S,plant:S,audit:S,people:H};
+const PM={daily:SDA,monthly:SDA,cumul:SD,review:SD,graphs:SD,exc:SD,lic:PMSUB,test:PMSUB,plant:PMSUB,audit:PMSUB,people:H};
+const ADM={daily:ALL,monthly:ALL,cumul:SD,review:SD,graphs:SD,exc:TYPEDL,lic:PMSUB,test:PMSUB,plant:PMSUB,audit:PMSUB,people:R(1,1,0,0)};
 function suggested(role){
- const r=ROLEMAP[role];
- return r?{...r.rights}:{search:true,submit:false,download:false,approve:false};
+ if(role==="Admin")return cloneMods(ADM);
+ if(role==="Plant Manager")return cloneMods(PM);
+ if(role==="Safety Officer"||role==="Asst Manager HSSE")return cloneMods(SAFETY);
+ if(role==="Staff")return cloneMods(STAFF);
+ if(role==="Dy Plant Incharge"||role==="Maintenance Officer"||role==="Operation Officer"||role==="Sr. Operations and Maintenance Officer")return cloneMods(TYPING);
+ return cloneMods(VIEW);
 }
-function submitOn(role){return (ROLEMAP[role]&&ROLEMAP[role].submitOn)||""}
-function summary(rights){return KEYS.filter(k=>rights[k]).map(k=>LABELS[k]).join(", ")||"None"}
-function same(a,b){return KEYS.every(k=>!!a[k]===!!b[k])}
+function cloneMods(src){
+ const out={};
+ MODULES.forEach(m=>{
+  out[m.id]={};
+  KEYS.forEach(k=>out[m.id][k]=m.keys.includes(k)?!!(src[m.id]&&src[m.id][k]):false);
+ });
+ return out;
+}
+function summary(rights){return KEYS.filter(k=>rights[k]).map(k=>LABELS[k]).join(", ")||"Hidden"}
+function sameMod(a,b){return KEYS.every(k=>!!(a&&a[k])===!!(b&&b[k]))}
+function same(a,b){return MODULES.every(m=>sameMod(a[m.id],b[m.id]))}
 function sysLabel(systems){
  const out=[];
  if((systems||[]).includes("fm"))out.push("Facility Management");
@@ -166,11 +213,15 @@ function sysLabel(systems){
  return out.join(" + ")||"—";
 }
 function roleOf(p){return (p.role&&(p.role.fm||p.role.sm))||""}
+function lineFor(p){
+ return MODULES.map(m=>m.title+": "+summary(state[p.id][m.id])).join(" · ");
+}
 const SAVE_URL="/api/fm-person-access";
-const KEY="fm-person-access-draft-v1";
+const KEY="fm-person-access-draft-v2";
 const PEOPLE_URL="/Person-Access-Facility_Management-Makeen_Energy/people.json";
 let PEOPLE=[];
 const state={};
+const openP={};
 let qfind="";
 let filter="all";
 let step=1;
@@ -178,12 +229,12 @@ let ready=false;
 let saveTimer=null;
 function el(t,a={},...c){const n=document.createElement(t);for(const k in a){if(k==="class")n.className=a[k];else if(k.startsWith("on"))n.addEventListener(k.slice(2).toLowerCase(),a[k]);else n.setAttribute(k,a[k])}c.flat().forEach(x=>{if(x!=null)n.append(typeof x==="string"?document.createTextNode(x):x)});return n}
 function status(t){const n=document.getElementById("progress2");if(n)n.textContent=t||""}
-function packDraft(){const draft={};PEOPLE.forEach(p=>draft[p.id]={...state[p.id]});return draft}
+function packDraft(){const draft={};PEOPLE.forEach(p=>draft[p.id]=cloneMods(state[p.id]));return draft}
 function applyDraft(draft){
  if(!draft||typeof draft!=="object")return;
  PEOPLE.forEach(p=>{
   const row=draft[p.id];if(!row||typeof row!=="object")return;
-  KEYS.forEach(k=>{if(typeof row[k]==="boolean")state[p.id][k]=row[k]});
+  if(row.daily||row.monthly||row.exc){state[p.id]=cloneMods(row);return}
  });
 }
 function saveLocal(){try{localStorage.setItem(KEY,JSON.stringify({savedAt:Date.now(),draft:packDraft()}))}catch(e){}}
@@ -201,22 +252,26 @@ function changed(p){return !same(state[p.id],suggested(roleOf(p)))}
 function answers(){
  return PEOPLE.map(p=>{
   const role=roleOf(p);
-  const choice=state[p.id];
-  const sug=suggested(role);
+  const modules={};
+  MODULES.forEach(m=>modules[m.id]={title:m.title,group:m.group,...state[p.id][m.id],text:summary(state[p.id][m.id])});
   return {
    id:p.id,name:p.name,designation:p.designation,location:p.location,
-   system:sysLabel(p.systems),role,
-   search:!!choice.search,submit:!!choice.submit,download:!!choice.download,approve:!!choice.approve,
-   suggested:summary(sug),choice:summary(choice),changed:changed(p),submitOn:submitOn(role)
+   system:sysLabel(p.systems),role,modules,line:lineFor(p),changed:changed(p)
   };
  });
 }
 function csv(){
- const rows=[["Name","KEKA designation","Plant","KEKA code","System","Portal role","Search","Submit","Download","Approve","Our suggestion","Matches suggestion","Submit applies to"]];
- answers().forEach(a=>rows.push([a.name,a.designation,a.location,a.id,a.system,a.role,a.search?"Yes":"No",a.submit?"Yes":"No",a.download?"Yes":"No",a.approve?"Yes":"No",a.suggested,a.changed?"Changed":"Same",a.submitOn]));
+ const head=["Name","KEKA designation","Plant","KEKA code","System","Portal role","Changed"];
+ MODULES.forEach(m=>head.push(m.title));
+ const rows=[head];
+ answers().forEach(a=>{
+  const row=[a.name,a.designation,a.location,a.id,a.system,a.role,a.changed?"Changed":"Same"];
+  MODULES.forEach(m=>row.push(a.modules[m.id].text));
+  rows.push(row);
+ });
  return rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(",")).join("\n");
 }
-function download(){const url=URL.createObjectURL(new Blob([csv()],{type:"text/csv"}));const a=el("a",{href:url,download:"person-search-submit-download.csv"});document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000)}
+function download(){const url=URL.createObjectURL(new Blob([csv()],{type:"text/csv"}));const a=el("a",{href:url,download:"person-module-access.csv"});document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000)}
 function visible(){
  const f=qfind.toLowerCase().replace(/\s+/g," ").trim();
  return PEOPLE.filter(p=>{
@@ -226,21 +281,59 @@ function visible(){
   return [p.name,p.designation,p.location,p.id,roleOf(p)].join(" ").toLowerCase().includes(f);
  });
 }
-function toggle(p,key){state[p.id][key]=!state[p.id][key];saveDraft();paint()}
-function resetOne(p){state[p.id]={...suggested(roleOf(p))};saveDraft();paint()}
-function resetGroup(role){PEOPLE.filter(p=>roleOf(p)===role).forEach(p=>{state[p.id]={...suggested(role)}});saveDraft();paint()}
-function resetAll(){PEOPLE.forEach(p=>{state[p.id]={...suggested(roleOf(p))}});saveDraft();paint()}
-function rightBtns(p){
+function toggle(p,mod,key){
+ if(!MODULES.find(m=>m.id===mod).keys.includes(key))return;
+ state[p.id][mod][key]=!state[p.id][mod][key];
+ saveDraft();paint();
+}
+function toggleRole(role,mod,key){
+ const people=PEOPLE.filter(p=>roleOf(p)===role);
+ if(!people.length)return;
+ if(!MODULES.find(m=>m.id===mod).keys.includes(key))return;
+ const next=!state[people[0].id][mod][key];
+ people.forEach(p=>{state[p.id][mod][key]=next});
+ saveDraft();paint();
+}
+function resetOne(p){state[p.id]=suggested(roleOf(p));saveDraft();paint()}
+function resetGroup(role){PEOPLE.filter(p=>roleOf(p)===role).forEach(p=>{state[p.id]=suggested(role)});saveDraft();paint()}
+function resetAll(){PEOPLE.forEach(p=>{state[p.id]=suggested(roleOf(p))});saveDraft();paint()}
+function btns(rights,mod,onClick){
  const box=el("div",{class:"rights"});
- KEYS.forEach(k=>{
-  const on=!!state[p.id][k];
-  box.append(el("button",{type:"button",class:"btn tiny "+(on?"yes on":"no"),onclick:()=>toggle(p,k)},LABELS[k]));
+ mod.keys.forEach(k=>{
+  const on=!!rights[k];
+  box.append(el("button",{type:"button",class:"btn tiny "+(on?"yes on":"no"),onclick:()=>onClick(k)},LABELS[k]));
  });
+ if(mod.keys.length<4)box.append(el("span",{class:"na"},mod.keys.includes("approve")?"":"No Approve"));
  return box;
+}
+function matrix(people, roleWide){
+ const sample=state[people[0].id];
+ const tb=el("table",{class:"mtx"});
+ tb.append(el("tr",{},el("th",{},"Module"),el("th",{},"Access on this module")));
+ let last="";
+ MODULES.forEach(m=>{
+  if(m.group!==last){tb.append(el("tr",{},el("td",{colspan:"2",class:"g"},m.group)));last=m.group}
+  const mixed=!people.every(p=>sameMod(state[p.id][m.id],sample[m.id]));
+  tb.append(el("tr",{class:mixed?"changed":""},
+   el("td",{},m.title,mixed?el("div",{class:"meta"},"Some people in this role differ"):null),
+   el("td",{},btns(sample[m.id],m,k=>roleWide?toggleRole(roleOf(people[0]),m.id,k):toggle(people[0],m.id,k)))
+  ));
+ });
+ return tb;
+}
+function personMatrix(p){
+ const tb=el("table",{class:"mtx"});
+ tb.append(el("tr",{},el("th",{},"Module"),el("th",{},"Access for "+p.name)));
+ let last="";
+ MODULES.forEach(m=>{
+  if(m.group!==last){tb.append(el("tr",{},el("td",{colspan:"2",class:"g"},m.group)));last=m.group}
+  tb.append(el("tr",{},el("td",{},m.title),el("td",{},btns(state[p.id][m.id],m,k=>toggle(p,m.id,k)))));
+ });
+ return tb;
 }
 function paintNav(){
  const nav=document.getElementById("nav");nav.innerHTML="";
- nav.append(el("a",{href:"#step1",class:step===1?"on":"",onclick:e=>{e.preventDefault();showStep(1)}},"Step 1 — Our suggestion",el("small",{},PEOPLE.length+" people")));
+ nav.append(el("a",{href:"#step1",class:step===1?"on":"",onclick:e=>{e.preventDefault();showStep(1)}},"Step 1 — By module",el("small",{},PEOPLE.length+" people")));
  nav.append(el("a",{href:"#step2",class:step===2?"on":"",onclick:e=>{e.preventDefault();showStep(2)}},"Step 2 — Review and submit",el("small",{},"Submit only from here")));
  if(step!==1)return;
  const counts={};
@@ -249,8 +342,8 @@ function paintNav(){
   nav.append(el("a",{href:"#"+id,class:filter===id?"on":"",onclick:e=>{e.preventDefault();filter=id;paint()}},lab,el("small",{},n+" people")));
  });
  ROLES.forEach(r=>{
-  if(!counts[r.id])return;
-  nav.append(el("a",{href:"#"+r.id,class:filter===r.id?"on":"",onclick:e=>{e.preventDefault();filter=id;paint()}},r.id,el("small",{},counts[r.id]+" people")));
+  if(!counts[r])return;
+  nav.append(el("a",{href:"#"+r,class:filter===r?"on":"",onclick:e=>{e.preventDefault();filter=r;paint()}},r,el("small",{},counts[r]+" people")));
  });
 }
 function paintTools(){
@@ -267,32 +360,36 @@ function paintList(){
  const box=document.getElementById("list");box.innerHTML="";
  const rows=visible();
  if(!rows.length){box.append(el("div",{class:"empty"},"Nothing matches that search or filter."));return}
- const order=ROLES.map(r=>r.id);
  const groups={};
  rows.forEach(p=>{(groups[roleOf(p)]||(groups[roleOf(p)]=[])).push(p)});
- const keys=Object.keys(groups).sort((a,b)=>{
-  const ia=order.indexOf(a),ib=order.indexOf(b);
-  return (ia<0?99:ia)-(ib<0?99:ib)||a.localeCompare(b);
- });
+ const keys=Object.keys(groups).sort((a,b)=>ROLES.indexOf(a)-ROLES.indexOf(b)||a.localeCompare(b));
  keys.forEach(role=>{
   const people=groups[role].slice().sort((a,b)=>a.name.localeCompare(b.name));
-  const sug=suggested(role);
   const card=el("div",{class:"card",id:role.replace(/\s+/g,"-")});
   card.append(el("h2",{},role+" — "+people.length+" "+(people.length===1?"person":"people")));
-  card.append(el("div",{class:"sug"},el("b",{},"Our suggestion: "+summary(sug)+".")," Submit (edit) for this role: "+submitOn(role)));
+  card.append(el("div",{class:"sug"},el("b",{},"Module access for this role.")," A tick here applies to everyone listed, unless you open one person and change only them."));
   card.append(el("div",{class:"acts"},el("button",{type:"button",class:"btn tiny ghost",onclick:()=>resetGroup(role)},"Reset this role to our suggestion")));
+  card.append(matrix(people,true));
   const tb=el("table",{class:"who"});
-  tb.append(el("tr",{},el("th",{},"Name"),el("th",{class:"hide-sm"},"KEKA designation"),el("th",{},"Plant / system"),el("th",{},"Search · Submit · Download · Approve"),el("th",{},"")));
+  tb.append(el("tr",{},el("th",{},"Name"),el("th",{class:"hide-sm"},"KEKA designation"),el("th",{},"Plant / system"),el("th",{},""),el("th",{},"")));
   people.forEach(p=>{
    const tr=el("tr",{class:changed(p)?"changed":""});
    tr.append(
     el("td",{},el("div",{class:"name"},p.name),el("div",{class:"meta"},"KEKA "+p.id)),
     el("td",{class:"hide-sm"},p.designation),
     el("td",{},el("div",{},p.location||"—"),el("div",{},el("span",{class:"chip"},sysLabel(p.systems)))),
-    el("td",{},rightBtns(p),el("div",{class:"mark "+(changed(p)?"":"ok")},changed(p)?"You changed this":"Our suggestion")),
-    el("td",{},el("button",{type:"button",class:"btn tiny ghost",onclick:()=>resetOne(p)},"Reset"))
+    el("td",{},el("div",{class:"mark "+(changed(p)?"":"ok")},changed(p)?"You changed this person":"Our suggestion")),
+    el("td",{},
+     el("button",{type:"button",class:"btn tiny ghost",onclick:()=>{openP[p.id]=!openP[p.id];paint()}},openP[p.id]?"Hide modules":"This person"),
+     " ",
+     el("button",{type:"button",class:"btn tiny ghost",onclick:()=>resetOne(p)},"Reset")
+    )
    );
    tb.append(tr);
+   if(openP[p.id]){
+    const wrap=el("tr",{},el("td",{colspan:"5",class:"person-mods"},personMatrix(p)));
+    tb.append(wrap);
+   }
   });
   card.append(tb);
   box.append(card);
@@ -305,20 +402,24 @@ function progress(){
   :("Step 2 of 2 · review and submit");
  status(step===1
   ?(n?n+" of "+PEOPLE.length+" people differ from our suggestion":"All "+PEOPLE.length+" people still match our suggestion")
-  :"Check the list, then submit");
+  :"Check each module, then submit");
 }
 function paintReview(){
  const box=document.getElementById("step2");box.innerHTML="";
  const ans=answers();
  const nChange=ans.filter(a=>a.changed).length;
  box.append(el("p",{class:"lead"},nChange
-  ?nChange+" people differ from our suggestion. Check the list, then submit."
+  ?nChange+" people differ from our suggestion. Check the modules, then submit."
   :"Every person still matches our suggestion. Submit that as confirmed."));
- const tb=el("table",{class:"grid"},el("tr",{},el("th",{},"Name"),el("th",{},"Designation"),el("th",{},"Plant / system"),el("th",{},"Portal role"),el("th",{},"Your ticks"),el("th",{},"")));
  ans.forEach(a=>{
-  tb.append(el("tr",{},el("td",{},a.name),el("td",{},a.designation),el("td",{},a.location+" · "+a.system),el("td",{},a.role),el("td",{},a.choice),el("td",{},a.changed?"Changed":"Suggestion")));
+  const card=el("div",{class:"card"});
+  card.append(el("h2",{},a.name+" — "+a.role));
+  card.append(el("div",{class:"sug"},a.designation+" · "+a.location+" · "+a.system+" · ",el("span",{class:"mark "+(a.changed?"":"ok")},a.changed?"Changed":"Our suggestion")));
+  const tb=el("table",{class:"grid"},el("tr",{},el("th",{},"Group"),el("th",{},"Module"),el("th",{},"Access")));
+  MODULES.forEach(m=>tb.append(el("tr",{},el("td",{},m.group),el("td",{},m.title),el("td",{},a.modules[m.id].text))));
+  card.append(tb);
+  box.append(card);
  });
- box.append(tb);
 }
 function paint(){
  paintNav();
@@ -339,8 +440,8 @@ function showStep(n){
  document.getElementById("to2").hidden=n!==1;
  document.getElementById("review").hidden=n!==2;
  document.getElementById("how").innerHTML=n===1
-  ?"<b>Step 1 — our suggestion</b><p><b>Search</b> — open the list. <b>Submit</b> — type / edit. <b>Download</b> — Excel and PDF. <b>Approve</b> — lock or return a day or month. Change any tick, then go to step 2.</p>"
-  :"<b>Step 2 — review and submit</b><p>This is the last step. Check every person. Go back to step 1 if a tick is wrong. Submit only when this list is right.</p>";
+  ?"<b>Step 1</b><p>The ticks under each role are MIS, Exception, licences and the other modules. Change a module for the whole role, or open one person. Then go to step 2.</p>"
+  :"<b>Step 2 — review and submit</b><p>This is the last step. Check every module. Go back to step 1 if a tick is wrong. Submit only when this list is right.</p>";
  paint();
  window.scrollTo({top:0,behavior:"smooth"});
 }
@@ -353,7 +454,7 @@ async function save(p){
 }
 function boot(data){
  PEOPLE=(data&&data.people)||[];
- PEOPLE.forEach(p=>{state[p.id]={...suggested(roleOf(p))}});
+ PEOPLE.forEach(p=>{state[p.id]=suggested(roleOf(p))});
  document.getElementById("dl").onclick=download;
  document.getElementById("resetAll").onclick=resetAll;
  document.getElementById("pill1").onclick=()=>showStep(1);
@@ -367,13 +468,13 @@ function boot(data){
   const body=document.getElementById("mbody");body.innerHTML="";
   const ans=answers();
   const nChange=ans.filter(a=>a.changed).length;
-  const tb=el("table",{class:"grid"},el("tr",{},el("th",{},"Name"),el("th",{},"Designation"),el("th",{},"System"),el("th",{},"Portal role"),el("th",{},"Your ticks"),el("th",{},"")));
+  const tb=el("table",{class:"grid"},el("tr",{},el("th",{},"Name"),el("th",{},"Role"),el("th",{},"Modules"),el("th",{},"")));
   ans.forEach(a=>{
-   tb.append(el("tr",{},el("td",{},a.name),el("td",{},a.designation+" · "+a.location),el("td",{},a.system),el("td",{},a.role),el("td",{},a.choice),el("td",{},a.changed?"Changed":"Suggestion")));
+   tb.append(el("tr",{},el("td",{},a.name),el("td",{},a.role),el("td",{},a.line),el("td",{},a.changed?"Changed":"Suggestion")));
   });
   body.append(tb);
   document.getElementById("msub").textContent=nChange
-   ?(nChange+" people differ from our suggestion. Submit these ticks?")
+   ?(nChange+" people differ from our suggestion. Submit these module ticks?")
    :"Every person still matches our suggestion. Submit that as confirmed?";
   document.getElementById("modal").classList.add("show");document.getElementById("confirm").focus();
  };

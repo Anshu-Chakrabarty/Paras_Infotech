@@ -20,12 +20,15 @@ function normalize(raw) {
   }
 }
 
-function yn(v) {
-  return v ? 'Yes' : 'No'
-}
-
 function csvFrom(payload) {
   const answers = Array.isArray(payload?.answers) ? payload.answers : []
+  const moduleTitles = []
+  for (const a of answers) {
+    const mods = a.modules && typeof a.modules === 'object' ? a.modules : {}
+    for (const row of Object.values(mods)) {
+      if (row && row.title && !moduleTitles.includes(row.title)) moduleTitles.push(row.title)
+    }
+  }
   const rows = [[
     'Name',
     'KEKA designation',
@@ -33,15 +36,15 @@ function csvFrom(payload) {
     'KEKA code',
     'System',
     'Portal role',
-    'Search',
-    'Submit',
-    'Download',
-    'Approve',
-    'Our suggestion',
-    'Matches suggestion',
-    'Submit applies to',
+    'Changed',
+    ...moduleTitles,
   ]]
   for (const a of answers) {
+    const mods = a.modules && typeof a.modules === 'object' ? a.modules : {}
+    const byTitle = {}
+    for (const row of Object.values(mods)) {
+      if (row && row.title) byTitle[row.title] = row.text || ''
+    }
     rows.push([
       a.name || '',
       a.designation || '',
@@ -49,13 +52,8 @@ function csvFrom(payload) {
       a.id || '',
       a.system || '',
       a.role || '',
-      yn(a.search),
-      yn(a.submit),
-      yn(a.download),
-      yn(a.approve),
-      a.suggested || '',
       a.changed ? 'Changed' : 'Same',
-      a.submitOn || '',
+      ...moduleTitles.map((title) => byTitle[title] || ''),
     ])
   }
   return rows.map((r) => r.map((v) => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\n')
