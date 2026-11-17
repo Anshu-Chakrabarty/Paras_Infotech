@@ -367,7 +367,7 @@ function paintList(){
   const people=groups[role].slice().sort((a,b)=>a.name.localeCompare(b.name));
   const card=el("div",{class:"card",id:role.replace(/\s+/g,"-")});
   card.append(el("h2",{},role+" — "+people.length+" "+(people.length===1?"person":"people")));
-  card.append(el("div",{class:"sug"},el("b",{},"Module access for this role.")," A tick here applies to everyone listed, unless you open one person and change only them."));
+  card.append(el("div",{class:"sug"},el("b",{},"Module access for this role.")," A tick here applies to everyone listed. Press Change this name only if one person should get different ticks."));
   card.append(el("div",{class:"acts"},el("button",{type:"button",class:"btn tiny ghost",onclick:()=>resetGroup(role)},"Reset this role to our suggestion")));
   card.append(matrix(people,true));
   const tb=el("table",{class:"who"});
@@ -380,7 +380,7 @@ function paintList(){
     el("td",{},el("div",{},p.location||"—"),el("div",{},el("span",{class:"chip"},sysLabel(p.systems)))),
     el("td",{},el("div",{class:"mark "+(changed(p)?"":"ok")},changed(p)?"You changed this person":"Our suggestion")),
     el("td",{},
-     el("button",{type:"button",class:"btn tiny ghost",onclick:()=>{openP[p.id]=!openP[p.id];paint()}},openP[p.id]?"Hide modules":"This person"),
+     el("button",{type:"button",class:"btn tiny ghost",onclick:()=>{openP[p.id]=!openP[p.id];paint()}},openP[p.id]?"Hide this name":"Change this name only"),
      " ",
      el("button",{type:"button",class:"btn tiny ghost",onclick:()=>resetOne(p)},"Reset")
     )
@@ -440,7 +440,7 @@ function showStep(n){
  document.getElementById("to2").hidden=n!==1;
  document.getElementById("review").hidden=n!==2;
  document.getElementById("how").innerHTML=n===1
-  ?"<b>Step 1</b><p>The ticks under each role are MIS, Exception, licences and the other modules. Change a module for the whole role, or open one person. Then go to step 2.</p>"
+  ?"<b>Step 1</b><p>The ticks under each role are MIS, Exception, licences and the other modules. Change a module for the whole role, or press Change this name only. Then go to step 2.</p>"
   :"<b>Step 2 — review and submit</b><p>This is the last step. Check every module. Go back to step 1 if a tick is wrong. Submit only when this list is right.</p>";
  paint();
  window.scrollTo({top:0,behavior:"smooth"});
