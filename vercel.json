@@ -14,7 +14,11 @@
     { "source": "/keka-role-map", "destination": "/KEKA-Role-Map-Facility_Management-Makeen_Energy", "permanent": true },
     { "source": "/keka-role-map/", "destination": "/KEKA-Role-Map-Facility_Management-Makeen_Energy/", "permanent": true },
     { "source": "/keka-designation-to-role-map", "destination": "/KEKA-Role-Map-Facility_Management-Makeen_Energy", "permanent": true },
-    { "source": "/keka-designation-to-role-map/", "destination": "/KEKA-Role-Map-Facility_Management-Makeen_Energy/", "permanent": true }
+    { "source": "/keka-designation-to-role-map/", "destination": "/KEKA-Role-Map-Facility_Management-Makeen_Energy/", "permanent": true },
+    { "source": "/person-access", "destination": "/Person-Access-Facility_Management-Makeen_Energy", "permanent": true },
+    { "source": "/person-access/", "destination": "/Person-Access-Facility_Management-Makeen_Energy/", "permanent": true },
+    { "source": "/login-rights", "destination": "/Person-Access-Facility_Management-Makeen_Energy", "permanent": true },
+    { "source": "/login-rights/", "destination": "/Person-Access-Facility_Management-Makeen_Energy/", "permanent": true }
   ],
   "rewrites": [
     { "source": "/Requirements-Facility_Management-Makeen_Energy", "destination": "/Requirements-Facility_Management-Makeen_Energy/index.html" },
@@ -23,9 +27,11 @@
     { "source": "/Access-Management-Facility_Management-Makeen_Energy/", "destination": "/Access-Management-Facility_Management-Makeen_Energy/index.html" },
     { "source": "/KEKA-Role-Map-Facility_Management-Makeen_Energy", "destination": "/KEKA-Role-Map-Facility_Management-Makeen_Energy/index.html" },
     { "source": "/KEKA-Role-Map-Facility_Management-Makeen_Energy/", "destination": "/KEKA-Role-Map-Facility_Management-Makeen_Energy/index.html" },
+    { "source": "/Person-Access-Facility_Management-Makeen_Energy", "destination": "/Person-Access-Facility_Management-Makeen_Energy/index.html" },
+    { "source": "/Person-Access-Facility_Management-Makeen_Energy/", "destination": "/Person-Access-Facility_Management-Makeen_Energy/index.html" },
     { "source": "/makeen_reports", "destination": "/makeen_reports/index.html" },
     { "source": "/makeen_reports/", "destination": "/makeen_reports/index.html" },
     { "source": "/makeen_reports/:path((?!assets/).*)", "destination": "/makeen_reports/index.html" },
-    { "source": "/((?!api/|assets/|bricks&bytes|favicon\\.|apple-touch-icon\\.png|Requirements-Facility_Management-Makeen_Energy|Access-Management-Facility_Management-Makeen_Energy|KEKA-Role-Map-Facility_Management-Makeen_Energy|makeen_reports).*)", "destination": "/index.html" }
+    { "source": "/((?!api/|assets/|bricks&bytes|favicon\\.|apple-touch-icon\\.png|Requirements-Facility_Management-Makeen_Energy|Access-Management-Facility_Management-Makeen_Energy|KEKA-Role-Map-Facility_Management-Makeen_Energy|Person-Access-Facility_Management-Makeen_Energy|makeen_reports).*)", "destination": "/index.html" }
   ]
 }

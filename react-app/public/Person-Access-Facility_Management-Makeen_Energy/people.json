@@ -1,0 +1,617 @@
+{
+  "submittedAt": "2026-11-16T07:00:28.352Z",
+  "people": [
+    {
+      "id": "1276",
+      "name": "Akshay Das",
+      "designation": "Accounts Executive",
+      "location": "HPCL-Chandrapur",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Accounts Officer"
+      }
+    },
+    {
+      "id": "824",
+      "name": "Dinesh Pal",
+      "designation": "Accounts Executive",
+      "location": "BPCL-Dharwad",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Accounts Officer"
+      }
+    },
+    {
+      "id": "1264",
+      "name": "Jitendra Rout",
+      "designation": "Accounts Executive",
+      "location": "BPCL-Bolangir",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Accounts Officer"
+      }
+    },
+    {
+      "id": "808",
+      "name": "Shubham Kapoor",
+      "designation": "Accounts Executive",
+      "location": "HPCL-Barmer",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Accounts Officer"
+      }
+    },
+    {
+      "id": "1213",
+      "name": "Nagesh Nagesh",
+      "designation": "Accounts Officer",
+      "location": "HPCL-YEDIYUR",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Accounts Officer"
+      }
+    },
+    {
+      "id": "903",
+      "name": "Naveen Kumar Narwani",
+      "designation": "Accounts Officer",
+      "location": "BPCL-Surat",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Accounts Officer"
+      }
+    },
+    {
+      "id": "967",
+      "name": "Rahul Kumar",
+      "designation": "Accounts Officer",
+      "location": "BPCL-Bareilly",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Accounts Officer"
+      }
+    },
+    {
+      "id": "560",
+      "name": "Raj Kumar Jha",
+      "designation": "Accounts Officer",
+      "location": "HPCL-Goalpara",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Accounts Officer"
+      }
+    },
+    {
+      "id": "1340",
+      "name": "Sanjay Pratap Singh",
+      "designation": "Accounts Officer",
+      "location": "BPCL-Bokaro",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Accounts Officer"
+      }
+    },
+    {
+      "id": "794",
+      "name": "Rahul Kumar",
+      "designation": "Asst. Maintenance Manager",
+      "location": "HPCL-Barmer",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Maintenance Officer"
+      }
+    },
+    {
+      "id": "1366",
+      "name": "Vishnu KV",
+      "designation": "Field Engineer",
+      "location": "IOCL Cochin",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Staff"
+      }
+    },
+    {
+      "id": "407",
+      "name": "Janagani Pavanasutudu",
+      "designation": "HR Officer",
+      "location": "HPCL-Warangal",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Accounts Officer"
+      }
+    },
+    {
+      "id": "119",
+      "name": "Durgesh Singh Kushwah",
+      "designation": "Head - FM Operations",
+      "location": "HO-Hyderabad",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "FM Co-ordinator"
+      }
+    },
+    {
+      "id": "75",
+      "name": "Navneet Singh Chauhan",
+      "designation": "Head QHSE",
+      "location": "HO-Hyderabad",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "QHSE Head"
+      }
+    },
+    {
+      "id": "1125",
+      "name": "Ankit Jaiswal",
+      "designation": "Maintenance Officer",
+      "location": "BPCL-Dharwad",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Maintenance Officer"
+      }
+    },
+    {
+      "id": "886",
+      "name": "Athul Krishna",
+      "designation": "Maintenance Officer",
+      "location": "BPCL-Dharwad",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Maintenance Officer"
+      }
+    },
+    {
+      "id": "806",
+      "name": "Bhupathy M",
+      "designation": "Maintenance Officer",
+      "location": "CPCL_Chennai",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Maintenance Officer"
+      }
+    },
+    {
+      "id": "550",
+      "name": "Raju E",
+      "designation": "Maintenance Officer",
+      "location": "HPCL-Warangal",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Maintenance Officer"
+      }
+    },
+    {
+      "id": "1377",
+      "name": "Sonu Kumar",
+      "designation": "Maintenance Officer",
+      "location": "HPCL-Barhi",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Maintenance Officer"
+      }
+    },
+    {
+      "id": "1162",
+      "name": "HEMLATA THAKUR",
+      "designation": "Operational Excellence Manager",
+      "location": "HO-Hyderabad",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Management"
+      }
+    },
+    {
+      "id": "915",
+      "name": "Indrajit Kumar Gope",
+      "designation": "Operations Officer",
+      "location": "BPCL-Surat",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Operation Officer"
+      }
+    },
+    {
+      "id": "1117",
+      "name": "Ramanand Kumar",
+      "designation": "Operations Officer",
+      "location": "BPCL-Bareilly",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Operation Officer"
+      }
+    },
+    {
+      "id": "603",
+      "name": "Shekar S",
+      "designation": "Operations Officer",
+      "location": "HPCL-Warangal",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Operation Officer"
+      }
+    },
+    {
+      "id": "416",
+      "name": "Gaurav Kumar",
+      "designation": "Plant Incharge",
+      "location": "BPCL-Bareilly",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Dy Plant Incharge"
+      }
+    },
+    {
+      "id": "745",
+      "name": "Abhinaw Pandey",
+      "designation": "Plant Manager",
+      "location": "HPCL-Warangal",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Plant Manager"
+      }
+    },
+    {
+      "id": "1131",
+      "name": "Ashok Kumar",
+      "designation": "Plant Manager",
+      "location": "HPCL-Chandrapur",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Plant Manager"
+      }
+    },
+    {
+      "id": "1013",
+      "name": "Deep Ashokbhai Patel",
+      "designation": "Plant Manager",
+      "location": "BPCL-Surat",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Plant Manager"
+      }
+    },
+    {
+      "id": "293",
+      "name": "Devarajan Shanmugasundaram",
+      "designation": "Plant Manager",
+      "location": "CPCL_Chennai",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Plant Manager"
+      }
+    },
+    {
+      "id": "107",
+      "name": "Pavan Raj B",
+      "designation": "Plant Manager",
+      "location": "HPCL-YEDIYUR",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Plant Manager"
+      }
+    },
+    {
+      "id": "753",
+      "name": "Prabhat Kumar",
+      "designation": "Plant Manager",
+      "location": "HPCL-Barhi",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Plant Manager"
+      }
+    },
+    {
+      "id": "716",
+      "name": "Sikander Rana",
+      "designation": "Plant Manager",
+      "location": "HPCL-Goalpara",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Plant Manager"
+      }
+    },
+    {
+      "id": "13",
+      "name": "Somnath Maiti",
+      "designation": "Plant Manager",
+      "location": "IOCL-Motihari",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Plant Manager"
+      }
+    },
+    {
+      "id": "35",
+      "name": "Vinod Patil",
+      "designation": "Plant Manager",
+      "location": "BPCL-Dharwad",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Plant Manager"
+      }
+    },
+    {
+      "id": "1282",
+      "name": "Ashish Meharkar",
+      "designation": "Safety Officer",
+      "location": "HPCL-Chandrapur",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Safety Officer"
+      }
+    },
+    {
+      "id": "1374",
+      "name": "BACHALI THIRUPATHI",
+      "designation": "Safety Officer",
+      "location": "HPCL-Warangal",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Safety Officer"
+      }
+    },
+    {
+      "id": "1345",
+      "name": "Chintan Dilip Kokate",
+      "designation": "Safety Officer",
+      "location": "HPCL-Chandrapur",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Safety Officer"
+      }
+    },
+    {
+      "id": "1367",
+      "name": "FARDEEN ABID KHANDKER",
+      "designation": "Safety Officer",
+      "location": "HPCL-Goalpara",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Safety Officer"
+      }
+    },
+    {
+      "id": "1400",
+      "name": "HARSHIT GOYAL",
+      "designation": "Safety Officer",
+      "location": "BPCL-Bareilly",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Safety Officer"
+      }
+    },
+    {
+      "id": "1412",
+      "name": "Hrishikesh SS",
+      "designation": "Safety Officer",
+      "location": "BPCL-Dharwad",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Safety Officer"
+      }
+    },
+    {
+      "id": "1425",
+      "name": "Hrithik Sajeev",
+      "designation": "Safety Officer",
+      "location": "IOCL Cochin",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Safety Officer"
+      }
+    },
+    {
+      "id": "709",
+      "name": "Naushad Ali",
+      "designation": "Safety Officer",
+      "location": "HPCL-Barhi",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Safety Officer"
+      }
+    },
+    {
+      "id": "1427",
+      "name": "Prince Kumar",
+      "designation": "Safety Officer",
+      "location": "BPCL-Bolangir",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Safety Officer"
+      }
+    },
+    {
+      "id": "232",
+      "name": "Ravi Ranjan",
+      "designation": "Safety Officer",
+      "location": "HPCL-Barmer",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Safety Officer"
+      }
+    },
+    {
+      "id": "357",
+      "name": "Sharath B.",
+      "designation": "Safety Officer",
+      "location": "HPCL-YEDIYUR",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Safety Officer"
+      }
+    },
+    {
+      "id": "1221",
+      "name": "Prajwal Fernandes",
+      "designation": "Senior Electrical Officer",
+      "location": "BPCL-Dharwad",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Accounts Officer"
+      }
+    },
+    {
+      "id": "792",
+      "name": "Abhishek Pathak",
+      "designation": "Sr. Maintenance Officer",
+      "location": "BPCL-Shendra",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Maintenance Officer"
+      }
+    },
+    {
+      "id": "420",
+      "name": "Sanjeev Sharma",
+      "designation": "Sr. Maintenance Officer",
+      "location": "BPCL-Bolangir",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Maintenance Officer"
+      }
+    },
+    {
+      "id": "1022",
+      "name": "David Raja Enock",
+      "designation": "Sr. Operations Officer",
+      "location": "IOCL Cochin",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Operation Officer"
+      }
+    },
+    {
+      "id": "1197",
+      "name": "Mayukh Mukhopadhyay",
+      "designation": "Sr. Operations Officer",
+      "location": "HPCL-Barmer",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Operation Officer"
+      }
+    },
+    {
+      "id": "115",
+      "name": "Daulat Ram",
+      "designation": "Sr. Safety Officer",
+      "location": "HO-Hyderabad",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Safety Officer"
+      }
+    },
+    {
+      "id": "228",
+      "name": "Prateek Kumar Rai",
+      "designation": "Sr.Plant Manager",
+      "location": "HPCL-YEDIYUR",
+      "systems": [
+        "fm"
+      ],
+      "role": {
+        "fm": "Plant Manager"
+      }
+    }
+  ]
+}

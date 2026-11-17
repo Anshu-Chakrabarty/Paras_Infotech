@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Who can Search, Submit, Download — MAKEEN Energy India · Facility Management</title>
+<style>
+:root{--ink:#1f2937;--navy:#0b2e4a;--navy2:#143a58;--soft:#4b5563;--line:#e5e7eb;--bg:#f7f8fa;--card:#ffffff;--ok:#1d5a37;--okbg:#eaf5ee;--warn:#9a5b00;--warnbg:#fff6e5;--no:#8a2b2b;--nobg:#f8ecec;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#e5e9ee;--navy:#0b2e4a;--navy2:#174468;--soft:#a3adb8;--line:#2b3644;--bg:#121a23;--card:#18222d;--ok:#acdcbc;--okbg:#1c3426;--warn:#f1c27a;--warnbg:#382c15;--no:#f0b4b4;--nobg:#3a2222;color-scheme:dark}}
+:root[data-theme="dark"]{--ink:#e5e9ee;--navy:#0b2e4a;--navy2:#174468;--soft:#a3adb8;--line:#2b3644;--bg:#121a23;--card:#18222d;--ok:#acdcbc;--okbg:#1c3426;--warn:#f1c27a;--warnbg:#382c15;--no:#f0b4b4;--nobg:#3a2222;color-scheme:dark}
+*{box-sizing:border-box}
+html{height:100%}
+body{margin:0;font:16px/1.5 Calibri,"Segoe UI",Carlito,Arial,sans-serif;color:var(--ink);background:var(--bg)}
+.app{display:grid;grid-template-columns:268px 1fr;min-height:100%}
+aside{background:#0b2e4a;color:#fff;padding:20px 0 40px;position:sticky;top:0;height:100vh;overflow:auto}
+aside .brand{padding:4px 20px 6px;font-weight:700}
+aside .sub{padding:0 20px 14px;color:#c5d0da;font-size:12px}
+aside a{display:block;color:#e8eef4;text-decoration:none;padding:10px 20px;font-size:13px}
+aside a:hover,aside a.on{background:#143a58}
+aside a small{display:block;color:#9fb4c9;font-size:12px;margin-top:2px}
+aside a.out{margin-top:18px;color:#9fb4c9}
+.main{min-width:0}
+header.top{background:#0b2e4a;color:#fff;padding:12px 28px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:30;gap:12px;flex-wrap:wrap}
+header.top .t{font-weight:700}
+header.top .right{font-size:14px;color:#dfe7ee}
+.wrap{max-width:1120px;margin:0 auto;padding:28px 32px 120px}
+h1{margin:4px 0 8px;color:var(--navy);font-size:26px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) h1,:root:not([data-theme="light"]) h2{color:#9cc3e4}}
+:root[data-theme="dark"] h1,:root[data-theme="dark"] h2{color:#9cc3e4}
+.lead{margin:0 0 16px;color:var(--soft);max-width:78ch}
+.how{margin:0 0 16px;padding:12px 14px;border:1px solid var(--line);border-radius:8px;background:var(--card)}
+.how b{display:block;color:var(--navy);margin-bottom:4px}
+.how p{margin:0 0 8px}
+.how p:last-child{margin:0}
+.how ul{margin:8px 0 0;padding-left:20px}
+.tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:0 0 14px}
+.tools input[type=search]{font:inherit;font-size:15px;color:var(--ink);background:var(--card);border:1px solid #c9d1da;border-radius:4px;padding:8px 10px;min-width:220px;flex:1}
+.seg{display:flex;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--card)}
+.seg button{font:inherit;font-size:13.5px;border:0;background:transparent;color:var(--ink);padding:7px 12px;cursor:pointer}
+.seg button.on{background:var(--navy);color:#fff}
+.card{border:1px solid var(--line);border-radius:8px;background:var(--card);margin:0 0 16px;overflow:hidden}
+.card h2{margin:0;padding:14px 16px 4px;font-size:18px;color:var(--navy)}
+.card .sug{padding:0 16px 12px;color:var(--soft);font-size:14.5px}
+.card .sug b{color:var(--ink)}
+.card .acts{padding:0 16px 12px;display:flex;gap:8px;flex-wrap:wrap}
+table.who{width:100%;border-collapse:collapse;font-size:14px}
+table.who th,table.who td{padding:8px 10px;text-align:left;border-top:1px solid var(--line);vertical-align:middle}
+table.who th{background:var(--bg);font-weight:700;position:sticky;top:0}
+table.who tr.changed{background:var(--warnbg)}
+table.who .name{font-weight:700}
+table.who .meta{color:var(--soft);font-size:13px}
+.rights{display:flex;gap:6px;flex-wrap:wrap}
+.btn{font:inherit;font-weight:700;border-radius:4px;padding:9px 18px;cursor:pointer;border:1px solid #0b2e4a;background:#0b2e4a;color:#fff}
+.btn.ghost{background:transparent;color:var(--ink);border-color:#c9d1da}
+.btn.tiny{font-size:13px;padding:5px 10px}
+.btn.yes,.btn.no{background:transparent;padding:6px 10px;font-size:13px}
+.btn.yes{color:var(--ok);border-color:var(--ok)}
+.btn.no{color:var(--soft);border-color:#c9d1da}
+.btn.yes.on{background:var(--ok);color:#fff;border-color:var(--ok)}
+.btn.no.on{background:transparent;color:var(--soft)}
+.btn[disabled]{opacity:.55;cursor:not-allowed}
+.chip{display:inline-block;background:var(--okbg);color:var(--ok);border-radius:4px;padding:2px 8px;font-size:12.5px;font-weight:700}
+.chip.sm{background:var(--warnbg);color:var(--warn)}
+.mark{font-size:12.5px;color:var(--warn);font-weight:700}
+.mark.ok{color:var(--ok)}
+.empty{color:var(--soft);padding:18px 4px}
+.bar{position:fixed;z-index:30;left:268px;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);padding:12px 32px calc(12px + env(safe-area-inset-bottom,0px))}
+.bar .in{max-width:1120px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.modal{position:fixed;inset:0;background:rgba(11,20,32,.7);display:none;align-items:center;justify-content:center;padding:18px;z-index:60}
+.modal.show{display:flex}
+.dlg{background:var(--card);color:var(--ink);border-radius:8px;max-width:980px;width:100%;max-height:86vh;display:flex;flex-direction:column;border-top:6px solid #0b2e4a}
+.dlg h3{margin:0;padding:18px 22px 6px;font-size:20px}
+.dlg .sub{padding:0 22px 12px;color:var(--soft);font-size:15px}
+.dlg .body{overflow:auto;padding:0 22px 10px;border-top:1px solid var(--line)}
+table.grid{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px}
+table.grid th,table.grid td{border:1px solid var(--line);padding:7px 8px;text-align:left;vertical-align:top}
+table.grid th{background:var(--bg)}
+.dlg .acts{display:flex;justify-content:flex-end;gap:10px;padding:14px 22px;border-top:1px solid var(--line)}
+.done-msg{background:var(--okbg);color:var(--ok);border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin:14px 0}
+.done-msg.warn{background:var(--warnbg);color:var(--warn)}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid #2f6aa3;outline-offset:2px}
+@media (max-width:900px){.app{grid-template-columns:1fr}aside{position:relative;height:auto}.bar{left:0}.wrap{padding:22px 16px 140px}table.who .hide-sm{display:none}}
+</style></head>
+<body>
+<div class="app">
+<aside>
+  <div class="brand">MAKEEN ENERGY</div>
+  <div class="sub">Search · Submit · Download</div>
+  <nav id="nav"></nav>
+  <a class="out" href="/keka-designation-to-role-map/">KEKA designation → role</a>
+  <a class="out" href="/Access-Management-Facility_Management-Makeen_Energy/" style="margin-top:0">Access Management</a>
+</aside>
+<div class="main">
+<header class="top"><span class="t">MAKEEN Energy India</span><span class="right" id="progress"></span></header>
+<div class="wrap">
+<h1>Who can Search, Submit and Download</h1>
+<p class="lead">These are the people you kept on the KEKA map. We have filled Search, Submit, Download and Approve from the portal role you already picked. Tick or untick if that person should get something different.</p>
+<div class="how">
+  <b>How to read the four ticks</b>
+  <p><b>Search</b> — open the list, filter plant and date, look at a row. Every login usually has this.</p>
+  <p><b>Submit</b> — type / edit. What they type depends on the role (shown on each group).</p>
+  <p><b>Download</b> — Excel and PDF of the open list or row.</p>
+  <p><b>Approve</b> — lock a submitted Daily or Monthly, or send it back with a reason.</p>
+  <p>Service Management has nobody kept on your map yet, so this page is Facility Management only.</p>
+</div>
+<div id="doneBox"></div>
+<div class="tools" id="tools"></div>
+<div id="list"></div>
+</div></div></div>
+<div class="bar"><div class="in"><span id="progress2" style="font-size:14px;color:var(--soft)"></span><span style="display:flex;gap:10px;flex-wrap:wrap">
+<button class="btn ghost" id="resetAll" type="button">Reset all to our suggestion</button>
+<button class="btn ghost" id="dl" type="button">Download answers</button>
+<button class="btn" id="review" type="button">Review and submit</button>
+</span></div></div>
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mt"><div class="dlg">
+<h3 id="mt">Please confirm the rights</h3><div class="sub" id="msub"></div>
+<div class="body" id="mbody"></div>
+<div class="acts"><button class="btn ghost" id="back" type="button">Go back and change</button><button class="btn" id="confirm" type="button">Yes, submit</button></div></div></div>
+<script>
+const KEYS=["search","submit","download","approve"];
+const LABELS={search:"Search",submit:"Submit",download:"Download",approve:"Approve"};
+const ROLES=[
+ {id:"Admin",submitOn:"Every Facility module, plus People and notices.",rights:{search:true,submit:true,download:true,approve:true}},
+ {id:"Plant Manager",submitOn:"Plant master, Audit and Licences. Does not type Daily MIS.",rights:{search:true,submit:true,download:true,approve:true}},
+ {id:"Dy Plant Incharge",submitOn:"Daily MIS, Daily Exception, and the month-only fields on Monthly MIS.",rights:{search:true,submit:true,download:false,approve:false}},
+ {id:"Maintenance Officer",submitOn:"Daily MIS, Daily Exception, and the month-only fields on Monthly MIS.",rights:{search:true,submit:true,download:false,approve:false}},
+ {id:"Operation Officer",submitOn:"Daily MIS, Daily Exception, and the month-only fields on Monthly MIS.",rights:{search:true,submit:true,download:false,approve:false}},
+ {id:"Sr. Operations and Maintenance Officer",submitOn:"Daily MIS, Daily Exception, and the month-only fields on Monthly MIS.",rights:{search:true,submit:true,download:false,approve:false}},
+ {id:"Accounts Officer",submitOn:"Does not type plant reports.",rights:{search:true,submit:false,download:true,approve:false}},
+ {id:"Asst Manager HSSE",submitOn:"Daily Exception and Audit. Does not type Daily MIS.",rights:{search:true,submit:true,download:true,approve:false}},
+ {id:"Safety Officer",submitOn:"Daily Exception and Audit. Does not type Daily MIS.",rights:{search:true,submit:true,download:true,approve:false}},
+ {id:"QHSE Head",submitOn:"Does not type plant reports unless you tick Submit.",rights:{search:true,submit:false,download:true,approve:false}},
+ {id:"FM Co-ordinator",submitOn:"Does not type plant reports unless you tick Submit.",rights:{search:true,submit:false,download:true,approve:false}},
+ {id:"Zonal Manager",submitOn:"Does not type plant reports unless you tick Submit.",rights:{search:true,submit:false,download:true,approve:false}},
+ {id:"Management",submitOn:"Does not type plant reports unless you tick Submit.",rights:{search:true,submit:false,download:true,approve:false}},
+ {id:"Staff",submitOn:"Search only, unless you tick more.",rights:{search:true,submit:false,download:false,approve:false}}
+];
+const ROLEMAP=Object.fromEntries(ROLES.map(r=>[r.id,r]));
+function suggested(role){
+ const r=ROLEMAP[role];
+ return r?{...r.rights}:{search:true,submit:false,download:false,approve:false};
+}
+function submitOn(role){return (ROLEMAP[role]&&ROLEMAP[role].submitOn)||""}
+function summary(rights){return KEYS.filter(k=>rights[k]).map(k=>LABELS[k]).join(", ")||"None"}
+function same(a,b){return KEYS.every(k=>!!a[k]===!!b[k])}
+function sysLabel(systems){
+ const out=[];
+ if((systems||[]).includes("fm"))out.push("Facility Management");
+ if((systems||[]).includes("sm"))out.push("Service Management");
+ return out.join(" + ")||"—";
+}
+function roleOf(p){return (p.role&&(p.role.fm||p.role.sm))||""}
+const SAVE_URL="/api/fm-person-access";
+const KEY="fm-person-access-draft-v1";
+const PEOPLE_URL="/Person-Access-Facility_Management-Makeen_Energy/people.json";
+let PEOPLE=[];
+const state={};
+let qfind="";
+let filter="all";
+let ready=false;
+let saveTimer=null;
+function el(t,a={},...c){const n=document.createElement(t);for(const k in a){if(k==="class")n.className=a[k];else if(k.startsWith("on"))n.addEventListener(k.slice(2).toLowerCase(),a[k]);else n.setAttribute(k,a[k])}c.flat().forEach(x=>{if(x!=null)n.append(typeof x==="string"?document.createTextNode(x):x)});return n}
+function status(t){const n=document.getElementById("progress2");if(n)n.textContent=t||""}
+function packDraft(){const draft={};PEOPLE.forEach(p=>draft[p.id]={...state[p.id]});return draft}
+function applyDraft(draft){
+ if(!draft||typeof draft!=="object")return;
+ PEOPLE.forEach(p=>{
+  const row=draft[p.id];if(!row||typeof row!=="object")return;
+  KEYS.forEach(k=>{if(typeof row[k]==="boolean")state[p.id][k]=row[k]});
+ });
+}
+function saveLocal(){try{localStorage.setItem(KEY,JSON.stringify({savedAt:Date.now(),draft:packDraft()}))}catch(e){}}
+function persistNow(){
+ if(!ready)return;
+ status("Saving…");
+ saveLocal();
+ fetch(SAVE_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({draft:packDraft()})})
+  .then(r=>{if(!r.ok)throw new Error("save");return r.json()})
+  .then(()=>status(""))
+  .catch(()=>status("Could not save. Kept on this device."));
+}
+function saveDraft(){saveLocal();clearTimeout(saveTimer);saveTimer=setTimeout(persistNow,400)}
+function changed(p){return !same(state[p.id],suggested(roleOf(p)))}
+function answers(){
+ return PEOPLE.map(p=>{
+  const role=roleOf(p);
+  const choice=state[p.id];
+  const sug=suggested(role);
+  return {
+   id:p.id,name:p.name,designation:p.designation,location:p.location,
+   system:sysLabel(p.systems),role,
+   search:!!choice.search,submit:!!choice.submit,download:!!choice.download,approve:!!choice.approve,
+   suggested:summary(sug),choice:summary(choice),changed:changed(p),submitOn:submitOn(role)
+  };
+ });
+}
+function csv(){
+ const rows=[["Name","KEKA designation","Plant","KEKA code","System","Portal role","Search","Submit","Download","Approve","Our suggestion","Matches suggestion","Submit applies to"]];
+ answers().forEach(a=>rows.push([a.name,a.designation,a.location,a.id,a.system,a.role,a.search?"Yes":"No",a.submit?"Yes":"No",a.download?"Yes":"No",a.approve?"Yes":"No",a.suggested,a.changed?"Changed":"Same",a.submitOn]));
+ return rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(",")).join("\n");
+}
+function download(){const url=URL.createObjectURL(new Blob([csv()],{type:"text/csv"}));const a=el("a",{href:url,download:"person-search-submit-download.csv"});document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000)}
+function visible(){
+ const f=qfind.toLowerCase().replace(/\s+/g," ").trim();
+ return PEOPLE.filter(p=>{
+  if(filter==="changed"&&!changed(p))return false;
+  if(filter!=="all"&&filter!=="changed"&&roleOf(p)!==filter)return false;
+  if(!f)return true;
+  return [p.name,p.designation,p.location,p.id,roleOf(p)].join(" ").toLowerCase().includes(f);
+ });
+}
+function toggle(p,key){state[p.id][key]=!state[p.id][key];saveDraft();paint()}
+function resetOne(p){state[p.id]={...suggested(roleOf(p))};saveDraft();paint()}
+function resetGroup(role){PEOPLE.filter(p=>roleOf(p)===role).forEach(p=>{state[p.id]={...suggested(role)}});saveDraft();paint()}
+function resetAll(){PEOPLE.forEach(p=>{state[p.id]={...suggested(roleOf(p))}});saveDraft();paint()}
+function rightBtns(p){
+ const box=el("div",{class:"rights"});
+ KEYS.forEach(k=>{
+  const on=!!state[p.id][k];
+  box.append(el("button",{type:"button",class:"btn tiny "+(on?"yes on":"no"),onclick:()=>toggle(p,k)},LABELS[k]));
+ });
+ return box;
+}
+function paintNav(){
+ const nav=document.getElementById("nav");nav.innerHTML="";
+ const counts={};
+ PEOPLE.forEach(p=>{const r=roleOf(p);counts[r]=(counts[r]||0)+1});
+ [["all","All selected people",PEOPLE.length],["changed","You changed",PEOPLE.filter(changed).length]].forEach(([id,lab,n])=>{
+  nav.append(el("a",{href:"#"+id,class:filter===id?"on":"",onclick:e=>{e.preventDefault();filter=id;paint()}},lab,el("small",{},n+" people")));
+ });
+ ROLES.forEach(r=>{
+  if(!counts[r.id])return;
+  nav.append(el("a",{href:"#"+r.id,class:filter===r.id?"on":"",onclick:e=>{e.preventDefault();filter=r.id;paint()}},r.id,el("small",{},counts[r.id]+" people")));
+ });
+}
+function paintTools(){
+ const box=document.getElementById("tools");box.innerHTML="";
+ const search=el("input",{type:"search",placeholder:"Search a name, plant or role"});search.value=qfind;
+ search.addEventListener("input",()=>{qfind=search.value;paint()});
+ const seg=el("div",{class:"seg"});
+ [["all","All"],["changed","You changed"]].forEach(([id,lab])=>{
+  seg.append(el("button",{type:"button",class:filter===id?"on":"",onclick:()=>{filter=id;paint()}},lab));
+ });
+ box.append(search,seg);
+}
+function paintList(){
+ const box=document.getElementById("list");box.innerHTML="";
+ const rows=visible();
+ if(!rows.length){box.append(el("div",{class:"empty"},"Nothing matches that search or filter."));return}
+ const order=ROLES.map(r=>r.id);
+ const groups={};
+ rows.forEach(p=>{(groups[roleOf(p)]||(groups[roleOf(p)]=[])).push(p)});
+ const keys=Object.keys(groups).sort((a,b)=>{
+  const ia=order.indexOf(a),ib=order.indexOf(b);
+  return (ia<0?99:ia)-(ib<0?99:ib)||a.localeCompare(b);
+ });
+ keys.forEach(role=>{
+  const people=groups[role].slice().sort((a,b)=>a.name.localeCompare(b.name));
+  const sug=suggested(role);
+  const card=el("div",{class:"card",id:role.replace(/\s+/g,"-")});
+  card.append(el("h2",{},role+" — "+people.length+" "+(people.length===1?"person":"people")));
+  card.append(el("div",{class:"sug"},el("b",{},"Our suggestion: "+summary(sug)+".")," Submit (edit) for this role: "+submitOn(role)));
+  card.append(el("div",{class:"acts"},el("button",{type:"button",class:"btn tiny ghost",onclick:()=>resetGroup(role)},"Reset this role to our suggestion")));
+  const tb=el("table",{class:"who"});
+  tb.append(el("tr",{},el("th",{},"Name"),el("th",{class:"hide-sm"},"KEKA designation"),el("th",{},"Plant / system"),el("th",{},"Search · Submit · Download · Approve"),el("th",{},"")));
+  people.forEach(p=>{
+   const tr=el("tr",{class:changed(p)?"changed":""});
+   tr.append(
+    el("td",{},el("div",{class:"name"},p.name),el("div",{class:"meta"},"KEKA "+p.id)),
+    el("td",{class:"hide-sm"},p.designation),
+    el("td",{},el("div",{},p.location||"—"),el("div",{},el("span",{class:"chip"},sysLabel(p.systems)))),
+    el("td",{},rightBtns(p),el("div",{class:"mark "+(changed(p)?"":"ok")},changed(p)?"You changed this":"Our suggestion")),
+    el("td",{},el("button",{type:"button",class:"btn tiny ghost",onclick:()=>resetOne(p)},"Reset"))
+   );
+   tb.append(tr);
+  });
+  card.append(tb);
+  box.append(card);
+ });
+}
+function progress(){
+ const n=PEOPLE.filter(changed).length;
+ document.getElementById("progress").textContent=PEOPLE.length+" logins · "+n+" changed from our suggestion";
+ status(n?n+" of "+PEOPLE.length+" people differ from our suggestion":"All "+PEOPLE.length+" people still match our suggestion");
+}
+function paint(){paintNav();paintTools();paintList();progress()}
+function hideModal(){document.getElementById("modal").classList.remove("show")}
+async function save(p){
+ const r=await fetch(SAVE_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({mode:"submit",draft:packDraft(),submittedAt:p.submittedAt,answers:p.answers})});
+ const j=await r.json().catch(()=>({}));
+ if(!r.ok||!j.ok)throw new Error(j.message||"save failed");
+ return true;
+}
+function boot(data){
+ PEOPLE=(data&&data.people)||[];
+ PEOPLE.forEach(p=>{state[p.id]={...suggested(roleOf(p))}});
+ document.getElementById("dl").onclick=download;
+ document.getElementById("resetAll").onclick=resetAll;
+ document.getElementById("back").onclick=hideModal;
+ document.getElementById("modal").addEventListener("click",e=>{if(e.target.id==="modal")hideModal()});
+ document.addEventListener("keydown",e=>{if(e.key==="Escape")hideModal()});
+ document.getElementById("review").onclick=()=>{
+  const body=document.getElementById("mbody");body.innerHTML="";
+  const ans=answers();
+  const nChange=ans.filter(a=>a.changed).length;
+  const tb=el("table",{class:"grid"},el("tr",{},el("th",{},"Name"),el("th",{},"Designation"),el("th",{},"System"),el("th",{},"Portal role"),el("th",{},"Your ticks"),el("th",{},"")));
+  ans.forEach(a=>{
+   tb.append(el("tr",{},el("td",{},a.name),el("td",{},a.designation+" · "+a.location),el("td",{},a.system),el("td",{},a.role),el("td",{},a.choice),el("td",{},a.changed?"Changed":"Suggestion")));
+  });
+  body.append(tb);
+  document.getElementById("msub").textContent=nChange
+   ?(nChange+" people differ from our suggestion. Submit these ticks?")
+   :"Every person still matches our suggestion. Submit that as confirmed?";
+  document.getElementById("modal").classList.add("show");document.getElementById("confirm").focus();
+ };
+ document.getElementById("confirm").onclick=async()=>{
+  const p={submittedAt:new Date().toISOString(),answers:answers()};
+  const btn=document.getElementById("confirm");btn.disabled=true;btn.textContent="Submitting…";
+  let saved=false;try{saved=await save(p)}catch(e){saved=false}
+  btn.disabled=false;btn.textContent="Yes, submit";hideModal();
+  const box=document.getElementById("doneBox");box.innerHTML="";
+  box.append(saved?el("div",{class:"done-msg"},"Submitted. Your ticks stay on this page. Change anything and it saves again."):el("div",{class:"done-msg warn"},"Could not send. Press Download answers and send the file."));
+  window.scrollTo({top:0,behavior:"smooth"});
+ };
+ fetch(SAVE_URL,{cache:"no-store"}).then(r=>{if(!r.ok)throw new Error("load");return r.json()}).then(data=>{
+  const remote=data&&data.draft;
+  let local=null;try{local=JSON.parse(localStorage.getItem(KEY)||"null")}catch(e){}
+  if(remote&&Object.keys(remote).length)applyDraft(remote);
+  else if(local&&local.draft)applyDraft(local.draft);
+  ready=true;paint();
+  if(!(remote&&Object.keys(remote).length)&&local&&local.draft)persistNow();
+ }).catch(()=>{
+  try{const local=JSON.parse(localStorage.getItem(KEY)||"null");if(local&&local.draft)applyDraft(local.draft)}catch(e){}
+  ready=true;paint();
+ });
+}
+fetch(PEOPLE_URL).then(r=>{if(!r.ok)throw new Error("people");return r.json()}).then(boot).catch(()=>{
+ document.getElementById("list").append(el("div",{class:"done-msg warn"},"Could not load the selected people. Refresh the page."));
+});
+</script></body></html>
